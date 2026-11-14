@@ -10037,4 +10037,27 @@ const _panelChron48 = panelChron; panelChron = function () {
 };
 </script>
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
+<style>
+/* ===== ARGENTHAL 49 : l'appli installée occupe tout l'écran ===== */
+html.pwa,html.pwa body{height:var(--appH,100vh);min-height:var(--appH,100vh);background:var(--bg)}
+html.pwa .screen{top:0;left:0;right:0;bottom:auto;height:var(--appH,100vh)}
+html.ios-app .screen{padding-bottom:max(6px,calc(env(safe-area-inset-bottom,0px) - 10px))}
+</style>
+<script>
+// ===================== ARGENTHAL 49 : appli installée en plein écran (iPhone, Android, Mac) =====================
+(function () {
+  const std = () => { try { return matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches || navigator.standalone === true } catch (e) { return false } };
+  const ios = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  function fit() {
+    if (!std()) { document.documentElement.style.removeProperty('--appH'); document.documentElement.classList.remove('pwa'); return }
+    document.documentElement.classList.add('pwa');
+    let h = window.innerHeight;
+    // iOS en mode appli : la hauteur annoncée oublie parfois la barre d'état ; on prend celle de l'écran
+    if (ios) { const portrait = innerHeight >= innerWidth; h = Math.max(h, portrait ? Math.max(screen.height, screen.width) : Math.min(screen.height, screen.width)) }
+    document.documentElement.style.setProperty('--appH', h + 'px');
+    document.documentElement.classList.toggle('ios-app', ios);
+  }
+  fit(); addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 300)); addEventListener('pageshow', fit);
+})();
+</script>
 </body></html>
