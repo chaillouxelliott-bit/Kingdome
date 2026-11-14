@@ -3472,9 +3472,9 @@ const _devTick16 = devTick; devTick = function () { _devTick16(); try { aiVsPlay
 const LORE_ERAS = [[1, 'La Conquête'], [41, 'La Guerre des Deux Frères'], [48, 'L\'Âge d\'Argent'], [131, 'La Mort Grise et l\'Enfant-Roi'], [171, 'L\'Ombre de Solméria'], [281, 'La Chute'], [284, 'Le Trône vide']];
 // rel : [a,b,delta] · cl : [qui revendique, province (nom)] · foe : ennemis héréditaires
 const LORE_CANON = [
-  { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Valmor. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison de Morvaine. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi et lève la bannière d\'argent, avec à ses côtés sa sœur Ysolde, la meilleure stratège de son temps.' },
+  { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Valmor. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison de Morvaine. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
   { y: 3, k: ['AUB'], big: 1, war: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
-  { y: 5, k: ['AUB', 'ROS'], war: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Rosemarche charge l\'ost d\'Aelric et se brise sur les piques d\'Ysolde. Le roi de Rosemarche plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
+  { y: 5, k: ['AUB', 'ROS'], war: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Rosemarche charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Rosemarche plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
   { y: 7, k: ['AUB', 'VAL'], t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valfleuve restera la plus fidèle alliée du Trône.', rel: [['AUB', 'VAL', 10]] },
   { y: 9, k: ['AUB', 'CIM'], war: 1, t: 'Le Siège des Cimes', d: 'Deux ans de siège devant Hautcimes, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Hautcimes par la force.', rel: [['AUB', 'CIM', -4]] },
   { y: 10, k: ['AUB', 'ORV'], t: 'L\'or d\'Orvalis', d: 'Orvalis achète sa place dans le nouveau royaume : la maison Aurevent paie la solde de l\'ost et devient la banque du Trône.', rel: [['AUB', 'ORV', 5]] },
@@ -7146,7 +7146,7 @@ DIFFICULTÉ : ${diff().n}. Les rois rivaux sont rusés, rancuniers et opportunis
 
 // ---------- la saga d'Argenthal en sept chapitres ----------
 const SAGA = [
-  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Valmor. À Vaeloria, Aelric Aeltharys et sa sœur Ysolde se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. (Vous jouez Aelric.)'],
+  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Valmor. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. (Vous jouez Aelric.)'],
   ['freres', 41, 'II. La Guerre des Deux Frères', 'An 41 — Aelric le Conquérant est mort. Aelor l\'Aîné tient Vaeloria ; Corwen le Solaire, fils de la princesse de Solméria, réclame la couronne avec l\'appui de Solméria et de Rosemarche. Le royaume se coupe en deux : quel frère suivrez-vous ?'],
   ['iles', 61, 'III. La Révolte des Îles', 'An 61 — Corwen a fui dans le désert, Aelor règne. Mais les îles du nord-est refusent le tribut : la maison Grimsel proclame le royaume des Îles Brisées. Naîtra-t-il une septième couronne ?'],
   ['enfant', 131, 'IV. L\'Enfant-Roi', 'An 131 — La Mort Grise a emporté un tiers de Valmor, le Haut-Roi et ses fils aînés. Sur le Trône d\'Argent : Edrik II, sept ans. Les grandes maisons gouvernent en son nom… et Rosemarche murmure le nom de la branche du Sud.'],
@@ -7176,7 +7176,7 @@ const _applyScenario24 = applyScenario; applyScenario = function (id) {
     const id2 = makeIndep('AUB', h, { name: 'Bannières d\'Aeltharys', short: 'Aeltharys', legit: 60, col: '#f3f1ea' }); if (!id2) return;
     S.player = id2; const r = S.realms[id2], ru = ch(r.ruler); r.cap = vae; r.title = 'Seigneur de Vaeloria'; r.gold += 260; r.prestige = 28; if (ru) { ru.name = 'Aelric'; ru.sex = 'm'; ru.age = 30; ru.mar = Math.max(ru.mar, 10); ru.dip = Math.max(ru.dip, 7) }
     S.prov[vae].castle = 3;
-    if (ru) { const ys = genChar({ house: ru.house, realm: id2, sex: 'f', age: 27, nt: 2 }); ys.name = 'Ysolde'; ys.mar = 12; ys.int = Math.max(ys.int, 9); ys.parent = ru.parent || null; if (!r.council.mar || ch(r.council.mar)?.id === ru.id) r.council.mar = ys.id; else r.council.mar = ys.id; S.flags.ysolde = ys.id; const A = armiesOf(id2)[0]; if (A) A.cmd = ys.id }
+    if (ru) { const ys = genChar({ house: ru.house, realm: id2, sex: 'f', age: 27, nt: 2 }); ys.name = 'Rhaelys'; ys.mar = 12; ys.int = Math.max(ys.int, 9); ys.parent = ru.parent || null; if (!r.council.mar || ch(r.council.mar)?.id === ru.id) r.council.mar = ys.id; else r.council.mar = ys.id; S.flags.ysolde = ys.id; const A = armiesOf(id2)[0]; if (A) A.cmd = ys.id }
     // l'ancien royaume se replie sur sa seconde cité
     const nc = realmProvs('AUB').sort((x, y) => S.prov[y].pop - S.prov[x].pop)[0]; if (nc) { A0.cap = nc; S.prov[nc].castle = 3 }
     A0.truce[id2] = 0; r.truce.AUB = 0; setRel(id2, 'AUB', -70);
@@ -9105,11 +9105,11 @@ const fx38 = {
 };
 const STORY38 = {
   conquete: [
-    { at: 3, t: 'Le serment d\'Ysolde', b: () => `À la veillée, votre sœur Ysolde pose trois dés sur la table de campagne. « Vaeloria ne tombera pas par la seule épée, mon frère. La ville basse nous attend, les capitaines de Morvan ont un prix, et tes chevaliers veulent la gloire pour eux seuls. Choisis sur quoi nous bâtissons. »`, ch: [
+    { at: 3, t: 'Le serment de Rhaelys', b: () => `À la veillée, votre sœur Rhaelys pose trois dés sur la table de campagne. « Vaeloria ne tombera pas par la seule épée, mon frère. La ville basse nous attend, les capitaines de Morvan ont un prix, et tes chevaliers veulent la gloire pour eux seuls. Choisis sur quoi nous bâtissons. »`, ch: [
       ['Soulever la ville basse', 'Peuple +, des volontaires rejoignent l\'ost', () => { fx38.es('peu', 10); fx38.men(900); fx38.es('nob', -4); return 'Tisserands et bateliers prennent les piques. Vos barons font la moue, mais l\'ost grossit de neuf cents volontaires.' }],
       ['Acheter les capitaines de Morvan', '−120 écus, l\'ennemi vacille', () => { if (P0().gold < 120) { fx38.pr(-2); return 'Vos coffres sont trop légers : les capitaines rient au nez de vos émissaires.' } fx38.g(-120); if (S.realms.AUB) S.realms.AUB.stab = C(S.realms.AUB.stab - 14, 0, 100); armiesOf('AUB').forEach(a => a.men = Math.round(a.men * .88)); return 'L\'or change de mains la nuit. Au matin, des compagnies entières ont quitté les remparts.' }],
       ['S\'en remettre à la chevalerie', 'Noblesse +, prestige +', () => { fx38.es('nob', 8); fx38.pr(6); fx38.loy(3); return 'Vos barons jurent sur leurs épées de vous porter jusqu\'au trône. Ils s\'en souviendront… et vous le rappelleront.' }]] },
-    { at: 9, t: 'Les émissaires des cinq couronnes', b: () => `Cinq hérauts attendent sous la pluie, chacun sous sa bannière. Les rois de Valmor veulent savoir ce que fera le rebelle de Vaeloria une fois la ville prise. Ysolde murmure : « Ce que tu leur diras ce soir, ils le répéteront pendant vingt ans. »`, ch: [
+    { at: 9, t: 'Les émissaires des cinq couronnes', b: () => `Cinq hérauts attendent sous la pluie, chacun sous sa bannière. Les rois de Valmor veulent savoir ce que fera le rebelle de Vaeloria une fois la ville prise. Rhaelys murmure : « Ce que tu leur diras ce soir, ils le répéteront pendant vingt ans. »`, ch: [
       ['« Je ne veux que mon royaume »', 'Relations + avec tous, légitimité +', () => { fx38.relAll(12); fx38.lg(4); return 'Les hérauts repartent rassurés. Le mensonge est beau ; il tiendra le temps qu\'il faudra.' }],
       ['« Vos maîtres plieront le genou »', 'Prestige ++, relations −', () => { fx38.pr(10); fx38.relAll(-10); fx38.inf(4); return 'Un silence, puis cinq saluts glacés. On ne vous prendra plus jamais pour un simple révolté.' }],
       ['Les dresser les uns contre les autres', 'Vos deux plus puissants voisins se brouillent', () => { const [a, b] = fx38.top(2); if (a && b) { addRel(a, b, -30); fx38.rel(a, 6) } return a && b ? `Une lettre « égarée » suffit : ${rn(a)} et ${rn(b)} se soupçonnent désormais de vous avoir vendus.` : 'Vos intrigues ne trouvent personne à brouiller.' }]] },
@@ -9241,7 +9241,7 @@ function sagaWin38() {
   const T = T38(); if (T.sagaDone) return; T.sagaDone = 1; const id = S.scen || 'classic', i = SAGA.findIndex(x => x[0] === id), nx = SAGA[i + 1], r = P0();
   let sc = 0; try { sc = reignScore() } catch (e) { }
   const all = sagaGet38(); if (!all[id] || all[id].score < sc) all[id] = { score: sc, ruler: chName(r.ruler), y: S.year }; Store.ls('cour:saga38', JSON.stringify(all));
-  if (!nx) { S.pend.push({ kind: 'html', t: '📖 La saga d\'Argenthal est achevée', body: `Du soulèvement de Vaeloria au Trône vide, trois siècles ont passé sous vos yeux. ${Object.keys(all).length >= SAGA.length ? 'Vous avez mené <b>les sept chapitres</b> à leur terme : peu de chroniqueurs peuvent en dire autant.' : `Chapitres accomplis : <b>${Object.keys(all).length}/${SAGA.length}</b>.`}` }); return }
+  if (!nx) { S.pend.push({ kind: 'html', t: '📖 La saga d\'Argenthal est achevée', body: `Du soulèvement de Vaeloria au Roi Fou, cent soixante ans ont passé sous vos yeux. ${Object.keys(all).length >= SAGA.length ? 'Vous avez mené <b>les six chapitres</b> à leur terme : peu de chroniqueurs peuvent en dire autant.' : `Chapitres accomplis : <b>${Object.keys(all).length}/${SAGA.length}</b>.`}` }); return }
   S.pend.push({ kind: 'html', t: '📖 La saga continue', body: `Votre règne entre dans la chronique. L'histoire de Valmor, elle, ne s'arrête pas :<br><br><b>${esc(nx[2])}</b><br><span style="font-size:14.5px">${esc(nx[3])}</span><br><br>Si vous enchaînez maintenant, le nouveau souverain recevra <b>l'héritage de ${esc(chName(r.ruler))}</b> : 150 écus, du prestige et un surcroît de légitimité.<br><br><button class="btn primary" onclick="sagaNext38('${nx[0]}')">▶ Jouer le chapitre suivant</button>` });
 }
 function sagaNext38(id) {
@@ -9263,7 +9263,7 @@ const _newGameUI38 = newGameUI; newGameUI = function (k) {
 const _showMenu38 = showMenu; showMenu = async function () {
   await _showMenu38.apply(this, arguments);
   try { const all = sagaGet38(), el = document.querySelector('#menu .acts'); if (!el || document.querySelector('#menu .saga38')) return; const n = Object.keys(all).length;
-    el.insertAdjacentHTML('afterend', `<div class="lbl" style="margin-top:16px">La saga en sept chapitres${n ? ` · ${n}/${SAGA.length} accomplis` : ''}</div><div class="saga38">${SAGA.map(s => { const m = /^([IVX]+)\./.exec(s[2]) || [0, '•']; return `<button class="${all[s[0]] ? 'done' : ''}" title="${esc(s[2])}${all[s[0]] ? ' · ' + esc(all[s[0]].ruler) + ', ' + all[s[0]].score + ' points' : ''}" onclick="VIEW.scen='${s[0]}';showPick()">${m[1]}</button>` }).join('')}</div>`) } catch (e) { }
+    el.insertAdjacentHTML('afterend', `<div class="lbl" style="margin-top:16px">La saga en six chapitres${n ? ` · ${n}/${SAGA.length} accomplis` : ''}</div><div class="saga38">${SAGA.map(s => { const m = /^([IVX]+)\./.exec(s[2]) || [0, '•']; return `<button class="${all[s[0]] ? 'done' : ''}" title="${esc(s[2])}${all[s[0]] ? ' · ' + esc(all[s[0]].ruler) + ', ' + all[s[0]].score + ' points' : ''}" onclick="VIEW.scen='${s[0]}';showPick()">${m[1]}</button>` }).join('')}</div>`) } catch (e) { }
 };
 
 // ---------- 7. LE TOUR DE SAISON ----------
@@ -10036,7 +10036,6 @@ const _panelChron48 = panelChron; panelChron = function () {
   return h;
 };
 </script>
-<script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
 <style>
 /* ===== ARGENTHAL 49 : l'appli installée occupe tout l'écran ===== */
 html.pwa,html.pwa body{height:var(--appH,100vh);min-height:var(--appH,100vh);background:var(--bg)}
@@ -10060,4 +10059,510 @@ html.ios-app .screen{padding-bottom:max(6px,calc(env(safe-area-inset-bottom,0px)
   fit(); addEventListener('resize', fit); addEventListener('orientationchange', () => setTimeout(fit, 300)); addEventListener('pageshow', fit);
 })();
 </script>
+<style>
+.fac50 b{color:var(--ink)} #pick .rl button span{line-height:1.2} #pick .rl button small{font-size:11px}
+</style>
+<script>
+// ===================== ARGENTHAL 50 : la nouvelle saga en six chapitres (de la Révolte de Vaeloria au Roi Fou) =====================
+// ---------- 1. les chapitres ----------
+const SAGA50 = [
+  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Valmor. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes.'],
+  ['nord', 24, 'II. La Révolte du Nord', 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isengrin pend les collecteurs aux portes de Hautcimes : « Le loup ne plie pas. » Dans les îles, la maison Grimsel en profite pour rompre avec le Nord.'],
+  ['batard', 61, 'III. La Fille et le Bâtard', 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin Delarive ; l\'armée acclame son bâtard Draevon, qui se proclame Draevon Aeltharys. Deux couronnes, un seul trône.'],
+  ['dechiree', 128, 'IV. La Couronne déchirée', 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. Trois Aeltharys, un seul Trône d\'Argent.'],
+  ['tete', 138, 'V. La Tête du Roi', 'An 138 — Daemyr, réfugié à Solméria, en a épousé l\'héritière et s\'en est proclamé roi. Avec l\'or du désert, le Nord et Rosemarche, il marche sur l\'isthme contre le roi Aldric.'],
+  ['fou', 163, 'VI. Le Roi Fou', 'An 163 — Hanté par la tête de son père, Aedrys V a fait exécuter les rois de Rosemarche et du Nord sous une couronne d\'argent fondu. Le Nord, Rosemarche et Solméria se soulèvent : c\'est la dernière guerre des Aeltharys.'],
+];
+const SCEN50 = {}; SAGA50.forEach(s => SCEN50[s[0]] = 1);
+(() => {
+  SAGA.length = 0; SAGA50.forEach(s => SAGA.push(s.slice()));
+  const old = Object.assign({}, SCEN); for (const k in SCEN) delete SCEN[k];
+  for (const [id, y, n, d] of SAGA50) SCEN[id] = Object.assign({}, old[id] || {}, { y, n, d });
+  // les anciens chapitres restent lisibles pour les vieilles sauvegardes, sans apparaître dans les menus
+  for (const k in old) if (!SCEN[k]) Object.defineProperty(SCEN, k, { value: old[k], enumerable: false, configurable: true, writable: true });
+})();
+// ---------- 2. les camps jouables de chaque chapitre ----------
+const PLAY50 = {
+  conquete: [{ id: 'AUB', realm: 'AUB', nm: 'Aelric Aeltharys', role: 'La révolte de Vaeloria', obj: 'Prendre la capitale de Morvaine, forger le Trône d\'Argent, puis soumettre les cinq autres couronnes.' },
+    { id: 'MOR', realm: 'AUB', nm: 'Morvan III de Morvaine', role: 'Le vieux roi d\'Argenthal', obj: 'Écraser la révolte et reprendre Vaeloria avant qu\'elle ne se répande.' }],
+  nord: [{ id: 'AUB', realm: 'AUB', nm: 'Aelric le Conquérant', role: 'Le Haut-Roi', obj: 'Mater la révolte du Nord sans perdre votre armée dans la neige.' },
+    { id: 'CIM', realm: 'CIM', nm: 'Hrodmar Isengrin', role: 'Le Nord affamé', obj: 'Tenir les cols et arracher l\'indépendance du Nord.' },
+    { id: 'FER', realm: 'FER', nm: 'Maison Grimsel', role: 'Les Îles Brisées', obj: 'Profiter de la guerre pour rester libres : tenir vos îles pendant cinq ans.' }],
+  batard: [{ id: 'AUB', realm: 'AUB', nm: 'Ysaera et son régent', role: 'Le Parti de la Reine', obj: 'Garder le trône jusqu\'à la majorité d\'Ysaera : briser le Parti du Bâtard.' },
+    { id: 'BAT', realm: 'AUB', nm: 'Draevon Aeltharys', role: 'Le Parti du Bâtard', obj: 'Prendre Vaeloria et devenir roi. S\'il perd, c\'est l\'exil ou l\'échafaud.' }],
+  dechiree: [{ id: 'AUB', realm: 'AUB', nm: 'Aldric', role: 'Le Parti d\'Aldric', obj: 'Garder Vaeloria et éliminer ou soumettre Taelon et Daemyr.' },
+    { id: 'TAE', realm: 'AUB', nm: 'Taelon', role: 'Le Parti de Taelon', obj: 'Prendre Vaeloria et éliminer ou soumettre Aldric et Daemyr.' },
+    { id: 'DAE', realm: 'AUB', nm: 'Daemyr', role: 'Le Parti de Daemyr', obj: 'Prendre Vaeloria et éliminer ou soumettre les deux petits-fils de la reine.' }],
+  tete: [{ id: 'AUB', realm: 'AUB', nm: 'Le roi Aldric', role: 'Le Trône d\'Argent', obj: 'Résister à Daemyr. Si le roi tombe, son fils Aedrys devra rallier les royaumes et repousser l\'envahisseur.' },
+    { id: 'SOL', realm: 'SOL', nm: 'Daemyr, roi de Solméria', role: 'Le roi du désert', obj: 'Prendre Vaeloria. Mais chaque cruauté vous coûtera des alliés.' },
+    { id: 'CIM', realm: 'CIM', nm: 'Maison Isengrin', role: 'Le Nord', obj: 'Changer de camp au bon moment : sortir de la guerre plus fort qu\'avant.' },
+    { id: 'ROS', realm: 'ROS', nm: 'Maison de Rosemont', role: 'Rosemarche', obj: 'Changer de camp au bon moment : sortir de la guerre plus fort qu\'avant.' }],
+  fou: [{ id: 'ROS', realm: 'ROS', nm: 'Garran de Rosemont', role: 'Rosemarche révoltée', obj: 'Venger votre père, prendre Vaeloria et devenir le nouveau Haut-Roi.' },
+    { id: 'AUB', realm: 'AUB', nm: 'Aedrys V, le Roi Fou', role: 'Le dernier Aeltharys', obj: 'Survivre : briser la révolte sans perdre Vaeloria.' }],
+};
+function fac50(scen, k) { const L = PLAY50[scen]; return L ? L.find(f => f.id === k) || null : null }
+const F50COL = { AEL: '#f3f1ea', REINE: '#f3f1ea', BAT: '#e6d3a1', ALD: '#f3f1ea', TAE: '#cfe0f2', DAE: '#ecd49a' };
+// ---------- 3. la chronique : de l'an 1 à l'an 163 ----------
+(() => {
+  LORE_CANON.length = 0;
+  LORE_CANON.push(
+    { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Valmor. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison de Morvaine. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi Morvan III et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
+    { y: 3, k: ['AUB'], big: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
+    { y: 5, k: ['ROS', 'AUB'], big: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Rosemarche charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Rosemarche plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
+    { y: 7, k: ['VAL', 'AUB'], big: 1, t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valfleuve restera la plus fidèle alliée du Trône.', rel: [['VAL', 'AUB', 10]] },
+    { y: 9, k: ['CIM', 'AUB'], big: 1, t: 'Le Siège des Cimes', d: 'Deux ans de siège devant Hautcimes, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Hautcimes par la force.', rel: [['CIM', 'AUB', -4]] },
+    { y: 10, k: ['ORV', 'AUB'], big: 1, t: 'L\'or d\'Orvalis', d: 'Orvalis achète sa place dans le nouveau royaume : la maison Aurevent paie la solde de l\'ost et devient la banque du Trône.', rel: [['ORV', 'AUB', 6]] },
+    { y: 12, k: ['SOL', 'AUB'], big: 1, t: 'Le sacre d\'Aelric le Conquérant', d: 'Solméria se soumet par le mariage d\'Aelric et d\'une princesse Sahrane. À Vaeloria, Aelric Ier est sacré Haut-Roi : le Grand Royaume d\'Argenthal est né.' },
+    { y: 21, k: ['CIM'], big: 1, t: 'Les trois hivers', d: 'Trois hivers sans récolte frappent le Nord. Dans les vallées, on mange l\'écorce des pins ; les collecteurs du Haut-Roi réclament pourtant le tribut.' },
+    { y: 24, k: ['CIM', 'AUB'], big: 1, war: 1, t: 'La Révolte du Nord', d: 'Le roi Hrodmar Isengrin fait pendre les collecteurs du Haut-Roi aux portes de Hautcimes. Le Nord prend les armes.', rel: [['CIM', 'AUB', -8]] },
+    { y: 24, k: ['FER', 'CIM'], big: 1, t: 'La naissance des Îles Brisées', d: 'Pendant que le Nord se bat, la maison Grimsel rompt avec Hautcimes et proclame le royaume des Îles Brisées : la septième couronne de Valmor.', rel: [['FER', 'CIM', -8]] },
+    { y: 27, k: ['CIM', 'AUB'], big: 1, t: 'La Paix des Neiges', d: 'Épuisé, le Nord rentre dans le rang, la rancune intacte. Les Îles Brisées, elles, restent libres.' },
+    { y: 40, k: ['AUB'], big: 1, t: 'La mort du Conquérant', d: 'Aelric meurt dans son lit. Son fils Haelor monte sur le Trône d\'Argent ; à la cour grandit un bâtard de Haelor, Draevon, élevé parmi les soldats.' },
+    { y: 61, k: ['AUB'], big: 1, t: 'La Fille et le Bâtard', d: 'Le roi Haelor meurt sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans ; l\'armée acclame le bâtard Draevon, qui se proclame Draevon Aeltharys.' },
+    { y: 64, k: ['AUB'], big: 1, war: 1, t: 'La bataille des Deux Couronnes', d: 'Draevon est vaincu, mais épargné par la petite reine. Ses descendants formeront la lignée du Bâtard, aimée de l\'armée et méprisée de la cour.' },
+    { y: 69, k: ['AUB'], big: 1, t: 'Les noces de la reine', d: 'Ysaera épouse un cadet de maison mineure, qui prend le nom Aeltharys : ainsi la lignée reste « d\'argent ».' },
+    { y: 71, k: ['AUB'], t: 'La majorité d\'Ysaera', d: 'La reine gouverne seule. Commence un long règne de paix que l\'on appellera l\'Âge d\'Argent.' },
+    { y: 96, k: ['AUB'], t: 'Les routes d\'argent', d: 'La reine fait paver les routes royales de Vaeloria à Gué-du-Roi et à Rosemarche ; les marchands bénissent son nom.' },
+    { y: 128, k: ['AUB'], big: 1, t: 'La Couronne déchirée', d: 'La reine Ysaera meurt à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône ; Daemyr, petit-fils du bâtard, se lève avec l\'armée.' },
+    { y: 131, k: ['AUB'], big: 1, war: 1, t: 'Le Champ des Trois Bannières', d: 'Aldric l\'emporte et devient roi. Taelon se soumet. Daemyr s\'enfuit vers le désert.' },
+    { y: 132, k: ['SOL', 'AUB'], big: 1, t: 'Le roi du désert', d: 'Daemyr épouse l\'unique héritière des Sahrane et se proclame roi de Solméria, l\'égal du Haut-Roi.', rel: [['SOL', 'AUB', -10]] },
+    { y: 138, k: ['SOL', 'AUB', 'CIM', 'ROS'], big: 1, war: 1, t: 'La Tête du Roi', d: 'Daemyr capture le roi Aldric, le fait torturer et envoie sa tête dans un coffret d\'argent à son fils Aedrys, douze ans. Horrifiés, le Nord et Rosemarche abandonnent Daemyr.', rel: [['SOL', 'AUB', -14]] },
+    { y: 139, k: ['AUB', 'VAL', 'ORV'], big: 1, t: 'Le couronnement dans les ruines', d: 'Valfleuve et Orvalis sauvent Vaeloria et repoussent Daemyr. Aedrys est couronné ; il n\'oubliera jamais que le Nord et Rosemarche ont d\'abord combattu aux côtés de l\'assassin de son père.', rel: [['VAL', 'AUB', 8], ['ORV', 'AUB', 8], ['CIM', 'AUB', -6], ['ROS', 'AUB', -6]] },
+    { y: 139, k: ['ROS', 'AUB'], t: 'Les noces de Rosemarche', d: 'La fille de Taelon épouse le roi de Rosemarche : le sang d\'argent coule désormais chez les Rosemont.' },
+    { y: 155, k: ['SOL', 'AUB'], big: 1, t: 'La mort de Daemyr', d: 'Daemyr meurt dans le désert, empoisonné dit-on sur ordre d\'Aedrys. Son fils Saeryn lui succède et se dit le vrai Aeltharys.' },
+    { y: 162, k: ['AUB'], t: 'Les nuits sans sommeil', d: 'À Vaeloria, le roi Aedrys ne dort plus. Il voit des traîtres partout et fait goûter chaque plat trois fois.' },
+  );
+  LORE_ERAS.length = 0; LORE_ERAS.push([1, 'La Conquête'], [24, 'La Révolte du Nord'], [28, 'Le Règne du Conquérant'], [61, 'La Fille et le Bâtard'], [71, 'L\'Âge d\'Argent'], [128, 'La Couronne déchirée'], [138, 'La Tête du Roi'], [139, 'Le Règne d\'Aedrys']);
+  LORE_EPILOGUE.length = 0; LORE_EPILOGUE.push({ y: 164, t: 'La fin des Aeltharys', d: 'Le Trône d\'Argent change de mains. Une nouvelle dynastie commence ; à Solméria, la lignée du Bâtard attend son heure.' });
+})();
+const FIX50 = [
+  { n: 'Aelric', epi: 'le Conquérant', from: 1, to: 40, death: 'mort dans son lit, après avoir fondé le Grand Royaume' },
+  { n: 'Haelor', epi: 'le Pacifique', from: 40, to: 61, death: 'mort sans fils légitime, laissant une fille et un bâtard' },
+  { n: 'Ysaera', f: true, epi: 'la Reine-Enfant', from: 61, to: 128, death: 'morte à 75 ans, pleurée par tout Valmor' },
+  { n: 'Aldric', epi: 'le Supplicié', from: 128, to: 138, death: 'torturé et décapité par Daemyr' },
+  { n: 'Aedrys', epi: 'le Fou', from: 138, to: 999, death: '' },
+];
+const _genLore50 = genLore; genLore = function (start) {
+  const L = _genLore50.apply(this, arguments);
+  try {
+    const st = L.start || start || 1; if (st > 170) return L; const end = st - 1;
+    L.kings.AUB = FIX50.filter(x => x.from < st && x.to > x.from).map(x => Object.assign({ num: 0, f: false, h: 'Aeltharys', hk: 1, keep: 1 }, x, { to: Math.min(x.to, end) })).filter(x => x.to > x.from || x.from === end);
+    if (L.kings.AUB.length) { const l = L.kings.AUB[L.kings.AUB.length - 1]; if (!l.death) l.death = 'règne encore' }
+  } catch (e) { console.error && console.error('lore50', e) }
+  return L;
+};
+// ---------- 4. outils ----------
+function alive50(k) { return !!(k && S.realms[k] && S.realms[k].alive) }
+function ruler50(k, name, age, sex, traits) {
+  const R = S.realms[k]; if (!R) return null; const c = ch(R.ruler); if (!c) return null;
+  c.name = name; if (age != null) c.age = age; c.sex = sex || 'm'; if (traits) traits.forEach(t => { if (TRAITS[t] && !c.traits.includes(t)) c.traits.push(t) }); c.alive = true; return c;
+}
+function label50(k, nm, short, title) { const R = S.realms[k]; if (!R) return; R.renamed = true; if (!/^N\d+$/.test(k)) R.lab50 = 1; R.nm = nm; R.nmS = short || nm; if (title) R.title = title }
+function houseName50(k, name, motto) { const R = S.realms[k]; const h = R && hs(R.house); if (h) { h.name = name; if (motto) h.motto = motto } }
+// une faction quitte un royaume avec une part de ses terres (sur la carte : la moitié la plus éloignée de la capitale)
+function split50(fromK, share, o) {
+  const F = S.realms[fromK]; if (!F) return null; const cap = capitalOf(fromK); const all = realmProvs(fromK).filter(q => q !== cap);
+  const n = Math.max(2, Math.round((all.length + 1) * share));
+  const dist = {}; const Q = [cap]; dist[cap] = 0; while (Q.length) { const x = Q.shift(); for (const y of NB[x]) if (dist[y] == null && S.prov[y] && S.prov[y].k === fromK) { dist[y] = dist[x] + 1; Q.push(y) } }
+  const far = all.filter(q => dist[q] != null).sort((a, b) => dist[b] - dist[a])[0] || all[0]; if (!far) return null;
+  // croissance depuis la province la plus lointaine
+  const take = [far], seen = new Set([far]); const fr = [far];
+  while (take.length < n && fr.length) { const x = fr.shift(); for (const y of [...NB[x]].sort((a, b) => (dist[b] || 0) - (dist[a] || 0))) { if (take.length >= n) break; if (!seen.has(y) && S.prov[y] && S.prov[y].k === fromK && y !== cap && !(o.avoid || []).includes(y)) { seen.add(y); take.push(y); fr.push(y) } } }
+  let h = Object.values(S.houses).filter(x => x.realm === fromK && !x.royal && !x.gone && houseProvs(x.id).some(q => take.includes(q))).sort((a, b) => houseProvs(b.id).filter(q => take.includes(q)).length - houseProvs(a.id).filter(q => take.includes(q)).length)[0]
+    || Object.values(S.houses).filter(x => x.realm === fromK && !x.royal && !x.gone)[0];
+  if (!h) return null;
+  if (!ch(h.head) || !ch(h.head).alive) { const c = genChar({ house: h.id, realm: fromK, sex: 'm', age: 30 }); h.head = c.id }
+  take.forEach(q => S.prov[q].h = h.id);
+  h.name = o.house || 'Aeltharys'; h.motto = o.motto || h.motto; h.col = o.col;
+  const id = makeIndep(fromK, h, { name: o.name, short: o.short, col: o.col, legit: o.legit || 55, force: true }); if (!id) return null;
+  const R = S.realms[id]; R.title = o.title || R.title; REALMS[id].title = R.title; label50(id, o.name, o.short, o.title); R.gold += o.gold || 120; R.col = o.col;
+  if (o.desc) REALMS[id].desc = o.desc; if (o.spec) REALMS[id].spec = o.spec; if (o.spec2) REALMS[id].spec2 = o.spec2;
+  REALMS[id].inc = REALMS[fromK].inc; REALMS[id].lev = REALMS[fromK].lev; REALMS[id].ai = Object.assign({}, REALMS[id].ai, { agg: .75, honor: .5, greed: .6 });
+  if (o.ruler) ruler50(id, o.ruler, o.age, 'm', o.traits);
+  if (o.men) mkArmy(id, null, R.cap, o.men, R.ruler, true);
+  R.truce = {}; if (F.truce) delete F.truce[id];
+  return id;
+}
+function war50(a, b, withA, withB, goal) {
+  if (!alive50(a) || !alive50(b)) return null; (S.realms[a].truce || {})[b] = 0; (S.realms[b].truce || {})[a] = 0;
+  const w = declareWar(a, b, 'claim', goal || [capitalOf(b)].filter(Boolean), true); if (!w) return null;
+  (withA || []).forEach(k => { if (alive50(k) && !w.a.includes(k) && !w.b.includes(k)) w.a.push(k) });
+  (withB || []).forEach(k => { if (alive50(k) && !w.a.includes(k) && !w.b.includes(k)) w.b.push(k) });
+  w.a.forEach(x => w.b.forEach(y => setRel(x, y, Math.min(rel(x, y), -50))));
+  w.start = S.turn; return w;
+}
+function men50(k, n) { if (!alive50(k)) return; const A = armiesOf(k).filter(a => !a.merc).sort((x, y) => y.men - x.men)[0]; if (A) A.men = Math.max(300, A.men + n); else if (n > 0) mkArmy(k, null, capitalOf(k), n, S.realms[k].ruler, true) }
+function scale50(k, f) { armiesOf(k).forEach(a => a.men = Math.max(200, Math.round(a.men * f))) }
+function hk50(king, sworn, defiant) {
+  if (!alive50(king)) return; S.highKing = king;
+  // un Haut-Roi joueur n'absorbe pas ses alliés : ils restent des royaumes à part entière
+  if (king === S.player) S.hk = { king, sworn: [], defiant: [], tax: 1, laws: [], since: S.turn, council: -99, seen: {} }; else { try { hkInit(king) } catch (e) { } } if (!S.hk) return;
+  S.hk.sworn = (sworn || []).filter(k => alive50(k) && k !== king); S.hk.defiant = (defiant || []).filter(k => alive50(k) && k !== king);
+  S.realms[king].title = 'Haut-Roi d\'Argenthal'; S.flags.hkFragile = 0;
+}
+// les îles du nord-est renaissent (elles appartenaient au Nord depuis la conquête)
+function reviveFER50() {
+  const F = S.realms.FER; if (!F || F.alive) return false; const host = Object.keys(S.realms).find(k => alive50(k) && realmProvs(k).some(q => PV[q].k === 'FER')); if (!host) return false;
+  const provs = realmProvs(host).filter(q => PV[q].k === 'FER'); if (!provs.length) return false;
+  const h = Object.values(S.houses).find(x => x.formerKing === 'FER') || hs(F.house);
+  F.alive = true; F.unborn = 0; F.gold = 120; F.legit = 55; F.stab = 55; F.truce = {}; F.claims = [];
+  if (h) { h.realm = 'FER'; h.royal = true; h.formerKing = null; h.loy = 100; h.rebel = false; F.house = h.id; if (!ch(h.head) || !ch(h.head).alive) { const c = genChar({ house: h.id, realm: 'FER', sex: 'm', age: 34 }); h.head = c.id } F.ruler = h.head; ch(F.ruler).realm = 'FER' }
+  provs.forEach(q => { const P = S.prov[q]; P.k = 'FER'; P.occ = null; P.siege = 0; if (P.h && hs(P.h) && hs(P.h).realm === host && hs(P.h).formerKing !== 'FER') P.h = null });
+  Object.values(S.houses).filter(x => x.realm === host && !x.royal && houseProvs(x.id).length && houseProvs(x.id).every(q => S.prov[q].k === 'FER')).forEach(x => x.realm = 'FER');
+  F.cap = provs.sort((a, b) => S.prov[b].pop - S.prov[a].pop)[0]; F.ships = F.ships || { war: 0, cog: 0 }; F.ships.war = Math.max(F.ships.war || 0, 6);
+  mkArmy('FER', null, F.cap, 2600, F.ruler, true); if (!REALM_IDS.includes('FER')) REALM_IDS.push('FER');
+  return true;
+}
+function isAelth50(k) { const R = S.realms[k]; const h = R && hs(R.house); return !!(h && /Aeltharys/.test(h.name)) }
+function note50(t, body) { S.pend.push({ kind: 'html', t, body }); if (S.lore && S.lore.ev) S.lore.ev.push({ y: S.year, k: [], big: 1, t: t.replace(/^\S+\s/, ''), d: body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').slice(0, 300) }) }
+function kid50(parent, name, age, sex) { const c = genChar({ house: parent.house, realm: parent.realm, sex: sex || 'm', age, parent: parent.id }); c.name = name; parent.kids = parent.kids || []; parent.kids.push(c.id); return c }
+// ---------- 5. mise en place des chapitres (nouvelle partie, ou chapitre qui survient en cours de règne) ----------
+const CH50 = {
+  conquete: {
+    setup(cont) {
+      const fac = S.flags.role50; const reb = Object.keys(S.realms).find(k => alive50(k) && /^N\d+$/.test(k) && /Aeltharys/.test((hs(S.realms[k].house) || {}).name || ''));
+      if (reb) { S.flags.f50.AEL = reb; const c = S.flags.ysolde && ch(S.flags.ysolde); if (c) c.name = 'Rhaelys' }
+      if (S.realms.AUB) S.realms.AUB.title = 'Roi d\'Argenthal';
+      if (fac === 'MOR' && reb) {
+        S.player = 'AUB'; S.flags.conquete = 0; S.realms.AUB.gold += 150; men50('AUB', 1800);
+        S.pend = S.pend.filter(x => x.t !== '⚔️ La bannière d\'argent');
+        S.pend.push({ kind: 'html', t: '🏰 Le vieux roi', body: `Vous êtes <b>Morvan III de Morvaine</b>, roi d'Argenthal. Ce printemps, Vaeloria vous a fermé ses portes : <b>Aelric Aeltharys</b> et sa sœur <b>Rhaelys</b> ont levé la bannière d'argent, et vos seigneurs hésitent.<br><br><b>Objectif :</b> reprendre <b>${esc(PV[S.realms[reb].cap].n)}</b> et écraser la révolte avant que les cinq autres couronnes ne la prennent au sérieux.` });
+      }
+    },
+  },
+  nord: {
+    setup(cont) {
+      const p = S.player; const king = cont ? S.highKing : 'AUB';
+      if (!cont) { const ae = ruler50('AUB', 'Aelric', 54); if (ae) ae.health = 99; S.realms.AUB.renamed = false; houseName50('AUB', 'Aeltharys', 'D\'argent naîtra la couronne'); S.realms.AUB.col = AELTH_COL }
+      if (!king || !alive50(king) || !alive50('CIM') || king === 'CIM') return this.skip(cont);
+      if (!cont) ruler50('CIM', 'Hrodmar', 46, 'm', ['brave']);
+      if (!alive50('FER')) reviveFER50();
+      if (!cont) ruler50('FER', pick(['Ragnvald', 'Sigurd', 'Haakon']), 38);
+      S.famine = { realm: 'CIM', until: S.turn + 6 }; realmProvs('CIM').forEach(q => S.prov[q].unrest = C(S.prov[q].unrest + 15, 0, 100));
+      if (!cont) hk50(king, ['VAL', 'ORV', 'ROS', 'SOL'], ['CIM', 'FER']); else if (S.hk) { hkSet('CIM', 'defiant') }
+      const rebelIsP = p === 'CIM' && cont;
+      if (!rebelIsP) { war50('CIM', king, [], [alive50('VAL') && p !== 'VAL' ? 'VAL' : null].filter(Boolean)); men50('CIM', 1600); men50(king, 800) }
+      if (alive50('FER') && alive50('CIM') && p !== 'FER' && !atWar('FER', 'CIM')) war50('FER', 'CIM', [], [], realmProvs('CIM').filter(q => PV[q].coast).slice(0, 1));
+      S.flags.f50.start = { CIM: realmProvs('CIM').length, FER: alive50('FER') ? realmProvs('FER').length : 0 };
+      const txt = `Trois hivers sans récolte ont affamé le Nord. Les collecteurs du Haut-Roi réclamaient pourtant le tribut : le roi <b>Hrodmar Isengrin</b> les a fait pendre aux portes de Hautcimes. « Le loup ne plie pas. »<br><br>Pendant que le Nord prend les armes, la maison <b>Grimsel</b> rompt avec Hautcimes et proclame le royaume des <b>Îles Brisées</b>.`;
+      const you = rebelIsP ? '<br><br>Vous régnez sur le Nord affamé : à vous de décider si le loup plie… ou s\'il mord (onglet Diplo → déclarer la guerre au Haut-Roi).' : p === 'CIM' ? '<br><br><b>Objectif :</b> tenir les cols et arracher l\'indépendance.' : p === king ? '<br><br><b>Objectif :</b> mater la révolte sans perdre votre armée dans la neige.' : p === 'FER' ? '<br><br><b>Objectif :</b> rester libres. Tenez vos îles pendant cinq ans.' : '<br><br>Le Haut-Roi vous demandera de le suivre. Le ferez-vous ?';
+      note50('❄️ La Révolte du Nord', txt + you);
+    },
+    skip(cont) { if (cont) note50('❄️ La Révolte du Nord n\'aura pas lieu', 'Dans votre histoire, le Nord n\'a plus de Haut-Roi contre qui se révolter. Les chroniques retiendront d\'autres noms.') },
+  },
+  batard: {
+    setup(cont) {
+      const p = S.player, king = cont ? S.highKing : 'AUB';
+      if (!king || !alive50(king) || !isAelth50(king)) return this.skip(cont);
+      const K = S.realms[king]; const old = ch(K.ruler);
+      // le roi Haelor meurt ; la petite reine monte sur le trône
+      if (cont && old && old.alive) { try { killChar(old, 'emporté par la fièvre') } catch (e) { } }
+      let q = ch(K.ruler); if (!q || !q.alive || q.realm !== king) { q = genChar({ house: K.house, realm: king, sex: 'f', age: 8 }); K.ruler = q.id; hs(K.house).head = q.id }
+      q.name = 'Ysaera'; q.sex = 'f'; q.age = 8; q.alive = true;
+      const reg = genChar({ house: (alive50('VAL') ? S.realms.VAL.house : K.house), realm: king, sex: 'm', age: 51, nt: 2 }); reg.name = 'Oswin'; reg.ste = Math.max(reg.ste, 11); reg.dip = Math.max(reg.dip, 10); K.regent = reg.id; K.council.chan = reg.id;
+      K.legit = 62; K.stab = 40; if (!cont) { houseName50(king, 'Aeltharys', 'D\'argent naîtra la couronne'); K.col = AELTH_COL }
+      label50(king, 'Parti de la Reine', 'la Reine', 'Haute-Reine d\'Argenthal');
+      const bat = split50(king, .42, { name: 'Parti du Bâtard', short: 'le Bâtard', col: F50COL.BAT, title: 'Prétendant au Trône d\'Argent', legit: 48, ruler: 'Draevon', age: 22, traits: ['brave', 'ambit'], men: 4200, gold: 160, motto: 'L\'épée fait le roi', desc: 'Draevon, bâtard du roi Haelor, élevé parmi les soldats. L\'armée l\'a acclamé ; il s\'est légitimé lui-même sous le nom de Draevon Aeltharys.', spec: ['⚔️ Le favori de l\'armée', 'Les garnisons et les vétérans lui sont acquis.'], spec2: ['🩸 Un bâtard', 'La loi et l\'Église ne le reconnaissent pas.'] });
+      if (!bat) return;
+      S.flags.f50.BAT = bat; scale50(king, .65);
+      if (!cont) hk50(king, ['VAL', 'ORV'], ['CIM', 'ROS']);
+      war50(bat, king, ['CIM', 'ROS'].filter(k => k !== p || !cont), ['VAL', 'ORV'].filter(k => k !== p || !cont));
+      if (S.flags.role50 === 'BAT' && !cont) S.player = bat;
+      note50('👑 La Fille et le Bâtard', `Le roi Haelor est mort sans fils légitime. Le conseil a couronné sa fille <b>Ysaera, huit ans</b>, sous la régence d'<b>Oswin Delarive</b>. Mais l'armée a acclamé son bâtard <b>Draevon</b>, qui se proclame <b>Draevon Aeltharys</b>.<br><br>Valfleuve et Orvalis soutiennent la petite reine ; le Nord et Rosemarche, le bâtard. Deux couronnes, un seul trône.${S.player === bat ? '<br><br><b>Objectif :</b> prendre Vaeloria et devenir roi.' : S.player === king ? '<br><br><b>Objectif :</b> garder le trône jusqu\'à la majorité d\'Ysaera.' : ''}`);
+    },
+    skip(cont) { if (cont) note50('👑 Le trône sans bâtard', 'Dans votre histoire, la maison Aeltharys ne règne plus sur le Trône d\'Argent : la querelle de la Fille et du Bâtard n\'aura pas lieu.') },
+  },
+  dechiree: {
+    setup(cont) {
+      const p = S.player, king = cont ? S.highKing : 'AUB';
+      if (!king || !alive50(king) || !isAelth50(king)) return this.skip(cont);
+      const K = S.realms[king]; const old = ch(K.ruler);
+      if (cont && old && old.alive) { try { killChar(old, 'morte de vieillesse, pleurée par tout Valmor') } catch (e) { } }
+      let a = ch(K.ruler); if (!a || !a.alive || a.realm !== king) { a = genChar({ house: K.house, realm: king, sex: 'm', age: 27 }); K.ruler = a.id; hs(K.house).head = a.id }
+      a.name = 'Aldric'; a.sex = 'm'; a.age = 27; K.regent = null; K.legit = 60; K.stab = 38; if (!cont) K.col = F50COL.ALD;
+      label50(king, 'Parti d\'Aldric', 'Aldric', 'Haut-Roi d\'Argenthal');
+      const tae = split50(king, .3, { name: 'Parti de Taelon', short: 'Taelon', col: F50COL.TAE, title: 'Prétendant au Trône d\'Argent', legit: 55, ruler: 'Taelon', age: 25, traits: ['genereux'], men: 3000, gold: 260, motto: 'L\'or et la loi', desc: 'Taelon, cadet des petits-fils de la reine Ysaera, soutenu par les villes et l\'or des marchands.', spec: ['💰 L\'or des villes', 'Les marchands financent sa cause.'], spec2: ['🕊️ Peu de soldats', 'Ses levées sont maigres.'] });
+      const dae = split50(king, .38, { name: 'Parti de Daemyr', short: 'Daemyr', col: F50COL.DAE, title: 'Prétendant au Trône d\'Argent', legit: 45, ruler: 'Daemyr', age: 28, traits: ['cruel', 'ambit'], men: 4200, gold: 140, motto: 'L\'épée fait le roi', desc: 'Daemyr, petit-fils du bâtard Draevon, acclamé par l\'armée comme son grand-père.', spec: ['⚔️ Le favori de l\'armée', 'Les vétérans suivent la lignée du Bâtard.'], spec2: ['🩸 Sang de bâtard', 'La cour et l\'Église le méprisent.'] });
+      S.flags.f50.TAE = tae; S.flags.f50.DAE = dae; scale50(king, .6);
+      if (!cont) hk50(king, ['VAL'], ['CIM', 'ROS', 'ORV']);
+      if (tae) war50(tae, king, [p === 'ORV' && cont ? null : 'ORV'].filter(Boolean), [p === 'VAL' && cont ? null : 'VAL'].filter(Boolean));
+      if (dae) war50(dae, king, ['CIM', 'ROS'].filter(k => k !== p || !cont), []);
+      if (dae && tae) war50(dae, tae, [], []);
+      if (!cont) { if (S.flags.role50 === 'TAE' && tae) S.player = tae; if (S.flags.role50 === 'DAE' && dae) S.player = dae }
+      note50('🩸 La Couronne déchirée', `La reine Ysaera est morte à 75 ans, et ses deux petits-fils se disputent son trône : <b>Aldric</b>, l'aîné, avec le conseil et l'Église ; <b>Taelon</b>, le cadet, avec les villes et l'or des marchands. Pendant que les deux frères s'entre-déchirent, <b>Daemyr</b>, petit-fils du bâtard Draevon, se lève avec l'armée.<br><br>Valfleuve soutient Aldric, Orvalis soutient Taelon, le Nord et Rosemarche soutiennent Daemyr. Trois Aeltharys, un seul Trône d'Argent.`);
+    },
+    skip(cont) { if (cont) note50('🩸 Une couronne qui tient', 'Dans votre histoire, la maison Aeltharys ne règne plus à Vaeloria : la Couronne déchirée n\'aura pas lieu.') },
+  },
+  tete: {
+    setup(cont) {
+      const p = S.player, king = cont ? S.highKing : 'AUB';
+      if (!king || !alive50(king)) return this.skip(cont);
+      const K = S.realms[king];
+      if (!cont) { const a = ruler50(king, 'Aldric', 37); K.renamed = false; houseName50(king, 'Aeltharys', 'D\'argent naîtra la couronne'); K.col = AELTH_COL; hk50(king, ['VAL', 'ORV'], ['SOL', 'CIM', 'ROS']) }
+      const kingC = ch(K.ruler); if (kingC && isAelth50(king)) { const son = (kingC.kids || []).map(ch).filter(x => x && x.alive && x.sex === 'm').sort((a, b) => b.age - a.age)[0]; if (son) { son.name = 'Aedrys'; son.age = 12 } else kid50(kingC, 'Aedrys', 12) }
+      // Daemyr : sa faction s'il a survécu, sinon le roi de Solméria
+      let att = S.flags.f50.DAE && alive50(S.flags.f50.DAE) && S.flags.f50.DAE !== king ? S.flags.f50.DAE : (alive50('SOL') && 'SOL' !== king ? 'SOL' : null);
+      if (!att) return this.skip(cont);
+      if (att === 'SOL') { if (!(cont && p === 'SOL') || true) ruler50('SOL', 'Daemyr', 38, 'm', ['cruel', 'ambit']); houseName50('SOL', 'Aeltharys-Sahrane', 'Le soleil et l\'argent'); S.realms.SOL.title = 'Roi de Solméria'; S.realms.SOL.renamed = false; S.realms.SOL.legit = 58 }
+      S.flags.f50.SOL = att;
+      const turn = !(cont && p === att);
+      if (turn) {
+        war50(att, king, ['CIM', 'ROS'].filter(k => k !== p), ['VAL', 'ORV'].filter(k => k !== p));
+        men50(att, 3200); men50('CIM', 900); men50('ROS', 900); men50(king, 1500);
+      }
+      S.flags.tete50 = { t0: S.turn, att, king, done: 0 };
+      S.flags.f50.start = { CIM: realmProvs('CIM').length, ROS: realmProvs('ROS').length };
+      note50('💀 La Tête du Roi', `<b>Daemyr</b>, ${att === 'SOL' ? 'qui a épousé l\'héritière des Sahrane et s\'est proclamé roi de Solméria' : 'le prétendant de la lignée du Bâtard'}, n'a jamais renoncé. Avec l'or du désert et ses cavaliers, et d'abord le soutien du Nord et de Rosemarche, fidèles à la lignée du Bâtard, il marche sur l'isthme contre le roi <b>Aldric</b>.${turn ? '' : '<br><br>Vous êtes Daemyr : l\'isthme vous attend (onglet Diplo → déclarer la guerre).'}`);
+    },
+    skip(cont) { if (cont) note50('💀 Le désert se tait', 'Dans votre histoire, ni Daemyr ni le roi Aldric ne sont en position de s\'affronter : la Tête du Roi n\'aura pas lieu.') },
+  },
+  fou: {
+    setup(cont) {
+      const p = S.player, king = cont ? S.highKing : 'AUB';
+      if (!king || !alive50(king) || !isAelth50(king)) return this.skip(cont);
+      const K = S.realms[king];
+      if (cont && p === king) { S.pend.push({ kind: 'fou50' }); return } // le joueur décide du sort des rois
+      this.massacre(king, cont);
+    },
+    massacre(king, cont, byKing) {
+      const p = byKing ? '__' : S.player, K = S.realms[king];
+      if (!byKing && (!cont || p !== king)) { ruler50(king, 'Aedrys', 37, 'm', ['cruel', 'colere']); K.regnal = 5 }
+      if (!cont) { K.renamed = false; houseName50(king, 'Aeltharys', 'D\'argent naîtra la couronne'); K.col = AELTH_COL }
+      // les rois de Rosemarche et du Nord exécutés : leurs héritiers montent sur le trône
+      for (const [k, nm] of [['ROS', 'Garran'], ['CIM', 'Ulric']]) {
+        if (!alive50(k) || k === king) continue; const R = S.realms[k], c = ch(R.ruler);
+        if (cont && c && c.alive && k !== p) { const h = genChar({ house: R.house, realm: k, sex: 'm', age: k === 'ROS' ? 23 : 26, parent: c.id }); h.name = nm; c.kids = c.kids || []; c.kids.unshift(h.id); try { killChar(c, 'exécuté à Vaeloria sous une couronne d\'argent fondu') } catch (e) { } const n2 = ch(R.ruler); if (n2) n2.name = nm }
+        else if (!cont) ruler50(k, nm, k === 'ROS' ? 23 : 26, 'm', k === 'ROS' ? ['brave', 'juste'] : ['brave']);
+        R.legit = C((R.legit || 55) + 10, 0, 100);
+      }
+      if (alive50('SOL') && !isAelth50('SOL') && S.flags.f50.SOL === 'SOL') { ruler50('SOL', 'Saeryn', 32, 'm', ['ruse']) } else if (alive50('SOL') && !cont) { ruler50('SOL', 'Saeryn', 32, 'm', ['ruse']); houseName50('SOL', 'Aeltharys-Sahrane', 'Le soleil et l\'argent'); S.realms.SOL.title = 'Roi de Solméria' }
+      if (!cont) hk50(king, ['VAL', 'ORV'], ['ROS', 'CIM', 'SOL']); else if (S.hk) ['ROS', 'CIM', 'SOL'].forEach(k => hkSet(k, 'defiant'));
+      const reb = ['ROS', 'CIM', 'SOL'].filter(k => alive50(k) && k !== king), lead = reb.includes('ROS') ? 'ROS' : reb[0];
+      if (lead && !(cont && p === lead)) { war50(lead, king, reb.filter(k => k !== lead && !(cont && k === p)), ['VAL', 'ORV'].filter(k => !(cont && k === p))); men50(king, 3200); men50('VAL', 600); men50('ORV', 600) }
+      if (alive50('ROS')) { try { claimThrone('ROS') } catch (e) { } }
+      S.flags.fou50 = { t0: S.turn, king };
+      note50('🔥 Le Roi Fou', `Il avait douze ans quand on lui a apporté la tête de son père dans un coffret d'argent. Aujourd'hui, <b>Aedrys V</b> règne et voit des traîtres partout. Il a convoqué à Vaeloria le roi de Rosemarche et le roi du Nord, les a accusés de complot, puis a fait verser sur leur tête une couronne d'argent fondu.<br><br>Leurs héritiers, <b>Garran de Rosemont</b> et <b>Ulric Isengrin</b>, ont survécu. Le Nord, Rosemarche et Solméria se soulèvent ; seules Valfleuve et Orvalis restent fidèles au roi. C'est la dernière guerre des Aeltharys.${p === 'ROS' ? '<br><br><b>Objectif :</b> venger votre père, prendre Vaeloria et devenir le nouveau Haut-Roi. Votre mère est la fille de Taelon : vous aussi, vous avez du sang d\'argent.' : p === king ? '<br><br><b>Objectif :</b> survivre.' : ''}`);
+    },
+    skip(cont) { if (cont) note50('🔥 Pas de Roi Fou', 'Dans votre histoire, aucun Aeltharys ne règne plus sur le Trône d\'Argent : la dernière guerre des Aeltharys n\'aura pas lieu.') },
+  },
+};
+function setup50(id, cont) {
+  S.flags = S.flags || {}; S.flags.f50 = S.flags.f50 || {};
+  for (const k in S.realms) { const R = S.realms[k]; if (R && R.lab50) { R.lab50 = 0; R.renamed = false; R.nm = null; R.nmS = null } }
+  S.flags.ch50 = id; S.flags.t050 = S.turn; S.flags.obj50 = 0; S.flags.hkFragile = 0;
+  try { CH50[id].setup(cont) } catch (e) { console.error && console.error('ch50', id, e) }
+  if (!cont) { S.news = []; S.world = [] }
+  try { T38().t0 = S.turn; T38().sagaDone = 0 } catch (e) { }
+  try { injectRealms(); applyNameMode() } catch (e) { } try { mapDirty() } catch (e) { }
+}
+// ---------- 6. les objectifs de chaque camp ----------
+function capK50() { const k = S.flags.tete50 ? S.flags.tete50.king : S.highKing || 'AUB'; return alive50(k) ? capitalOf(k) : (S.realms.AUB && S.realms.AUB.cap) }
+const OBJ50 = {
+  conquete: {
+    MOR: () => { const a = S.flags.f50.AEL; return !alive50(a) || realmProvs(a).length === 0 },
+  },
+  nord: {
+    AUB: () => { const t = S.turn - S.flags.t050; return t > 2 && (!alive50('CIM') || hkStatus('CIM') === 'sworn' || overlordOf('CIM') === S.player || (!atWar('CIM', S.player) && realmProvs('CIM').length < (S.flags.f50.start || {}).CIM)) },
+    CIM: () => { const t = S.turn - S.flags.t050; return t > 2 && alive50('CIM') && !atWar('CIM', S.highKing || 'AUB') && hkStatus('CIM') !== 'sworn' && overlordOf('CIM') !== (S.highKing || 'AUB') },
+    FER: () => S.turn - S.flags.t050 >= 20 && alive50('FER') && realmProvs('FER').length >= Math.max(1, ((S.flags.f50.start || {}).FER || 1) - 1),
+  },
+  batard: {
+    AUB: () => { const b = S.flags.f50.BAT; return S.turn - S.flags.t050 > 1 && (!alive50(b) || realmProvs(b).length === 0 || overlordOf(b) === S.player) },
+    BAT: () => { const c = S.realms.AUB && S.realms.AUB.cap; return !!c && S.prov[c] && (S.prov[c].k === S.player || (ctrl(c) === S.player && !alive50('AUB'))) || !alive50('AUB') },
+  },
+  dechiree: {
+    _all: () => { const ids = ['AUB', S.flags.f50.TAE, S.flags.f50.DAE].filter(Boolean); const others = ids.filter(k => k !== S.player); return S.turn - S.flags.t050 > 1 && others.every(k => !alive50(k) || realmProvs(k).length === 0 || overlordOf(k) === S.player) },
+  },
+  tete: {
+    AUB: () => { const T = S.flags.tete50; return T && T.done && !atWar(S.player, T.att) && alive50(S.player) && ctrl(capitalOf(S.player)) === S.player },
+    SOL: () => { const c = capK50(); return !!c && ctrl(c) === S.player },
+    CIM: () => { const T = S.flags.tete50; return T && T.done && !warsOf(S.player).length && realmProvs(S.player).length >= ((S.flags.f50.start || {}).CIM || 0) },
+    ROS: () => { const T = S.flags.tete50; return T && T.done && !warsOf(S.player).length && realmProvs(S.player).length >= ((S.flags.f50.start || {}).ROS || 0) },
+  },
+  fou: {
+    ROS: () => { const F = S.flags.fou50; const c = F && S.realms[F.king] ? S.realms[F.king].cap : null; return (!!c && ctrl(c) === S.player) || (F && !alive50(F.king)) },
+    AUB: () => { const F = S.flags.fou50; return F && S.turn - F.t0 > 3 && !['ROS', 'CIM', 'SOL'].some(k => alive50(k) && atWar(k, S.player)) && ctrl(capitalOf(S.player)) === S.player },
+  },
+};
+function objFn50() { const ch0 = S.flags && S.flags.ch50; if (!ch0) return null; const role = S.flags.role50; const O = OBJ50[ch0] || {}; return O[role] || O._all || null }
+function role50Now() { const ch0 = S.flags.ch50; const f = fac50(ch0, S.flags.role50); return f }
+// ---------- 7. la campagne continue : les chapitres arrivent à leur date ----------
+const _devTick50 = devTick; devTick = function () {
+  _devTick50.apply(this, arguments);
+  if (!S || !S.flags || !S.flags.ch50 || !SCEN50[S.flags.ch50]) return;
+  // objectif atteint
+  try {
+    const f = objFn50(); if (f && !S.flags.obj50 && f()) {
+      S.flags.obj50 = 1; const sg = SAGA50.find(x => x[0] === S.flags.ch50), i = SAGA50.indexOf(sg), nx = SAGA50[i + 1];
+      S.flags.done50 = S.flags.done50 || {}; S.flags.done50[S.flags.ch50] = 1; const r = P0(); r.prestige += 15; r.legit = C(r.legit + 8, 0, 100);
+      try { sagaWin38() } catch (e) { }
+      const pe = S.pend.filter(x => x.t === '📖 La saga continue').pop();
+      if (pe && nx) pe.body = pe.body.replace('<br><br><button', `<br><br>Vous pouvez aussi <b>continuer à régner</b> : le chapitre ${esc(nx[2].split('.')[0])} surviendra dans votre partie au printemps de l'an ${nx[1]}.<br><br><button`);
+      S.pend.unshift({ kind: 'html', t: `🏆 ${sg[2]} — chapitre accompli`, body: `${esc((role50Now() || {}).obj || 'Votre objectif est atteint.')}<br><br><b>C'est fait.</b> Les chroniqueurs de Valmor écriront votre nom dans le livre de l'an ${S.year}. <b>+15 prestige · +8 légitimité</b>` });
+    }
+  } catch (e) { console.error && console.error('obj50', e) }
+  // V. la tête du roi : après quelques batailles, Daemyr capture Aldric
+  try {
+    const T = S.flags.tete50; if (T && !T.done && S.flags.ch50 === 'tete') {
+      const K = S.realms[T.king], kc = K && ch(K.ruler), w = S.wars.find(x => (x.a.includes(T.att) && x.b.includes(T.king)) || (x.b.includes(T.att) && x.a.includes(T.king)));
+      const occ = K ? realmProvs(T.king).filter(q => S.prov[q].occ === T.att).length : 0, bat = w ? (typeof w.battles === 'number' ? w.battles : (w.battles || []).length) : 0, el = S.turn - T.t0;
+      if (w && kc && kc.alive && (occ >= 3 || bat >= 3 || el >= 8)) {
+        T.done = 1; const son = (kc.kids || []).map(ch).find(x => x && x.alive && x.sex === 'm');
+        try { killChar(kc, 'torturé et décapité par Daemyr') } catch (e) { }
+        const nk = ch(K.ruler); if (nk && son && nk.id !== son.id) { K.ruler = son.id; hs(K.house).head = son.id } const nk2 = ch(K.ruler); if (nk2 && isAelth50(T.king)) { nk2.name = 'Aedrys'; nk2.age = Math.max(nk2.age, 12) }
+        // horreur : le Nord et Rosemarche abandonnent Daemyr et se rallient au jeune prince
+        for (const k of ['CIM', 'ROS']) { if (!alive50(k) || k === S.player) continue; S.wars.forEach(x => { if (x.a.includes(k) && x.a.includes(T.att)) { x.a = x.a.filter(z => z !== k); if (!x.b.includes(k)) x.b.push(k) } if (x.b.includes(k) && x.b.includes(T.att)) { x.b = x.b.filter(z => z !== k); if (!x.a.includes(k)) x.a.push(k) } }); setRel(k, T.att, -60); setRel(k, T.king, 25) }
+        REALM_IDS.forEach(k => { if (k !== T.att && alive50(k)) addRel(k, T.att, -25) }); if (alive50(T.att)) S.realms[T.att].prestige -= 15;
+        const sp = S.player === T.att, sk = S.player === T.king;
+        note50('💀 La tête dans le coffret d\'argent', `Après plusieurs batailles, Daemyr a capturé le roi <b>Aldric</b>. Il l'a fait torturer, puis a envoyé sa tête dans un coffret d'argent à Vaeloria, à son fils <b>Aedrys, douze ans</b>.<br><br>Valmor est horrifié. ${['CIM', 'ROS'].filter(k => alive50(k) && k !== S.player).map(rn).join(' et ') || 'Les alliés de Daemyr'} abandonne${['CIM', 'ROS'].filter(k => alive50(k) && k !== S.player).length > 1 ? 'nt' : ''} Daemyr et se rallie${['CIM', 'ROS'].filter(k => alive50(k) && k !== S.player).length > 1 ? 'nt' : ''} au jeune prince.${sk ? '<br><br>Vous régnez désormais au nom d\'Aedrys : ralliez les royaumes et repoussez l\'envahisseur.' : sp ? '<br><br>Votre cruauté vous coûte vos alliés. Prenez Vaeloria avant que tout Valmor ne se retourne contre vous.' : (S.player === 'CIM' || S.player === 'ROS') ? '<br><br>Tout Valmor attend de voir de quel côté vous vous tiendrez désormais.' : ''}`);
+      }
+    }
+  } catch (e) { console.error && console.error('tete50', e) }
+  // le chapitre suivant survient à sa date
+  try {
+    const i = SAGA50.findIndex(x => x[0] === S.flags.ch50), nx = SAGA50[i + 1];
+    if (nx && S.year >= nx[1] && S.s === 0) {
+      S.flags.role50 = null; S.scen = nx[0]; setup50(nx[0], true);
+      S.pend.unshift({ kind: 'html', t: `📖 ${nx[2]}`, body: `<i>An ${nx[1]}.</i> ${esc(nx[3].replace(/^An \d+ — /, ''))}<br><br><span class="faint">La saga suit son cours dans votre partie : ce que vous avez accompli jusqu'ici change la façon dont ce chapitre se déroule.</span>` });
+    }
+  } catch (e) { console.error && console.error('next50', e) }
+};
+// ---------- 8. le joueur Haut-Roi au chapitre VI : épargner ou exécuter les rois ----------
+const _nextPend50 = nextPend; nextPend = function () {
+  const pe = S && S.pend && S.pend[0];
+  if (pe && pe.kind === 'fou50') {
+    modal(`<h2>🔥 Le complot des rois</h2><p class="lead">Vos espions jurent que le roi de Rosemarche et le roi du Nord complotent contre vous, comme leurs pères avec Daemyr. Ils sont à Vaeloria, vos invités pour la Saint-Argent. Une couronne d'argent fondu attend dans les forges du palais.</p><div class="ch"><button class="btn" onclick="fou50(1)">Les faire exécuter<small>Le Nord, Rosemarche et Solméria se soulèveront</small></button><button class="btn" onclick="fou50(0)">Les épargner<small>Légitimité +, mais vos ennemis vous croiront faible</small></button></div>`);
+    const bx = $('#modal .box'); if (bx) bx.classList.add('st38');
+    return;
+  }
+  return _nextPend50.apply(this, arguments);
+};
+function fou50(kill) {
+  S.pend.shift(); const king = S.player;
+  if (kill) { CH50.fou.massacre(king, true, true) }
+  else { P0().legit = C(P0().legit + 10, 0, 100); P0().prestige -= 5; ['ROS', 'CIM'].forEach(k => { if (alive50(k)) addRel(k, king, 15) }); note50('🕊️ Les rois épargnés', 'Vous renvoyez les rois chez eux, sains et saufs. La couronne d\'argent fondu refroidit dans les forges. Les chroniques ne parleront pas d\'un Roi Fou… du moins pas cette fois.') }
+  closeModal(); render(); nextPend(); autosave();
+}
+// ---------- 9. l'écran de choix : chapitres et camps ----------
+pickSetupHTML = function () {
+  if (!SCEN50[VIEW.scen]) VIEW.scen = 'conquete';
+  const sc = SCEN[VIEW.scen], dI = VIEW.diff != null ? VIEW.diff : 1, m = /^([IVX]+)\.\s*(.*)$/.exec(sc.n || '') || [0, '', sc.n], L = PLAY50[VIEW.scen] || [];
+  return `<div class="psetup">
+   <div class="ps-lbl">📖 Chapitre de la saga</div>
+   <div class="ps-chips">${SAGA50.map(s => { const mm = /^([IVX]+)\./.exec(s[2]); return `<button class="${s[0] === VIEW.scen ? 'on' : ''}" onclick="VIEW.scen='${s[0]}';VIEW.faction=null;pickSetupRefresh()"><b>${mm ? mm[1] : '•'}</b><small>an ${s[1]}</small></button>` }).join('')}</div>
+   <div class="ps-desc"><b>${esc(m[2] || sc.n)}</b> <span class="faint">· an ${sc.y}</span><div>${esc(String(sc.d || '').replace(/^An \d+ — /, ''))}</div><div class="ok" style="margin-top:3px">👑 Camps jouables : ${L.map(f => esc(f.role)).join(' · ')}</div></div>
+   <div class="ps-lbl">⚔️ Difficulté</div>
+   <div class="ps-seg">${DIFF.map((d, i) => `<button class="${i === dI ? 'on' : ''}" onclick="VIEW.diff=${i};pickSetupRefresh()">${d.n}</button>`).join('')}</div>
+   <div class="faint ps-dd">${esc(DIFF[dI].d)}</div></div>`;
+};
+pickSetupRefresh = function () { const el = $('#pick .psetup'); if (el) el.outerHTML = pickSetupHTML(); const chp = $('#pick .ps-chips .on'); if (chp) chp.scrollIntoView({ inline: 'center', block: 'nearest' }); try { pickRealm(VIEW.faction || (PLAY50[VIEW.scen] || [])[0].id) } catch (e) { } };
+const _showPick50 = showPick; showPick = function () { if (!SCEN50[VIEW.scen]) VIEW.scen = 'conquete'; const r = _showPick50.apply(this, arguments); try { pickRealm(VIEW.faction && fac50(VIEW.scen, VIEW.faction) ? VIEW.faction : PLAY50[VIEW.scen][0].id) } catch (e) { } return r };
+const _pickRealm50 = pickRealm; pickRealm = function (k) {
+  if (!SCEN50[VIEW.scen]) return _pickRealm50.apply(this, arguments);
+  const L = PLAY50[VIEW.scen]; let F = fac50(VIEW.scen, k);
+  if (!F) { const cur = fac50(VIEW.scen, VIEW.faction); F = (cur && cur.realm === k) ? cur : L.find(f => f.realm === k) || cur || L[0] }
+  VIEW.faction = F.id; const r = _pickRealm50.call(this, F.realm);
+  try {
+    const rl = document.querySelector('#pick .rl');
+    if (rl) rl.innerHTML = L.map(f => `<button class="${f.id === F.id ? 'sel' : ''}" onclick="pickRealm('${f.id}')">${typeof realmCrest === 'function' && REALMS[f.realm] ? realmCrest(f.realm, 16) : ''} <span><b>${esc(f.nm)}</b><br><small class="faint">${esc(f.role)}</small></span></button>`).join('');
+    const info = $('#pinfo');
+    if (info) {
+      info.querySelectorAll('.fac50').forEach(e => e.remove());
+      const card = `<div class="card fac50" style="border-color:var(--brass);margin:0 0 10px"><div class="lbl" style="margin:0 0 3px">👑 ${esc(F.role)}</div><b style="font-family:var(--serif);font-size:16px">${esc(F.nm)}</b><div style="font-size:13px;margin-top:4px"><b>Objectif :</b> ${esc(F.obj)}</div></div>`;
+      const after = info.querySelector('.rl'); if (after && after.parentNode === info) after.insertAdjacentHTML('afterend', card); else info.insertAdjacentHTML('afterbegin', card);
+      info.querySelectorAll('button[onclick^="newGameUI"]').forEach(b => { b.setAttribute('onclick', `newGameUI('${F.id}')`); b.innerHTML = `👑 Jouer ${esc(F.nm)}` });
+    }
+    const bar = $('#pstart'); if (bar) bar.innerHTML = `<button class="btn primary" onclick="newGameUI(VIEW.faction)">👑 Jouer ${esc(F.nm)}</button>`;
+  } catch (e) { console.error && console.error('pick50', e) }
+  return r;
+};
+// ---------- 10. lancer une partie ----------
+const _applyScenario50 = applyScenario; applyScenario = function (id) {
+  _applyScenario50.apply(this, arguments);
+  if (!SCEN50[id]) return;
+  S.flags = S.flags || {}; S.flags.f50 = {}; S.flags.role50 = VIEW.faction && fac50(id, VIEW.faction) ? VIEW.faction : (PLAY50[id][0] || {}).id;
+  if (S.realms.FER && !S.realms.FER.alive && id !== 'conquete') S.realms.FER.unborn = 0;
+  // avant la Révolte du Nord, les îles appartiennent au Nord
+  setup50(id, false);
+};
+const _newGameUI50 = newGameUI; newGameUI = function (k) {
+  if (SCEN50[VIEW.scen]) { const F = fac50(VIEW.scen, k) || fac50(VIEW.scen, VIEW.faction) || PLAY50[VIEW.scen][0]; VIEW.faction = F.id; k = F.realm }
+  const r = _newGameUI50.call(this, k);
+  try {
+    if (S && SCEN50[S.scen]) {
+      const F = role50Now(), a = S.pend.find(x => x.kind === 'alert' && /, (Printemps|Été|Automne|Hiver) de l'an/.test(x.t || ''));
+      if (a && !(S.scen === 'conquete' && S.flags.role50 !== 'MOR')) { a.t = `${rname(S.player)}, ${seasonName()}`; a.body = `${F ? `Vous êtes <b>${esc(F.nm)}</b> — ${esc(F.role)}.` : ''} ${esc((SCEN[S.scen] || {}).n || '')}, an ${S.year}.\n\n${F ? 'Objectif : ' + F.obj + '\n\n' : ''}Gouvernez vos grandes maisons (onglet Cour), menez la diplomatie et la guerre, et donnez vos ordres par écrit comme un vrai souverain. À la fin de chaque saison, le monde avance.`.replace(/<[^>]+>/g, '') }
+      S.pend = S.pend.filter(x => !/^👑 Le Royaume d'Argenthal$/.test(x.t || '') || S.scen === 'conquete');
+      render(); autosave();
+    }
+  } catch (e) { console.error && console.error('ng50', e) }
+  return r;
+};
+// ---------- 11. la carte d'objectif du chapitre ----------
+function obj50Card() {
+  if (!S || !S.flags || !S.flags.ch50 || !SCEN50[S.flags.ch50] || (S.flags.ch50 === 'conquete' && S.flags.role50 !== 'MOR')) return '';
+  const sg = SAGA50.find(x => x[0] === S.flags.ch50), F = role50Now(), nx = SAGA50[SAGA50.indexOf(sg) + 1];
+  return `<div class="lbl">📖 ${esc(sg[2])}</div><div class="card" style="border-color:var(--brass)"><div style="font-size:13px">${S.flags.obj50 ? '✅' : '⬜'} ${esc(F ? F.obj : 'Vivez votre propre histoire : ce chapitre est survenu dans votre règne.')}</div>${nx ? `<div class="faint" style="font-size:12px;margin-top:4px">Prochain chapitre : ${esc(nx[2])} — an ${nx[1]}${S.year < nx[1] ? ` (dans ${nx[1] - S.year} an${nx[1] - S.year > 1 ? 's' : ''})` : ''}.</div>` : '<div class="faint" style="font-size:12px;margin-top:4px">Dernier chapitre de la saga.</div>'}</div>`;
+}
+const _panelOrders50 = panelOrders; panelOrders = function () { const h = _panelOrders50.apply(this, arguments); try { return obj50Card() + h } catch (e) { return h } };
+// ---------- 12. prologue : la tête des chroniques ----------
+const _prologueHTML50 = prologueHTML; prologueHTML = function () {
+  let h = _prologueHTML50.apply(this, arguments);
+  try {
+    if (!S || !SCEN50[S.scen] || S.scen === 'conquete') return h; const st = S.year;
+    const lead = {
+      nord: `Il y a ${st - 1} ans, Aelric Aeltharys se révoltait à Vaeloria ; onze ans plus tard, six couronnes pliaient le genou devant le Conquérant. Le Conquérant a vieilli, et le Nord a faim.`,
+      batard: `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Son fils Haelor vient de mourir sans fils légitime : une fillette de huit ans et un bâtard aimé de l'armée se disputent son trône.`,
+      dechiree: `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. La reine Ysaera, qui avait gardé le trône contre le bâtard Draevon, vient de mourir après soixante-sept ans de règne.`,
+      tete: `Il y a dix ans, la Couronne déchirée a fait d'Aldric le Haut-Roi. Le vaincu, Daemyr, s'est réfugié dans le désert… et en est revenu roi.`,
+      fou: `Il y a vingt-cinq ans, Daemyr envoyait la tête du roi Aldric à son fils dans un coffret d'argent. Ce fils règne aujourd'hui, et Valmor tremble.`,
+    }[S.scen];
+    if (lead) h = h.replace(/<p class="lead">[\s\S]*?<\/p>/, `<p class="lead">${lead}</p>`);
+  } catch (e) { }
+  return h;
+};
+// ---------- 13. pages d'histoire des nouveaux chapitres ----------
+Object.assign(STORY38, {
+  nord: [
+    { at: 3, t: 'Le grain du Trône', b: () => `Un convoi de grain venu du sud attend aux portes de vos greniers. Le Nord meurt de faim, mais chaque sac pourrait aussi nourrir vos soldats.`, ch: [
+      ['Nourrir les villages', 'Peuple ++, armée −', () => { fx38.es('peu', 12); fx38.unrest(-8); fx38.men(-500); return 'Les cheminées fument de nouveau dans les vallées. Vos soldats, eux, serrent leur ceinture.' }],
+      ['Nourrir l\'armée', 'Armée +, peuple −', () => { fx38.men(800); fx38.es('peu', -10); fx38.unrest(6); return 'Les soldats mangent à leur faim ; les villages, eux, enterrent leurs vieux.' }],
+      ['Le vendre au plus offrant', '+120 écus, peuple −−', () => { fx38.g(120); fx38.es('peu', -14); return 'Le grain repart vers le sud, et l\'or remplit vos coffres. Les ballades du Nord ne vous pardonneront pas.' }]] },
+    { at: 10, t: 'Le loup et le corbeau', b: () => `Un émissaire porte une branche de pin et une plume noire : on propose de régler la guerre par un duel entre champions, au pied de Hautcimes.`, ch: [
+      ['Accepter le duel', 'Prestige ++, tout se joue sur une lame', () => { if (chance(.5)) { fx38.pr(12); fx38.lg(5); return 'Votre champion l\'emporte au troisième assaut. On chantera longtemps ce matin-là.' } fx38.pr(-8); fx38.men(-400); return 'Votre champion tombe dans la neige. Le silence de votre camp dure jusqu\'au soir.' }],
+      ['Refuser : la guerre décidera', 'Noblesse +', () => { fx38.es('nob', 5); return 'Vous renvoyez l\'émissaire. La guerre sera longue, mais elle sera la vôtre.' }]] },
+  ],
+  batard: [
+    { at: 3, t: 'Le serment des garnisons', b: () => `Les capitaines des garnisons hésitent entre la petite reine et le bâtard. Ils attendent un geste.`, ch: [
+      ['Doubler leur solde', '−110 écus, armée +', () => { if (P0().gold < 110) return 'Vos coffres sont vides : les capitaines regardent ailleurs.'; fx38.g(-110); fx38.men(1200); return 'L\'or parle plus fort que les serments. Douze cents hommes rejoignent vos bannières.' }],
+      ['Leur parler en personne', 'Loyauté +, prestige +', () => { fx38.loy(5); fx38.pr(5); return 'Vous passez une nuit entière au milieu d\'eux, au coin des feux. Au matin, ils crient votre nom.' }],
+      ['Exiger un serment sur les reliques', 'Clergé +, stabilité +', () => { fx38.es('cle', 8); fx38.sb(4); return 'Un à un, ils jurent. Le Haut-Prélat sourit ; les capitaines, moins.' }]] },
+    { at: 12, t: 'Une lettre de l\'autre camp', b: () => `Une lettre arrive, scellée de cire blanche. L'autre camp propose de partager le royaume : l'isthme à l'un, le reste à l'autre.`, ch: [
+      ['Refuser avec mépris', 'Prestige +, la guerre continue', () => { fx38.pr(6); return 'Vous brûlez la lettre devant votre conseil. Il n\'y aura qu\'un roi.' }],
+      ['Faire traîner pour gagner du temps', 'Stabilité +', () => { fx38.sb(5); fx38.g(40); return 'Les envoyés vont et viennent pendant des mois. Pendant ce temps, vos forges travaillent.' }]] },
+  ],
+  dechiree: [
+    { at: 3, t: 'Le sceau de la reine', b: () => `On a retrouvé le sceau de la reine Ysaera dans une chapelle. Celui qui le portera dira que la reine l'a choisi.`, ch: [
+      ['Le porter publiquement', 'Légitimité ++, les autres prétendants enragent', () => { fx38.lg(10); fx38.relAll(-6); return 'Le sceau brille à votre doigt. Dans les villes, on commence à vous appeler « le choisi ».' }],
+      ['Le remettre à l\'Église', 'Clergé ++', () => { fx38.es('cle', 12); fx38.lg(3); return 'Le Haut-Prélat le garde sous clef. Il le remettra… au vainqueur.' }]] },
+    { at: 11, t: 'Les deux autres', b: () => `Vos deux rivaux s'épuisent l'un contre l'autre. Un capitaine propose d'attendre qu'ils se soient saignés.`, ch: [
+      ['Attendre', 'Armée +, temps perdu', () => { fx38.men(900); fx38.sb(3); return 'Vous laissez les autres se battre. Vos rangs grossissent, mais les villes s\'impatientent.' }],
+      ['Frapper maintenant', 'Prestige +', () => { fx38.pr(8); fx38.es('nob', 5); return 'Vos bannières sortent au petit matin. Les chroniqueurs aiment les audacieux.' }]] },
+  ],
+  tete: [
+    { at: 4, t: 'L\'or du désert', b: () => `Des marchands de Solméria offrent de l'or à qui fermera ses ports aux galères ennemies.`, ch: [
+      ['Accepter l\'or', '+130 écus, relations avec Solméria +', () => { fx38.g(130); fx38.rel('SOL', 15); return 'Le coffre est lourd. On saura que vous avez un prix.' }],
+      ['Refuser', 'Prestige +', () => { fx38.pr(5); fx38.rel('SOL', -10); return 'Vous renvoyez les marchands. Le désert retient votre nom.' }]] },
+  ],
+  fou: [
+    { at: 3, t: 'Les cendres de Vaeloria', b: () => `Le Roi Fou a fait brûler les quartiers de Vaeloria qui murmuraient contre lui. Des milliers de réfugiés fuient l'isthme.`, ch: [
+      ['Les accueillir', 'Peuple ++, −60 écus', () => { fx38.g(-60); fx38.es('peu', 12); fx38.pop(1.03); return 'Les réfugiés racontent partout la folie du roi. Votre cause gagne des cœurs.' }],
+      ['Les enrôler', 'Armée +', () => { fx38.men(1100); return 'Ils ont tout perdu : ils se battent comme des loups.' }]] },
+    { at: 12, t: 'La couronne d\'argent fondu', b: () => `Un orfèvre de Vaeloria s'est enfui avec le moule de la couronne d'argent fondu. Il vous l'offre.`, ch: [
+      ['Le briser devant l\'armée', 'Prestige +, légitimité +', () => { fx38.pr(8); fx38.lg(6); return 'Le moule vole en éclats. Vos soldats hurlent le nom de leurs rois assassinés.' }],
+      ['Le garder', 'Inquiétant…', () => { fx38.es('nob', -5); fx38.inf(2); return 'Vous le rangez dans un coffre. Vos conseillers échangent un regard.' }]] },
+  ],
+});
+</script>
+<script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
 </body></html>
