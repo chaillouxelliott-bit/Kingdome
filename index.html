@@ -384,8 +384,8 @@ body.noanim .tidle,body.noanim .tclouds ellipse{animation:none}
 .ps-seg button{flex:1;padding:6px 2px;font-size:12.5px;background:var(--panel);color:var(--ink,#eee);border:0;border-right:1px solid var(--line);cursor:pointer}.ps-seg button:last-child{border-right:0}
 .ps-seg button.on{background:#e3c55a26;color:var(--brass2,#f1d98a);font-weight:600}
 .ps-dd{font-size:11.5px;margin:4px 0 2px}
-.ov-h{display:none!important}.ov-open .ov-h{display:inline-flex!important}
-.ov-more{opacity:.85;border-style:dashed!important}
+
+
 @media (max-width:700px){
   #panel .acts .btn.small,#pcard .acts .btn.small{padding:5px 8px;font-size:12.5px}
   #panel .qa .btn{padding:7px 8px;font-size:13px}
@@ -480,8 +480,8 @@ body.noanim .tidle,body.noanim .tclouds ellipse{animation:none}
 .plab{fill:#fbf4de;stroke:rgba(26,18,8,.82);stroke-width:2.6px;font-weight:600;letter-spacing:.02em}
 #griv polyline,#gcoast39{vector-effect:none}
 /* ===== ARGENTHAL 40 : affichage simplifié (sections repliables, menu d'actions, carte allégée) ===== */
-.f40h{display:none!important}
-.full40{display:block;margin:14px auto 4px;background:none;border:0;color:var(--faint);font-size:12px;text-decoration:underline}
+
+
 #modes.m40:not(.open) button:not(.sel){display:none}
 #modes.m40:not(.open) button.sel::after{content:' ▾'}
 #modes.m40.open{z-index:30;flex-wrap:wrap;max-width:calc(100% - 66px);overflow:visible;background:rgba(12,18,22,.9);padding:6px;border-radius:14px;border:1px solid var(--line2)}
@@ -492,10 +492,10 @@ body.noanim .tidle,body.noanim .tclouds ellipse{animation:none}
 }
 .row.between:has(> .lmem){flex-wrap:wrap}.row.between > .lmem{order:9;flex:0 0 100%}
 
-.chips45{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
-.chips45 button{background:var(--panel2);border:1px solid var(--line2);border-radius:16px;padding:6px 10px;font-size:12.5px;color:var(--ink);white-space:nowrap}
-.chips45 button.on{background:linear-gradient(180deg,var(--brass2),var(--brass));color:#22180a;border-color:var(--brass);font-weight:700}
-.chips45 button i{font-style:normal;font-size:10.5px;opacity:.7;margin-left:4px}
+
+
+
+
 #qb45{position:absolute;left:8px;top:104px;display:flex;flex-direction:column;gap:5px;z-index:6}
 #qb45 button{width:46px;height:44px;border-radius:12px;background:rgba(16,23,28,.92);border:1px solid var(--line2);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9.5px;color:var(--ink);gap:1px;position:relative;padding:0}
 #qb45 button span{font-size:17px;line-height:1}
@@ -503,13 +503,13 @@ body.noanim .tidle,body.noanim .tclouds ellipse{animation:none}
 #qb45 button:active{transform:scale(.95);border-color:var(--brass)}
 @media(min-width:901px){#qb45{top:52px}}
 /* 46 : boutons qui tiennent leur texte */
-body.simple40 .btn.nw46{white-space:nowrap}
+
 body.simple40 .acts{display:flex;flex-wrap:wrap;gap:6px}
 @media(max-width:900px){
   body.simple40 .qa{display:flex;flex-wrap:wrap;gap:6px}
   body.simple40 .qa .btn{flex:1 1 auto;white-space:nowrap;padding:9px 10px;font-size:13.5px}
   body.simple40 .acts .btn.small{padding:7px 11px}
-  .chips45 button{padding:7px 11px;font-size:13px}
+  
   #qb45 button{width:52px;height:46px;font-size:10.5px}
 }
 /* ===================== ARGENTHAL 47 : habillage héraldique ===================== */
@@ -562,11 +562,11 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--brass)}
 #gtitle::after{content:"";flex:1;max-width:120px;height:1px;background:linear-gradient(90deg,#6b5636,transparent)}
 .grab i{background:#4e3e2b}
 /* rubriques (pastilles) : des onglets de registre */
-.chips45{gap:4px 4px;border-bottom:1px solid var(--line);padding-bottom:9px;margin-bottom:12px}
-.chips45 button{background:rgba(236,220,190,.035);border:1px solid transparent;border-radius:3px;color:var(--mute);font-family:var(--ui);font-size:13px;padding:6px 10px}
-.chips45 button:hover{color:var(--ink);border-color:var(--line2)}
-.chips45 button.on{background:rgba(198,162,90,.15);color:var(--brass2);border-color:transparent;box-shadow:inset 0 -2px 0 var(--brass);font-weight:600}
-.full40{font-style:italic}
+
+
+
+
+
 /* navigation du bas */
 #mnav{background:#110d09;border-top:3px double #4e3e2b}
 #mnav button{font-family:var(--ui);font-size:11px}
@@ -681,7 +681,7 @@ const REALMS = {
     desc: 'Toutes les terres enneigées du grand nord : glaciers, cols gelés, fjords et nids d\'aigle, sous la bannière au loup des Isengrin. Personne n\'a jamais pris Hautcimes par la force.', inc: .85, lev: .85, loy: 8, ai: { agg: .3, honor: .7, greed: .4 } },
   AUB: { name: 'Couronne de Vaeloria', short: 'Vaeloria', col: '#f3f1ea', adj: 'vaelorien', house: 'Aeltharys', title: 'Régent de Vaeloria',
     spec: ['👑 Siège du Trône d\'Argent', 'Grande légitimité ; la capitale de Vaeloria est la clé du titre de Haut-Roi.'], spec2: ['⛪ Cité du Haut-Prélat', 'L\'Église soutient le régent ; son trésor est riche mais son armée faible.'],
-    desc: 'L\'ancienne capitale impériale, sur l\'isthme qui relie les deux continents. Depuis la mort du dernier Haut-Roi, un régent garde le Trône d\'Argent vide… et tout Valmor le convoite.', inc: 1.4, lev: .7, loy: 0, ai: { agg: .25, honor: .7, greed: .5 } },
+    desc: 'L\'ancienne capitale impériale, sur l\'isthme qui relie les deux continents. Le cœur de l\'isthme, siège du Trône d\'Argent forgé par Aelric le Conquérant : qui tient Vaeloria tient la clé du titre de Haut-Roi.', inc: 1.4, lev: .7, loy: 0, ai: { agg: .25, honor: .7, greed: .5 } },
   ROS: { name: 'Royaume de Rosemarche', short: 'Rosemarche', col: '#78b263', adj: 'rosemarchois', house: 'de Rosemont', title: 'Roi de Rosemarche',
     spec: ['🐴 Chevalerie lourde', 'Ses armées frappent plus fort en plaine.'], spec2: ['🌹 Le plus peuplé', 'Des levées nombreuses et des récoltes généreuses.'],
     desc: 'Le grand continent du sud : vergers, vignes, forêts et champs de blé à perte de vue. Une cour raffinée, des tournois… et des ambitions démesurées.', inc: .95, lev: .95, loy: 4, ai: { agg: .5, honor: .55, greed: .55 } },
@@ -690,7 +690,7 @@ const REALMS = {
     desc: 'Les côtes déchirées de l\'extrême est, battues par les orages. On y naît soldat et on y meurt rarement dans son lit.', inc: .95, lev: 1.1, loy: 6, ai: { agg: .6, honor: .75, greed: .4 } },
   SOL: { name: 'Principauté de Solméria', short: 'Solméria', col: '#da8549', adj: 'solmérien', house: 'Sahrane', title: 'Prince de Solméria',
     spec: ['🏜️ Désert brûlant', 'Les envahisseurs perdent des hommes chaque saison dans le désert ; ses armées harcèlent.'], spec2: ['🌶️ Route des épices', 'Commerce maritime très lucratif.'],
-    desc: 'Le grand désert du sud-est : dunes, oasis et ports d\'épices. Jamais vraiment soumise, toujours rusée.', inc: 1.25, lev: .85, loy: 2, ai: { agg: .35, honor: .5, greed: .6 } },
+    desc: 'Le grand désert du sud-est : dunes, oasis et ports d\'épices. Soumise par mariage plus que par l\'épée, elle n\'a jamais cessé de ruser.', inc: 1.25, lev: .85, loy: 2, ai: { agg: .35, honor: .5, greed: .6 } },
 };
 let REALM_IDS = Object.keys(REALMS);
 
@@ -702,7 +702,7 @@ const HOUSES = {
   ORV: [['Aurevent', 'Un Aurevent paie ses dettes', '#d9a520'], ['Lionroc', 'Rugir avant de mordre', '#a3501f'], ['Cuivremont', 'Le métal ne ment pas', '#b06a3b'], ['Ambrelys', 'Brillants et patients', '#e0b46a'], ['Topazelle', 'L\'éclat est une arme', '#e3c55a'], ['Rubimont', 'Rouges et durs', '#8f2a2a']],
   VAL: [['Delarive', 'Famille, devoir, honneur', '#3a6ea5'], ['Gué-Noir', 'Nul ne passe', '#2b2b3a'], ['Moulinbourg', 'Le grain avant l\'épée', '#c4a35a'], ['Saulaie', 'Plier sans rompre', '#6d9a6a'], ['Héronval', 'Patience et précision', '#9ab0c4'], ['Pont-Vieux', 'Nous tenons le passage', '#8c6f57']],
   CIM: [['Isengrin', 'Le loup ne plie pas', '#5a4a8c'], ['Roc-Lune', 'Sous la lune, la pierre', '#c4c8e0'], ['Chamois', 'Le pied sûr', '#8b6d4a'], ['Granitval', 'Inébranlables', '#6e6e75'], ['Ardoisier', 'La pierre se souvient', '#4e5866'], ['Nid-d\'Aigle', 'Nul ne nous surplombe', '#7a6a9a']],
-  AUB: [['Aeltharys', 'Par l\'argent et par le sang', '#b8bcc4'], ['Sainte-Claire', 'La foi nous garde', '#f2e8c9'], ['Portroyal', 'Toutes les routes mènent au port', '#7a2f3a'], ['Clairefont', 'Clairs comme l\'eau', '#9ac0d8'], ['Lysblanc', 'Purs et loyaux', '#f4f4f4'], ['Hautetour', 'Nous veillons', '#5a5a6a']],
+  AUB: [['Aeltharys', 'D\'argent naîtra la couronne', '#b8bcc4'], ['Sainte-Claire', 'La foi nous garde', '#f2e8c9'], ['Portroyal', 'Toutes les routes mènent au port', '#7a2f3a'], ['Clairefont', 'Clairs comme l\'eau', '#9ac0d8'], ['Lysblanc', 'Purs et loyaux', '#f4f4f4'], ['Hautetour', 'Nous veillons', '#5a5a6a']],
   ROS: [['de Rosemont', 'Croître en force', '#5c9a42'], ['Blésor', 'L\'abondance oblige', '#d8b84a'], ['Vignelaine', 'Le temps mûrit tout', '#7b2d55'], ['Hautjardin', 'Fleurir ou périr', '#e07aa0'], ['Ronceval', 'Gare aux épines', '#3e5c2e'], ['Pommeraie', 'Doux au cœur, dur à l\'écorce', '#c0392b']],
   BOU: [['Orageval', 'Notre est la fureur', '#d9a43a'], ['Tonnerre', 'Le premier coup', '#4a5a7a'], ['Corvalis', 'Noirs comme l\'orage', '#222'], ['Chênefort', 'Racines et rameaux', '#6b5235'], ['Grêlebois', 'Après la grêle, la moisson', '#7a8a5a'], ['Cerfroi', 'Le cerf ne plie pas', '#a0522d']],
   SOL: [['Sahrane', 'Insoumis, invaincus', '#e07b2a'], ['Al-Dunar', 'Le sable recouvre tout', '#c9a46a'], ['Safranel', 'Doux comme le safran', '#e8b23a'], ['Oasis-Bleue', 'L\'eau est la vie', '#3a8fb0'], ['Scorpenne', 'Notre piqûre est mortelle', '#5a2a1a'], ['Palmeraie', 'Patience et ombre', '#4a7a3a']],
@@ -4664,7 +4664,7 @@ async function showMenu() {
   $('#menu').innerHTML = `<div class="in"><div>
     <div class="lbl" style="color:var(--brass)">Grande stratégie médiévale</div>
     <h1>Le Royaume<br>d'Argenthal</h1>
-    <p class="tag">Valmor, sept royaumes déchirés, et un Trône d'Argent vide à Vaeloria. Gouvernez vos vassaux, menez vos guerres, mariez vos enfants… puis ceignez la couronne d'argent et refondez le Royaume d'Argenthal.</p>
+    <p class="tag">Valmor, sept couronnes rivales et, à Vaeloria, la dynastie d'argent des Aeltharys, de sa révolte à sa chute. Gouvernez vos vassaux, menez vos guerres, mariez vos enfants… puis ceignez la couronne d'argent et refondez le Royaume d'Argenthal.</p>
     <div class="acts">
       ${list[0] ? `<button class="btn primary" onclick="loadGame('${list[0].id}')">▶ Reprendre : ${esc(list[0].name)} · ${dateTxt(list[0].y, list[0].s)}</button>` : ''}
       <button class="btn ${list[0] ? '' : 'primary'}" onclick="showPick()">👑 Nouvelle partie</button>
@@ -7086,13 +7086,13 @@ function prologueHTML() {
   const li = e => `<li><b>An ${e.y}</b> — <i>${esc(e.t)}</i>. ${esc(e.d)}</li>`;
   const st = L.start || 301, hk = S.realms.AUB && ch(S.realms.AUB.ruler), sc = S.scen && SCEN[S.scen];
   const lead = st <= 1 ? 'Valmor compte six couronnes, et aucune ne commande aux autres. Sur l\'isthme, le royaume d\'Argenthal ploie sous la vieille maison de Morvaine, pesante et détestée. Il n\'existe ni Haut-Roi, ni Trône d\'Argent — pas encore.'
-    : st < 48 ? `Il y a ${st - 1} ans, Aelric Aeltharys se révoltait à Vaeloria ; onze ans plus tard, six couronnes pliaient le genou devant le Conquérant. L'hiver dernier, le Conquérant est mort — et ses deux fils se disputent déjà son Trône d'Argent.`
-    : st >= 131 && st < 140 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Cet hiver, la Mort Grise a emporté un tiers de Valmor et presque toute la maison royale : sur le Trône d'Argent ne reste qu'un enfant de sept ans.`
-    : st < 281 ? `Il y a ${st - 1} ans, Aelric Aeltharys se révoltait à Vaeloria ; onze ans plus tard, six couronnes pliaient le genou devant le Conquérant. ${p === 'AUB' ? 'Vous régnez' : `${hk ? esc(hk.name) + (S.realms.AUB.regnal ? ' ' + ord(S.realms.AUB.regnal) : '') : 'Le Haut-Roi'} règne`} aujourd'hui sur le Trône d'Argent${st < 131 ? ', au faîte de la puissance des Aeltharys.' : ' — mais les rois gardent leurs armées et n\'obéissent qu\'à leur gré.'}`
-    : st < 290 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. L'automne dernier, Edrik V est mort empoisonné au banquet de la Saint-Argent : après deux cent quatre-vingts ans, la dynastie Aeltharys a perdu le Trône d'Argent. Le régent, Solméria, la branche du Sud… tout le monde soupçonne tout le monde.`
-    : `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Depuis ${st - 281} ans, depuis la Chute des Aeltharys, le Trône d'Argent est vide — et nul ne sait qui a versé le poison.`;
+    : st < 40 ? `Il y a ${st - 1} ans, Aelric Aeltharys se révoltait à Vaeloria ; onze ans plus tard, les cinq autres couronnes pliaient le genou devant le Conquérant. Aujourd'hui vieillissant, Aelric règne toujours sur le Trône d'Argent — mais le Nord affamé gronde.`
+    : st < 128 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Son fils Haelor vient de mourir sans fils légitime : une fillette de huit ans et un bâtard aimé des soldats se disputent le Trône d'Argent.`
+    : st < 138 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. La reine Ysaera, qui régna soixante-sept ans, vient de mourir : trois Aeltharys réclament son trône.`
+    : st < 163 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Le roi Aldric a vaincu ses rivaux, mais Daemyr, réfugié au désert, s'est fait roi de Solméria et marche sur l'isthme.`
+    : `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Aedrys, le fils du roi supplicié, règne depuis vingt-cinq ans et voit des traîtres partout : la dernière guerre des Aeltharys commence.`;
   return `<div class="prolog"><p class="lead">${lead}</p>${sc && S.scen !== 'classic' ? `<p class="scenp"><b>📖 ${esc(sc.n)}</b> — ${esc(sc.d.replace(/^An \d+ — /, ''))}</p>` : ''}
-  <p>Nous sommes au printemps de l'an <b>${st}</b> de l'Ère d'Argent. ${st <= 1 ? `Vous voici, ${ru ? esc(chName(ru)) : 'Aelric Aeltharys'}, seigneur de Vaeloria révolté contre son roi. Ce que vous ferez de cette révolte, les chroniques le raconteront pendant trois siècles. <!--` : ''}${pred ? `${esc(pred.n)}${pred.num ? ' ' + ord(pred.num, pred.f) : ''} ${esc(pred.epi)}, ${p === 'AUB' && st > 281 ? 'votre oncle, le dernier Haut-Roi,' : pred.f ? 'la reine qui vous a précédé,' : 'le roi qui vous a précédé,'} est ${esc(pred.death).replace(/^mort/, pred.f ? 'morte' : 'mort').replace(/^emporté/, pred.f ? 'emportée' : 'emporté').replace(/^tombé/, pred.f ? 'tombée' : 'tombé')}.` : ''} ${ru ? `Vous voici, ${esc(ru.name)}${r.regnal ? ' ' + ord(r.regnal, ru.sex === 'f') : ''}, ${esc(r.title || D.title)}` : 'Vous voici sur le trône'} — héritier de ${K.length} souverains et de toutes leurs querelles.${st <= 1 ? '-->' : ''}</p>
+  <p>Nous sommes au printemps de l'an <b>${st}</b> de l'Ère d'Argent. ${st <= 1 ? `Vous voici, ${ru ? esc(chName(ru)) : 'Aelric Aeltharys'}, seigneur de Vaeloria révolté contre son roi. Ce que vous ferez de cette révolte, les chroniques le raconteront pendant des générations. <!--` : ''}${pred ? `${esc(pred.n)}${pred.num ? ' ' + ord(pred.num, pred.f) : ''} ${esc(pred.epi)}, ${p === 'AUB' && st > 281 ? 'votre oncle, le dernier Haut-Roi,' : pred.f ? 'la reine qui vous a précédé,' : 'le roi qui vous a précédé,'} est ${esc(pred.death).replace(/^mort/, pred.f ? 'morte' : 'mort').replace(/^emporté/, pred.f ? 'emportée' : 'emporté').replace(/^tombé/, pred.f ? 'tombée' : 'tombé')}.` : ''} ${ru ? `Vous voici, ${esc(ru.name)}${r.regnal ? ' ' + ord(r.regnal, ru.sex === 'f') : ''}, ${esc(r.title || D.title)}` : 'Vous voici sur le trône'} — héritier de ${K.length} souverains et de toutes leurs querelles.${st <= 1 ? '-->' : ''}</p>
   <div class="lbl">Ce que racontent les chroniques</div><ul class="lorel">${mine.map(li).join('')}</ul>
   <div class="lbl">Ce que votre royaume n'a pas oublié</div><ul class="lorel">
    ${foes.length ? `<li>⚔️ <b>Ennemis héréditaires :</b> ${foes.map(k => esc(REALMS[k].short)).join(', ')}. Leurs rois chercheront la revanche à la première faiblesse.</li>` : ''}
@@ -7389,7 +7389,7 @@ function rumors() {
     if (ru && !heir) add('👶 À la cour, on s\'inquiète : le souverain n\'a pas d\'héritier.');
     else if (heir && heir.sex === 'f') add(`👑 Les seigneurs murmurent : faute de fils, ${heir.name} héritera.`);
     if (ru && ru.age > 60) add(`🕯️ Le souverain a ${ru.age} ans ; les vautours comptent les hivers.`);
-    if (S.highKing && S.highKing !== p) add(`👑 À Vaeloria, ${titR(S.highKing)} tient le Trône d'Argent.`); else if (!S.highKing) add('👑 Le Trône d\'Argent attend toujours son roi.');
+    if (S.highKing && S.highKing !== p) add(`👑 À Vaeloria, ${titR(S.highKing)} tient le Trône d'Argent.`); else if (!S.highKing) add(S.flags && S.flags.ch50 === 'conquete' && (S.flags.conquete || 0) < 2 ? '⚔️ Sur l\'isthme, la bannière d\'argent défie la vieille maison de Morvaine.' : '👑 Le Trône d\'Argent attend toujours son roi.');
     if (S.famine) add(`🌾 La famine frappe ${rn(S.famine.realm)} ; le pain vaut son pesant d'argent.`);
     const w = warsOf(p)[0]; if (w) add(`⚔️ Les veuves de la guerre contre ${(sideOf(w, p) === 'a' ? w.b : w.a).map(rn).join(' et ')} portent le noir.`);
     const rich = REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive).sort((a, b) => S.realms[b].gold - S.realms[a].gold)[0]; if (rich && rich !== p) add(`💰 Les marchands jurent que le trésor de ${rn(rich)} déborde.`);
@@ -7808,25 +7808,7 @@ const _showPick28 = showPick; showPick = function () {
   setTimeout(() => { const ch = $('#pick .ps-chips .on'); if (ch) ch.scrollIntoView({ inline: 'center', block: 'nearest' }) }, 30);
 };
 // ---------- 2. rangées de boutons : les secondaires se replient derrière « ⋯ » ----------
-function compactActs(root) {
-  if (!root) return; const lim = isMobile() ? 4 : 6;
-  root.querySelectorAll('.acts, .qa').forEach(box => {
-    if (box.dataset.cpx || box.closest('#amenu, #modal, .tbox, .cp-all, .ps-seg')) return; box.dataset.cpx = 1;
-    const btns = [...box.children].filter(e => e.tagName === 'BUTTON' || (e.tagName === 'SELECT' && e.classList.contains('btn')));
-    if (btns.length <= lim) return;
-    const keep = new Set(btns.filter(b => b.classList.contains('primary') && !b.disabled).slice(0, 2));
-    for (const b of btns) { if (keep.size >= lim - 1) break; if (!b.disabled) keep.add(b) }
-    const hide = btns.filter(b => !keep.has(b)); if (hide.length < 2) return;
-    hide.forEach(b => b.classList.add('ov-h'));
-    const key = (box.closest('.card') ? box.closest('.card').textContent.slice(0, 30) : '') + '|' + btns.length;
-    const more = document.createElement('button'); more.className = 'btn small ghost ov-more'; more.type = 'button';
-    const set = open => { box.classList.toggle('ov-open', open); more.textContent = open ? '▴ Moins' : `⋯ ${hide.length} de plus` };
-    more.onclick = e => { e.stopPropagation(); const o = !box.classList.contains('ov-open'); (VIEW.ovOpen = VIEW.ovOpen || {})[key] = o; set(o) };
-    box.appendChild(more); set(!!(VIEW.ovOpen && VIEW.ovOpen[key]));
-  });
-}
-const _render28 = render; render = function () { const r = _render28.apply(this, arguments); try { compactActs($('#panel')); compactActs($('#pcard')) } catch (e) { } return r };
-const _renderCard28 = renderCard; renderCard = function () { const r = _renderCard28.apply(this, arguments); try { compactActs($('#pcard')) } catch (e) { } return r };
+function compactActs() { } // retiré par la refonte 51 : plus de boutons cachés
 // ---------- 3. téléphone : la liste des royaumes au-dessus de la carte, bouton « Régner » toujours visible ----------
 const _pickRealm28 = pickRealm; pickRealm = function (k) {
   const r = _pickRealm28.apply(this, arguments); try {
@@ -9523,127 +9505,8 @@ const _updateMap39 = updateMap; updateMap = function () {
 const _useMap39 = useMap; useMap = function (v) { const old = MAP; _useMap39.apply(this, arguments); if (MAP !== old) { ART39.map = null; ART39.url = null; ART39.sea = null; ART39.byP = null; ART39.spots = null; ART39.px = null } };
 addEventListener('resize', () => { ART39.cw = 0 });
 
-// ===================== ARGENTHAL 40/45 : interface — tout à un geste =====================
-// Chaque onglet : une rangée de pastilles (une par rubrique), toujours visible en haut. Un toucher = la rubrique.
-// Sur la carte : une barre d'actions directes. Dans les cartes chargées : les boutons principaux d'abord, le reste sous « ⋯ ».
-const SIMPLE40 = () => !(S && S.settings && S.settings.simple === false);
-const OPEN40 = /Situation du royaume|Vos ordres|Économie du royaume|Vos forces|Forces en présence|État de la guerre|Lettres|Décrets rapides|Votre souverain|Objectifs|Royaumes voisins|Trône d'Argent|Suggestions du chancelier|Chantiers en cours|Ordres de campagne/i;
-const tabKey40 = () => (VIEW.tab === 'ordres' && VIEW.osub === 'conseil' ? 'conseil' : VIEW.tab);
-function sections40(pn) {
-  const kids = [...pn.children], secs = []; let cur = null; const loose = [];
-  const titleOf = el => { const e = el.matches('.lbl') ? el : el.querySelector('summary b, summary, b, .lbl'); let t = ''; if (e) { for (const n of e.childNodes) { if (n.nodeType === 3) t += n.nodeValue; else if (n.nodeType === 1 && !/^(BUTTON|SELECT|INPUT|A)$/.test(n.tagName) && !n.querySelector('button')) t += n.textContent } } return t.replace(/\s+/g, ' ').trim() };
-  kids.forEach((el, i) => {
-    if (el.classList.contains('chips45') || el.classList.contains('full40')) return;
-    const prev = kids[i - 1];
-    if (el.matches('.lbl')) { cur = { t: titleOf(el), els: [el] }; secs.push(cur); return }
-    if (el.matches('.seg, .acts') && !cur) { loose.push(el); return }
-    let own = null;
-    if (el.matches('.card') && /Trône d'Argent/.test(titleOf(el)) && VIEW.tab === 'diplo') own = titleOf(el);
-    else if (el.matches('.faint') && VIEW.tab === 'diplo') own = '🤝 Royaumes voisins';
-    else if (el.matches('.card') && prev && prev.matches('.log')) own = '⚙️ Réglages du jeu';
-    else if (!cur && el.matches('.card')) own = VIEW.tab === 'cour' && !secs.length ? '👑 Votre souverain' : titleOf(el) || 'Détails';
-    else if (cur && cur.solo && el.matches('.card, .qa, details')) own = titleOf(el) || 'Détails';
-    if (own != null) { cur = { t: own, els: [el], solo: !el.matches('.faint') && !/Réglages/.test(own) }; secs.push(cur); return }
-    if (cur) cur.els.push(el); else loose.push(el);
-  });
-  secs.forEach(s => { s.key = s.t.replace(/[\d(),.]+/g, '').replace(/\s+/g, ' ').trim().slice(0, 40); s.ess = OPEN40.test(s.t) });
-  return { secs: secs.filter(s => s.t), loose };
-}
-function chips40() {
-  const pn = $('#panel'); if (!pn || !S) return; document.body.classList.toggle('simple40', SIMPLE40());
-  if (!SIMPLE40()) return;
-  const { secs } = sections40(pn); if (secs.length < 3) return;
-  VIEW.chip45 = VIEW.chip45 || {}; const tk = tabKey40(); let act = VIEW.chip45[tk] || 'ess'; if (act !== 'ess' && !secs.some(s => s.key === act)) act = 'ess';
-  if (!secs.some(s => s.ess)) secs[0].ess = true;
-  const bar = document.createElement('div'); bar.className = 'chips45';
-  const short = t => { const m = t.match(/^(\S+)\s+(.*)$/), emo = m && /[^\w\sÀ-ÿ'’]/.test(m[1]) && m[1].length <= 4 ? m[1] + ' ' : '', rest = emo ? m[2] : t; return emo + (rest.length > 21 ? rest.slice(0, 20).trim() + '…' : rest) };
-  const apply = () => { secs.forEach(s => { const on = act === 'ess' ? s.ess : s.key === act; s.els.forEach(e => e.classList.toggle('f40h', !on)) }); bar.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.k === act)) };
-  const mk = (k, label, n) => { const b = document.createElement('button'); b.type = 'button'; b.dataset.k = k; b.dataset.t = label; b.innerHTML = esc(short(label)) + (n > 1 ? `<i>${n}</i>` : ''); b.onclick = () => { act = k; VIEW.chip45[tk] = k; apply(); pn.scrollTop = 0 }; bar.appendChild(b) };
-  mk('ess', '★ Essentiel', 0); secs.filter(s => !s.ess).forEach(s => mk(s.key, s.t, s.els.filter(e => e.matches('.card, .log')).length));
-  const seg = pn.querySelector(':scope > .seg'); if (seg) seg.after(bar); else pn.prepend(bar);
-  apply();
-  if (!pn.querySelector('.full40')) { const b = document.createElement('button'); b.className = 'full40'; b.type = 'button'; b.textContent = 'Tout afficher sur une seule page'; b.onclick = () => { S.settings.simple = false; render(); autosave() }; pn.appendChild(b) }
-}
-// boutons principaux d'abord ; les autres à un toucher, sur place
-const PRIO45 = [/Proposer un accord|Négocier/, /Déclarer|Voir la guerre|Paix/, /Intrigues/, /Présent|Honorer/, /Convoquer|Renvoyer/, /fantassins|Recruter/, /Alliance/];
-compactActs = function (root) {
-  if (!root) return; const lim = isMobile() ? 4 : 6;
-  root.querySelectorAll('.acts, .qa').forEach(box => {
-    if (box.dataset.cpx || box.closest('#amenu, #modal, .tbox, .cp-all, .ps-seg')) return; box.dataset.cpx = 1;
-    const btns = [...box.children].filter(e => e.tagName === 'BUTTON' || (e.tagName === 'SELECT' && e.classList.contains('btn')));
-    if (btns.length <= lim) return;
-    const rank = b => { if (b.disabled) return 200; const i = PRIO45.findIndex(r => r.test(b.textContent)); return i >= 0 ? i : b.classList.contains('primary') ? 50 : 99 };
-    const keep = new Set(btns.map((b, i) => [rank(b), i, b]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).slice(0, lim - 1).map(x => x[2]));
-    const hide = btns.filter(b => !keep.has(b)); if (hide.length < 2) return;
-    hide.forEach(b => b.classList.add('ov-h'));
-    const key = (box.closest('.card') ? box.closest('.card').textContent.slice(0, 30) : '') + '|' + btns.length;
-    const more = document.createElement('button'); more.className = 'btn small ghost ov-more'; more.type = 'button';
-    const set = open => { box.classList.toggle('ov-open', open); more.textContent = open ? '▴ Moins' : `⋯ ${hide.length} de plus` };
-    more.onclick = e => { e.stopPropagation(); const o = !box.classList.contains('ov-open'); (VIEW.ovOpen = VIEW.ovOpen || {})[key] = o; set(o) };
-    box.appendChild(more); set(!!(VIEW.ovOpen && VIEW.ovOpen[key]));
-  });
-};
-function go40(tab, key) {
-  VIEW.tab = tab; VIEW.side = true; if (tab === 'ordres') VIEW.osub = 'ordres'; VIEW.chip45 = VIEW.chip45 || {}; VIEW.chip45[tab] = 'ess'; render();
-  const pn = $('#panel'); if (!pn) return; pn.scrollTop = 0;
-  if (key) { const b = [...pn.querySelectorAll('.chips45 button')].find(x => x.dataset.t && x.dataset.t.toLowerCase().includes(key.toLowerCase())); if (b) b.click() }
-  else if (tab === 'ordres') { const ta = pn.querySelector('textarea'); if (ta && !isMobile()) ta.focus() }
-}
-const _renderPanel40 = renderPanel; renderPanel = function () {
-  const pn = $('#panel'), sc = pn ? pn.scrollTop : 0, tab0 = VIEW.tab + '|' + VIEW.osub;
-  _renderPanel40.apply(this, arguments);
-  try { chips40(); if (pn && renderPanel.last === tab0) pn.scrollTop = sc; renderPanel.last = VIEW.tab + '|' + VIEW.osub } catch (e) { console.error && console.error('chips40', e) }
-};
-const _panelChron40 = panelChron; panelChron = function () {
-  return _panelChron40() + `<div class="card" style="margin-top:12px"><label class="row between" style="font-size:13px"><span>🧭 Interface à pastilles</span><input type="checkbox" ${SIMPLE40() ? 'checked' : ''} onchange="S.settings.simple=this.checked;render();autosave()"></label><div class="faint" style="font-size:12px">Une pastille par rubrique en haut de chaque onglet, une barre d'actions sur la carte, les boutons principaux d'abord. Décochez pour tout afficher sur une seule page.</div></div>`;
-};
-// carte : un seul bouton de vue, qui se déplie
-const _updateMap40 = updateMap; updateMap = function () {
-  _updateMap40.apply(this, arguments);
-  try { const m = $('#modes'); if (!m) return; const on = SIMPLE40(); m.classList.toggle('m40', on); m.classList.toggle('open', on && !!VIEW.mo40);
-    if (on && !m.querySelector('button.sel')) { const b = m.querySelector('button'); b && b.classList.add('sel') }
-    if (!m._h40) { m._h40 = 1; m.addEventListener('click', e => { if (!SIMPLE40()) return; const b = e.target.closest('button'); if (!b) return; if (!VIEW.mo40) { VIEW.mo40 = 1; m.classList.add('open'); e.stopPropagation(); e.preventDefault() } else { VIEW.mo40 = 0; setTimeout(() => m.classList.remove('open'), 0) } }, true) }
-  } catch (e) { }
-};
-// barre d'actions directes sur la carte
-function quick45() {
-  const mw = $('#mapwrap'); if (!mw || !S || !S.realms[S.player]) return; let el = $('#qb45'); if (!SIMPLE40()) { if (el) el.remove(); return }
-  if (!el) { el = document.createElement('div'); el.id = 'qb45'; mw.appendChild(el) }
-  const r = P0(), ws = warsOf(S.player).filter(w => !w.civil), nl = (S.letters || []).length;
-  const B = [['✍️', 'Ordre', `go40('ordres','')`], r.ban ? ['🏠', 'Renvoyer', `doAct({type:'dismiss'})`] : ['📯', 'Ban', `doAct({type:'ban'})`], ['🛡️', 'Recruter', 'rec45()'], ['🏗️', 'Bâtir', `go40('dev','Suggestions')`], ['🤝', 'Diplo', `go40('diplo','')`],
-    ws.length ? ['📜', 'Paix', ws.length === 1 ? `treatyUI('${ws[0].id}')` : `go40('guerre','')`] : ['⚔️', 'Guerre', `go40('guerre','')`], nl ? ['✉️', 'Lettres', `go40('chron','')`, nl] : null].filter(Boolean);
-  const h = B.map(([ic, l, fn, n]) => `<button type="button" onclick="${fn}">${n ? `<i>${n}</i>` : ''}<span>${ic}</span>${l}</button>`).join(''); if (el._h !== h) { el._h = h; el.innerHTML = h }
-}
-function rec45() {
-  const r = P0(), row = (ic, t, d, a, c) => `<button class="btn" ${r.gold < c ? 'disabled' : ''} onclick="closeModal();doAct(${a})">${ic} <b>${t}</b> <span class="faint" style="font-size:12.5px">· ${d} · ${c} écus</span></button>`;
-  modal(`<h2>🛡️ Recruter</h2><div class="faint" style="font-size:13px;margin-top:-4px">Trésor : ${Math.round(r.gold)} écus</div><div class="ch">${row('🛡️', '1 000 fantassins', 'solides en défense', `{type:'recruitType',unit:'inf'}`, UNIT.inf[1])}${row('🐎', '1 000 chevaliers', 'la charge qui décide', `{type:'recruitType',unit:'cav'}`, UNIT.cav[1])}${row('🏹', '1 000 archers', 'usent l’ennemi de loin', `{type:'recruitType',unit:'arc'}`, UNIT.arc[1])}${row('🗡️', 'Mercenaires', '2 500 hommes tout de suite', `{type:'mercs'}`, S.player === 'ORV' ? 90 : 130)}<button class="btn ghost" onclick="closeModal()">Annuler</button></div>`);
-}
-const _renderTop40 = renderTop; renderTop = function () { _renderTop40.apply(this, arguments); try { quick45() } catch (e) { } };
-const _renderCard40 = renderCard; renderCard = function () { _renderCard40.apply(this, arguments); try { if (SIMPLE40() && isMobile()) { const s = document.querySelector('#pcard .scene31 svg'); s && s.setAttribute('preserveAspectRatio', 'xMidYMid slice') } } catch (e) { } };
-const _enterGame40 = enterGame; enterGame = function () { const r = _enterGame40.apply(this, arguments); try { document.body.classList.toggle('simple40', SIMPLE40()); quick45() } catch (e) { } return r };
-
-// ===================== ARGENTHAL 46 : des boutons courts, avec un emoji, qui tiennent dans leur case =====================
-const CHIP46 = [['Ambitions', '🎯 Ambitions'], ['Ordres de la saison', '📜 Historique'], ["Vos types d'ordres", '📖 Exemples'], ['Fer', '⚒️ Fer'], ['Politique économique', '💰 Économie'], ['Finances', '🪙 Finances'], ['Négoce', '⚓ Négoce'], ['Ressources', '📦 Ressources'], ['Ouvrages', '🏰 Ouvrages'], ['Commerce', '🤝 Commerce'], ['Marine', '⛵ Marine'], ['Ligne de succession', '⚜️ Succession'], ['Famille', '👪 Famille'], ['Petit conseil', '🕯️ Conseil'], ['Grandes maisons', '🏰 Vassaux'], ['Affaires des maisons', '⚖️ Affaires'], ['Grandes décisions', '👑 Décisions'], ['Classement', '🏆 Classement'], ['Situation géopolitique', '🌍 Géopolitique'], ['Le monde', '🗺️ Monde'], ['Chroniques', '📜 Chroniques'], ['Statistiques', '📈 Stats'], ['Registre', '📒 Registre'], ['Réglages', '⚙️ Réglages'], ['Suggestions', '💡 Conseils'], ['Chantiers', '🏗️ Chantiers'], ['Ordres de campagne', '🎯 Campagne'], ['Lettres', '✉️ Lettres'], ['Objectifs', '🎯 Objectifs'], ['Annales', '📜 Annales'], ['Votre dynastie', '👑 Dynastie'], ['Ce que l', '🕯️ Souvenirs'], ['Bilan', '📜 Bilan'], ['Vos forces', '⚔️ Forces'], ['Royaumes voisins', '🤝 Voisins']];
-function chipName46(t) { const s = t.replace(/^[^\p{L}]+/u, '').replace(/\s*[—(].*$/, '').trim(); const m = CHIP46.find(([k]) => s.toLowerCase().startsWith(k.toLowerCase())); if (m) return m[1]; const w = s.split(' '); let o = ''; for (const x of w) { if ((o + ' ' + x).trim().length > 15) break; o = (o + ' ' + x).trim() } const emo = (t.match(/^\p{Extended_Pictographic}️?/u) || [''])[0]; return (emo ? emo + ' ' : '') + (o || w[0]) }
-const BTN46 = [[/^📯 Convoquer le ban$/, '📯 Ban'], [/^🏠 Renvoyer le ban$/, '🏠 Renvoyer'], [/^🛡️ \+1 000 fantassins$/, '🛡️ Fantassins'], [/^🐎 \+1 000 chevaliers$/, '🐎 Chevaliers'], [/^🏹 \+1 000 archers$/, '🏹 Archers'], [/^🛡️ 1 000 fantassins \((\d+)\)$/, '🛡️ Fantassins · $1'], [/^🐎 1 000 chevaliers \((\d+)\)$/, '🐎 Chevaliers · $1'], [/^🏹 1 000 archers \((\d+)\)$/, '🏹 Archers · $1'], [/^🗡️ Mercenaires \((\d+)\)$/, '🗡️ Mercenaires · $1'],
-  [/^🏳️ Reprendre nos terres$/, '🏳️ Reprendre'], [/^🗺️ Conquérir un maximum$/, '🗺️ Conquérir'], [/^👑 Prendre la capitale ennemie$/, '👑 Capitale'], [/^🛡️ Défendre le royaume$/, '🛡️ Défendre'], [/^🎯 Traquer les armées ennemies$/, '🎯 Traquer'], [/^✋ Libérer toutes les armées$/, '✋ Libérer'],
-  [/^🤝 Proposer un accord$/, '🤝 Accord'], [/^⚔️ Déclarer la guerre$/, '⚔️ Guerre'], [/^⚔️ Voir la guerre$/, '⚔️ La guerre'], [/^📜 Négocier un traité$/, '📜 Traité'], [/^🗺️ Exiger les terres occupées$/, '🗺️ Terres'], [/^💰 Exiger un tribut$/, '💰 Tribut'], [/^🤝 Céder une terre contre la paix$/, '🤝 Céder une terre'], [/^👑 Revendiquer le trône$/, '👑 Revendiquer'], [/^🚶 Droit de passage$/, '🚶 Passage'], [/^⛓️ Exiger l'hommage$/, '⛓️ Hommage'],
-  [/^🌳 Arbre généalogique$/, '🌳 Arbre'], [/^🛡️ Anoblir un fidèle$/, '🛡️ Anoblir'], [/^💰 Exiger de l'or$/, '💰 Or'], [/^⛓️ Arrêter le chef$/, '⛓️ Arrêter'], [/^✏️ Nom, titre, couleurs$/, '✏️ Blason'], [/^🏳️ Indépendance d'une maison$/, '🏳️ Indépendance'], [/^👑 Votre dynastie$/, '👑 Dynastie'], [/^🕯️ Ce que l'on n'oublie pas$/, '🕯️ Souvenirs'], [/^📜 Bilan du règne$/, '📜 Bilan'], [/^Lettres de marque · (\d+)$/, '🏴 Corsaires · $1'], [/^Engager \((\d+)\)$/, '🗡️ $1 écus'], [/^Tout afficher sur une seule page$/, '📄 Tout sur une page']];
-function shortBtns46(root) {
-  if (!root || !SIMPLE40()) return;
-  root.querySelectorAll('button').forEach(b => {
-    if (b.dataset.s46) return; b.dataset.s46 = '1'; if (b.querySelector('small, b, div, br')) return;
-    const t = b.textContent.trim().replace(/\s+/g, ' '); for (const [re, to] of BTN46) if (re.test(t)) { b.textContent = t.replace(re, to); if (!b.title) b.title = t; break }
-    if (b.textContent.trim().length <= 22) b.classList.add('nw46');
-  });
-}
-const _chips46 = chips40; chips40 = function () {
-  _chips46.apply(this, arguments);
-  try { const pn = $('#panel'); pn.querySelectorAll('.chips45 button').forEach(b => { if (b.dataset.k === 'ess') return; const n = b.querySelector('i'); b.textContent = chipName46(b.dataset.t); if (n) b.appendChild(n); b.title = b.dataset.t }); shortBtns46(pn) } catch (e) { console.error && console.error('short46', e) }
-};
-const _renderCard46 = renderCard; renderCard = function () { _renderCard46.apply(this, arguments); try { shortBtns46($('#pcard')) } catch (e) { } };
-const _render46 = render; render = function () { const r = _render46.apply(this, arguments); try { shortBtns46($('#pcard')); shortBtns46($('#amenu')) } catch (e) { } return r };
-
+// (anciennes interfaces 40/45/46 — pastilles, boutons repliés, libellés raccourcis — retirées par la refonte 51)
+const SIMPLE40 = () => false;
 // ===================== ARGENTHAL 41 : les terres se règlent à la paix · la capitale pèse selon les armées restantes · les rebelles plient quand leur château tombe =====================
 // 1. Plus d'annexion en pleine guerre : une terre occupée reste occupée ; à la paix, le vainqueur garde ou rend.
 const _annexProv41 = annexProv; annexProv = function (p, k) {
@@ -9840,7 +9703,7 @@ const _panelWar43 = panelWar; panelWar = function () {
 };
 const _renderTop43 = renderTop; renderTop = function () {
   _renderTop43.apply(this, arguments);
-  try { if (SIMPLE40() && isMobile()) { const M = { 'Légitimité': 'Légit.', 'Population': 'Pop.', 'Stabilité': 'Stab.', 'Prestige': 'Prest.' }; document.querySelectorAll('#top .st small').forEach(s => { for (const k in M) if (s.textContent.includes(k)) s.textContent = s.textContent.replace(k, M[k]) }) } } catch (e) { }
+  try { if (isMobile()) { const M = { 'Légitimité': 'Légit.', 'Population': 'Pop.', 'Stabilité': 'Stab.', 'Prestige': 'Prest.' }; document.querySelectorAll('#top .st small').forEach(s => { for (const k in M) if (s.textContent.includes(k)) s.textContent = s.textContent.replace(k, M[k]) }) } } catch (e) { }
 };
 
 // ===================== ARGENTHAL 46 : un ban convoqué reste à jour (anciennes parties, maisons arrivées depuis, loyauté remontée) =====================
@@ -10071,7 +9934,7 @@ const SAGA50 = [
   ['batard', 61, 'III. La Fille et le Bâtard', 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin Delarive ; l\'armée acclame son bâtard Draevon, qui se proclame Draevon Aeltharys. Deux couronnes, un seul trône.'],
   ['dechiree', 128, 'IV. La Couronne déchirée', 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. Trois Aeltharys, un seul Trône d\'Argent.'],
   ['tete', 138, 'V. La Tête du Roi', 'An 138 — Daemyr, réfugié à Solméria, en a épousé l\'héritière et s\'en est proclamé roi. Avec l\'or du désert, le Nord et Rosemarche, il marche sur l\'isthme contre le roi Aldric.'],
-  ['fou', 163, 'VI. Le Roi Fou', 'An 163 — Hanté par la tête de son père, Aedrys V a fait exécuter les rois de Rosemarche et du Nord sous une couronne d\'argent fondu. Le Nord, Rosemarche et Solméria se soulèvent : c\'est la dernière guerre des Aeltharys.'],
+  ['fou', 163, 'VI. Le Roi Fou', 'An 163 — Hanté par la tête de son père, Aedrys Ier a fait exécuter les rois de Rosemarche et du Nord sous une couronne d\'argent fondu. Le Nord, Rosemarche et Solméria se soulèvent : c\'est la dernière guerre des Aeltharys.'],
 ];
 const SCEN50 = {}; SAGA50.forEach(s => SCEN50[s[0]] = 1);
 (() => {
@@ -10098,7 +9961,7 @@ const PLAY50 = {
     { id: 'CIM', realm: 'CIM', nm: 'Maison Isengrin', role: 'Le Nord', obj: 'Changer de camp au bon moment : sortir de la guerre plus fort qu\'avant.' },
     { id: 'ROS', realm: 'ROS', nm: 'Maison de Rosemont', role: 'Rosemarche', obj: 'Changer de camp au bon moment : sortir de la guerre plus fort qu\'avant.' }],
   fou: [{ id: 'ROS', realm: 'ROS', nm: 'Garran de Rosemont', role: 'Rosemarche révoltée', obj: 'Venger votre père, prendre Vaeloria et devenir le nouveau Haut-Roi.' },
-    { id: 'AUB', realm: 'AUB', nm: 'Aedrys V, le Roi Fou', role: 'Le dernier Aeltharys', obj: 'Survivre : briser la révolte sans perdre Vaeloria.' }],
+    { id: 'AUB', realm: 'AUB', nm: 'Aedrys Ier, le Roi Fou', role: 'Le dernier Aeltharys', obj: 'Survivre : briser la révolte sans perdre Vaeloria.' }],
 };
 function fac50(scen, k) { const L = PLAY50[scen]; return L ? L.find(f => f.id === k) || null : null }
 const F50COL = { AEL: '#f3f1ea', REINE: '#f3f1ea', BAT: '#e6d3a1', ALD: '#f3f1ea', TAE: '#cfe0f2', DAE: '#ecd49a' };
@@ -10132,7 +9995,7 @@ const F50COL = { AEL: '#f3f1ea', REINE: '#f3f1ea', BAT: '#e6d3a1', ALD: '#f3f1ea
     { y: 155, k: ['SOL', 'AUB'], big: 1, t: 'La mort de Daemyr', d: 'Daemyr meurt dans le désert, empoisonné dit-on sur ordre d\'Aedrys. Son fils Saeryn lui succède et se dit le vrai Aeltharys.' },
     { y: 162, k: ['AUB'], t: 'Les nuits sans sommeil', d: 'À Vaeloria, le roi Aedrys ne dort plus. Il voit des traîtres partout et fait goûter chaque plat trois fois.' },
   );
-  LORE_ERAS.length = 0; LORE_ERAS.push([1, 'La Conquête'], [24, 'La Révolte du Nord'], [28, 'Le Règne du Conquérant'], [61, 'La Fille et le Bâtard'], [71, 'L\'Âge d\'Argent'], [128, 'La Couronne déchirée'], [138, 'La Tête du Roi'], [139, 'Le Règne d\'Aedrys']);
+  LORE_ERAS.length = 0; LORE_ERAS.push([1, 'La Conquête'], [24, 'La Révolte du Nord'], [28, 'Le Règne du Conquérant'], [40, 'Le Règne de Haelor le Pacifique'], [61, 'La Fille et le Bâtard'], [71, 'L\'Âge d\'Argent'], [128, 'La Couronne déchirée'], [138, 'La Tête du Roi'], [139, 'Le Règne d\'Aedrys']);
   LORE_EPILOGUE.length = 0; LORE_EPILOGUE.push({ y: 164, t: 'La fin des Aeltharys', d: 'Le Trône d\'Argent change de mains. Une nouvelle dynastie commence ; à Solméria, la lignée du Bâtard attend son heure.' });
 })();
 const FIX50 = [
@@ -10326,7 +10189,7 @@ const CH50 = {
     },
     massacre(king, cont, byKing) {
       const p = byKing ? '__' : S.player, K = S.realms[king];
-      if (!byKing && (!cont || p !== king)) { ruler50(king, 'Aedrys', 37, 'm', ['cruel', 'colere']); K.regnal = 5 }
+      if (!byKing && (!cont || p !== king)) { ruler50(king, 'Aedrys', 37, 'm', ['cruel', 'colere']); K.regnal = 1 }
       if (!cont) { K.renamed = false; houseName50(king, 'Aeltharys', 'D\'argent naîtra la couronne'); K.col = AELTH_COL }
       // les rois de Rosemarche et du Nord exécutés : leurs héritiers montent sur le trône
       for (const [k, nm] of [['ROS', 'Garran'], ['CIM', 'Ulric']]) {
@@ -10335,13 +10198,13 @@ const CH50 = {
         else if (!cont) ruler50(k, nm, k === 'ROS' ? 23 : 26, 'm', k === 'ROS' ? ['brave', 'juste'] : ['brave']);
         R.legit = C((R.legit || 55) + 10, 0, 100);
       }
-      if (alive50('SOL') && !isAelth50('SOL') && S.flags.f50.SOL === 'SOL') { ruler50('SOL', 'Saeryn', 32, 'm', ['ruse']) } else if (alive50('SOL') && !cont) { ruler50('SOL', 'Saeryn', 32, 'm', ['ruse']); houseName50('SOL', 'Aeltharys-Sahrane', 'Le soleil et l\'argent'); S.realms.SOL.title = 'Roi de Solméria' }
+      if (alive50('SOL') && !isAelth50('SOL') && S.flags.f50.SOL === 'SOL') { ruler50('SOL', 'Saeryn', 30, 'm', ['ruse']) } else if (alive50('SOL') && !cont) { ruler50('SOL', 'Saeryn', 30, 'm', ['ruse']); houseName50('SOL', 'Aeltharys-Sahrane', 'Le soleil et l\'argent'); S.realms.SOL.title = 'Roi de Solméria' }
       if (!cont) hk50(king, ['VAL', 'ORV'], ['ROS', 'CIM', 'SOL']); else if (S.hk) ['ROS', 'CIM', 'SOL'].forEach(k => hkSet(k, 'defiant'));
       const reb = ['ROS', 'CIM', 'SOL'].filter(k => alive50(k) && k !== king), lead = reb.includes('ROS') ? 'ROS' : reb[0];
       if (lead && !(cont && p === lead)) { war50(lead, king, reb.filter(k => k !== lead && !(cont && k === p)), ['VAL', 'ORV'].filter(k => !(cont && k === p))); men50(king, 3200); men50('VAL', 600); men50('ORV', 600) }
       if (alive50('ROS')) { try { claimThrone('ROS') } catch (e) { } }
       S.flags.fou50 = { t0: S.turn, king };
-      note50('🔥 Le Roi Fou', `Il avait douze ans quand on lui a apporté la tête de son père dans un coffret d'argent. Aujourd'hui, <b>Aedrys V</b> règne et voit des traîtres partout. Il a convoqué à Vaeloria le roi de Rosemarche et le roi du Nord, les a accusés de complot, puis a fait verser sur leur tête une couronne d'argent fondu.<br><br>Leurs héritiers, <b>Garran de Rosemont</b> et <b>Ulric Isengrin</b>, ont survécu. Le Nord, Rosemarche et Solméria se soulèvent ; seules Valfleuve et Orvalis restent fidèles au roi. C'est la dernière guerre des Aeltharys.${p === 'ROS' ? '<br><br><b>Objectif :</b> venger votre père, prendre Vaeloria et devenir le nouveau Haut-Roi. Votre mère est la fille de Taelon : vous aussi, vous avez du sang d\'argent.' : p === king ? '<br><br><b>Objectif :</b> survivre.' : ''}`);
+      note50('🔥 Le Roi Fou', `Il avait douze ans quand on lui a apporté la tête de son père dans un coffret d'argent. Aujourd'hui, <b>Aedrys Ier</b> règne et voit des traîtres partout. Il a convoqué à Vaeloria le roi de Rosemarche et le roi du Nord, les a accusés de complot, puis a fait verser sur leur tête une couronne d'argent fondu.<br><br>Leurs héritiers, <b>Garran de Rosemont</b> et <b>Ulric Isengrin</b>, ont survécu. Le Nord, Rosemarche et Solméria se soulèvent ; seules Valfleuve et Orvalis restent fidèles au roi. C'est la dernière guerre des Aeltharys.${p === 'ROS' ? '<br><br><b>Objectif :</b> venger votre père, prendre Vaeloria et devenir le nouveau Haut-Roi. Votre mère est la fille de Taelon : vous aussi, vous avez du sang d\'argent.' : p === king ? '<br><br><b>Objectif :</b> survivre.' : ''}`);
     },
     skip(cont) { if (cont) note50('🔥 Pas de Roi Fou', 'Dans votre histoire, aucun Aeltharys ne règne plus sur le Trône d\'Argent : la dernière guerre des Aeltharys n\'aura pas lieu.') },
   },
@@ -10564,5 +10427,525 @@ Object.assign(STORY38, {
   ],
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="a51">
+// ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
+// Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
+
+// ---------- 0. état propre à la refonte ----------
+function g51() { if (!S) return {}; S.g51 = S.g51 || {}; const G = S.g51; G.spy = G.spy || {}; G.ally = G.ally || []; if (G.autoIron == null) G.autoIron = 1; G.dipOpen = G.dipOpen || {}; return G }
+const KEY51 = { Aelric: 'AEL', Haelor: 'AEL', Ysaera: 'AEL', Draevon: 'AEL', Aldric: 'AEL', Taelon: 'AEL', Daemyr: 'AEL', Aedrys: 'AEL', Rhaelys: 'AEL', Saeryn: 'AEL', Garran: 'ROS', Ulric: 'CIM', Hrodmar: 'CIM', Morvan: 'MOR' };
+function keyOk51(c) {
+  const t = KEY51[(c.name || '').split(' ')[0]]; if (!t) return true; const h = hs(c.house), hn = (h && h.name) || '';
+  if (t === 'AEL') return /Aeltharys/.test(hn); if (t === 'MOR') return /Morvaine/.test(hn);
+  if (t === 'ROS') return /Rosemont/.test(hn); if (t === 'CIM') return /Isengrin/.test(hn); return true;
+}
+function freeName51(sex) { const L = (sex === 'f' ? NAMES_F : NAMES_M).filter(n => !KEY51[n]); return L[Math.floor(Math.random() * L.length)] }
+// les grands noms de la saga ne sont portés que par leurs maisons : plus d'« Aldric Isengrin » face au roi Aldric
+function names51() { try { for (const c of Object.values(S.chars)) { if (c && c.alive && !keyOk51(c)) c.name = freeName51(c.sex) } } catch (e) { } }
+const _genChar51 = genChar; genChar = function (o) { const c = _genChar51.apply(this, arguments); try { if (c && KEY51[c.name] && S && !keyOk51(c)) c.name = freeName51(c.sex) } catch (e) { } return c };
+
+const _migrate51 = migrate; migrate = function () {
+  _migrate51.apply(this, arguments);
+  try { S.settings = S.settings || {}; S.settings.simple = false; g51();
+    // anciens titres corrigés dans les vieilles sauvegardes
+    for (const c of Object.values(S.chars || {})) if (c && /^Aedrys$/.test(c.name) && S.realms.AUB && S.realms.AUB.ruler === c.id && S.realms.AUB.regnal === 5) S.realms.AUB.regnal = 1;
+    if (S.realms.SOL && S.realms.SOL.title === 'Prince de Solméria') S.realms.SOL.title = 'Roi de Solméria';
+  } catch (e) { console.error && console.error('migrate51', e) }
+};
+
+// ---------- 1. l'histoire : corrections au lancement de chaque chapitre ----------
+const _setup51 = setup50; setup50 = function (id, cont) {
+  _setup51.apply(this, arguments);
+  try { story51(id, cont) } catch (e) { console.error && console.error('story51', e) }
+};
+function story51(id, cont) {
+  g51();
+  if (!cont) {
+    // le registre ne garde aucune ligne d'une autre époque
+    if (S.log) S.log = S.log.filter(l => (l.y || 0) <= S.year && !(id === 'conquete' && /Grimsel n'est plus/.test(l.t || '')));
+    // un seul objectif : celui du chapitre
+    if (S.flags && S.flags.goal30) delete S.flags.goal30;
+  }
+  if (S.realms.SOL) S.realms.SOL.title = 'Roi de Solméria';
+  if (id === 'conquete' && !cont) {
+    const A = S.realms.AUB, reb = S.flags.f50 && S.flags.f50.AEL;
+    if (A) { const k = ch(A.ruler); if (k && /^Morvan/.test(k.name)) k.name = 'Morvan III'; A.regnal = 0 }
+    if (reb && S.realms[reb] && !playerHousesOf51(reb).length) {
+      giveHouses51(reb, 2);
+      men50(reb, 1200); men50('AUB', 1500); const cc = S.flags.conqCap || (S.realms.AUB && S.realms.AUB.cap); if (cc && S.prov[cc]) S.prov[cc].castle = Math.max(S.prov[cc].castle || 0, 3);
+    }
+    // Valfleuve ne combat pas Aelric : elle prêtera serment sans combattre (an 7)
+    if (reb) S.wars.forEach(w => { if (w.a.includes(reb) || w.b.includes(reb)) { w.a = w.a.filter(x => x !== 'VAL' || x === S.player); w.b = w.b.filter(x => x !== 'VAL' || x === S.player) } });
+    S.wars = S.wars.filter(w => w.a.length && w.b.length);
+  }
+  if (id === 'batard' && !cont) { const b = S.flags.f50 && S.flags.f50.BAT; if (b && S.realms[b] && !playerHousesOf51(b).length) giveHouses51(b, 1) }
+  if (id === 'dechiree' && !cont) {
+    // le Nord et Rosemarche n'entreront en guerre aux côtés de Daemyr qu'en l'an 138 (chapitre V)
+    const D = S.flags.f50 && S.flags.f50.DAE;
+    if (D) S.wars.forEach(w => { const side = w.a.includes(D) ? 'a' : w.b.includes(D) ? 'b' : null; if (side) w[side] = w[side].filter(x => !['CIM', 'ROS'].includes(x) || x === S.player) });
+  }
+  // les grands personnages de la saga ne meurent pas de maladie au premier hiver
+  if (!cont) for (const k in S.realms) { const R = S.realms[k], c = R && R.alive && ch(R.ruler); if (c && KEY51[(c.name || '').split(' ')[0]] && c.age < 60) c.health = Math.max(c.health || 0, 92) }
+  names51();
+  try { mapDirty() } catch (e) { }
+}
+// des maisons de l'isthme rallient un prétendant : elles passent dans son camp avec leurs terres
+function giveHouses51(reb, n) {
+  const near = q => [...NB[q]].some(x => S.prov[x] && S.prov[x].k === reb);
+  const cands = Object.values(S.houses).filter(h => h.realm === 'AUB' && !h.royal && !h.gone && !h.rebel && houseProvs(h.id).length && !houseProvs(h.id).includes(S.realms.AUB.cap))
+    .map(h => ({ h, n: houseProvs(h.id).filter(near).length })).filter(x => x.n > 0).sort((a, b) => b.n - a.n).slice(0, n);
+  for (const { h } of cands) {
+    h.realm = reb; h.loy = 75; h.mods = h.mods || []; h.mods.push({ v: 15, why: 'Ralliée au prétendant', t: S.turn + 40 });
+    houseProvs(h.id).forEach(q => { S.prov[q].k = reb; S.prov[q].occ = null; S.prov[q].siege = 0 });
+    Object.values(S.chars).forEach(c => { if (c.house === h.id) c.realm = reb });
+    Object.values(S.armies).forEach(a => { if (a.house === h.id) a.realm = reb });
+  }
+  if (S.realms.AUB && S.realms.AUB.cap && S.prov[S.realms.AUB.cap].k !== 'AUB') S.realms.AUB.cap = capitalOf('AUB');
+  return cands.length;
+}
+function playerHousesOf51(k) { return Object.values(S.houses).filter(h => h.realm === k && !h.royal && !h.gone) }
+
+const _killChar51 = killChar; killChar = function (c, why) {
+  try { if (c && S && S.flags && S.flags.ch50 && KEY51[(c.name || '').split(' ')[0]] && keyOk51(c) && c.age < 60 && /^(de fièvre|d'une chute de cheval|de maladie|dans son sommeil)$/.test(String(why || ''))) { c.health = Math.max(c.health || 0, 70); return } } catch (e) { }
+  return _killChar51.apply(this, arguments);
+};
+// ---------- 2. économie : de l'or précieux, du fer qui ne pénalise plus dès le départ ----------
+const ECO51 = { inc: .86, upk: 1.2 };
+const _provIncome51 = provIncome; provIncome = function (p) { return _provIncome51.apply(this, arguments) * ECO51.inc };
+const _upkeep51 = upkeep; upkeep = function (k) { return Math.round(_upkeep51(k) * ECO51.upk + gar51Men(k) * .012) };
+// chaque royaume a ses forges : sans fer, l'équipement est normal ; le fer (mines, commerce, halle) donne un bonus
+function forge51(k) { return ironNeed(k) * .6 }
+equip = function (k) { const have = (realmRes(k).fer || 0) + importedIron(k) + forge51(k); return C(.9 + .18 * have / ironNeed(k), .9, 1.1) };
+function autoIron51() {
+  const G = g51(), p = S.player, R0 = P0(); if (!G.autoIron || !R0) return;
+  const need = ironNeed(p), have = (realmRes(p).fer || 0) + importedIron(p) + forge51(p);
+  if (have >= need || R0.gold < 150) return;
+  try { const r = market38('buy', 'fer', 1); if (typeof r === 'object' || /achet/i.test(String(r))) S.news.push({ t: '⚒️ Vos intendants achètent du fer à la halle pour équiper l\'armée.', c: 'eco' }) } catch (e) { }
+}
+
+// ---------- 3. garnisons ----------
+function gar51Men(k) { let n = 0; if (!S || !S.prov) return 0; for (const q in S.prov) { const P = S.prov[q]; if (P.gar51 && P.k === k && !P.occ) n += P.gar51 } return n }
+const _siegeRate51 = siegeRate; siegeRate = function (men, p) { const r = _siegeRate51(men, p), P = S.prov[p]; return P && P.gar51 ? r / (1 + P.gar51 / 1500) : r };
+function garTick51() {
+  for (const q in S.prov) { const P = S.prov[q]; if (!P.gar51) continue;
+    if (P.occ) { if (P.k === S.player) S.news.push({ t: `🏰 La garnison de ${PV[q].n} est tombée avec la place.`, c: 'war' }); P.gar51 = 0; continue }
+    if (P.siege > 0) P.gar51 = Math.max(0, Math.round(P.gar51 * .93));
+  }
+}
+
+// ---------- 4. alliés qui attaquent une cible, espions ----------
+function allyTick51() {
+  const G = g51(); G.ally = G.ally.filter(t => t.until > S.turn && S.realms[t.ally] && S.realms[t.ally].alive && S.prov[t.target] && atWar(S.player, S.prov[t.target].k) && atWar(t.ally, S.prov[t.target].k));
+}
+function allyPaths51(k) {
+  const G = g51(), t = G.ally.find(x => x.ally === k); if (!t) return;
+  armiesOf(k).filter(a => !a.merc).sort((a, b) => b.men - a.men).slice(0, 2).forEach(a => { if (a.loc === t.target || a.siege === t.target) return; const path = findPath(k, a.loc, t.target, k === 'FER'); if (path && path.length) a.path = path });
+}
+const _aiTick51 = aiTick; aiTick = function (k) { _aiTick51.apply(this, arguments); try { allyPaths51(k) } catch (e) { } };
+function spied51(k) { const G = g51(); return G.spy[k] && G.spy[k] > S.turn }
+
+// ---------- 5. les nouvelles actions ----------
+const _act51 = act; act = function (a) {
+  const p = S.player, r = P0(), ok = m => ({ ok: true, msg: m }), err = m => ({ ok: false, msg: m });
+  switch (a && a.type) {
+    case 'allyTask': {
+      const k = a.ally, q = a.target; if (!S.realms[k] || !S.realms[k].alive || !S.prov[q]) return err('Allié ou cible inconnus.');
+      const foe = S.prov[q].k; if (!atWar(p, foe) || !atWar(k, foe)) return err(`${rn(k)} n'est pas en guerre contre ${rn(foe)}.`);
+      if (rel(p, k) < -10 && !hasTreaty(p, k, ['alliance', 'marriage', 'vassal'])) return err(`${rname(k)} refuse : vos relations sont trop mauvaises.`);
+      const G = g51(); G.ally = G.ally.filter(x => x.ally !== k); G.ally.push({ ally: k, target: q, until: S.turn + 4 }); addRel(p, k, -2);
+      try { allyPaths51(k) } catch (e) { }
+      return ok(`${rname(k)} accepte : ses armées marchent sur ${PV[q].n} pendant un an.`);
+    }
+    case 'ransomOwn': {
+      const c = ch(a.char); if (!c || !c.alive || !c.prison || c.prison === p) return err('Ce prisonnier n\'est pas retenu à l\'étranger.');
+      const cost = 60 + (c.id === r.ruler || heirOf(ch(r.ruler)) === c ? 120 : 40); if (r.gold < cost) return err(`Il faut ${cost} écus.`);
+      const k = c.prison; r.gold -= cost; if (S.realms[k]) S.realms[k].gold += cost; c.prison = null; c.realm = p; addRel(p, k, 3);
+      return ok(`Vous payez ${cost} écus : ${chName(c)} rentre à la cour.`);
+    }
+    case 'swapPrisoner': {
+      const mine = ch(a.mine), theirs = ch(a.theirs); if (!mine || !theirs || !mine.alive || !theirs.alive) return err('Prisonniers introuvables.');
+      if (theirs.prison !== p) return err('Ce prisonnier n\'est pas dans vos cachots.'); if (!mine.prison || mine.prison === p) return err('Ce proche n\'est pas captif.');
+      const k = mine.prison; if (theirs.realm !== k) return err(`${rname(k)} ne s'intéresse qu'aux siens.`);
+      mine.prison = null; mine.realm = p; theirs.prison = null; addRel(p, k, 6);
+      return ok(`Échange conclu avec ${rname(k)} : ${chName(mine)} contre ${chName(theirs)}.`);
+    }
+    case 'garrison': {
+      const q = a.prov, P = S.prov[q]; if (!P || P.k !== p || P.occ) return err('Il faut une de vos provinces.');
+      const A = armiesAt(q, x => x.realm === p && !x.merc).sort((x, y) => y.men - x.men)[0]; if (!A) return err(`Aucune de vos armées à ${PV[q].n}.`);
+      const n = Math.min(A.men - 200, Math.max(200, Math.round(a.men || 1000))); if (n < 200) return err('L\'armée est trop petite pour laisser une garnison.');
+      A.men -= n; P.gar51 = (P.gar51 || 0) + n; return ok(`${fmtMen(n)} hommes tiennent désormais ${PV[q].n} : les sièges y seront bien plus longs.`);
+    }
+    case 'ungarrison': {
+      const q = a.prov, P = S.prov[q]; if (!P || P.k !== p || !P.gar51) return err('Pas de garnison ici.');
+      if (P.siege > 0) return err('La place est assiégée : la garnison ne peut pas sortir.');
+      const A = armiesAt(q, x => x.realm === p && !x.merc)[0]; if (A) A.men += P.gar51; else mkArmy(p, null, q, P.gar51, null, true);
+      const n = P.gar51; P.gar51 = 0; return ok(`La garnison de ${PV[q].n} (${fmtMen(n)}) reprend la campagne.`);
+    }
+    case 'spy': {
+      const k = a.target; if (!S.realms[k] || !S.realms[k].alive || k === p) return err('Royaume inconnu.');
+      if (r.gold < 40) return err('Il faut 40 écus pour payer l\'espion.'); r.gold -= 40;
+      const esp = r.council && r.council.esp && ch(r.council.esp), sk = esp ? esp.int : 4;
+      if (chance(C(.55 + sk * .03, .4, .9))) { g51().spy[k] = S.turn + 6; return ok(`Votre espion est entré à la cour de ${rn(k)} : vous connaissez ses armées, son trésor et ses alliances pendant un an et demi.`) }
+      addRel(p, k, -10); r.prestige -= 2; return err(`L'espion a été pris et pendu à ${PV[S.realms[k].cap].n}. ${rname(k)} est furieux.`);
+    }
+    case 'marryPeace': {
+      const w = S.wars.find(x => x.id === a.war); if (!w || !(w.a.includes(p) || w.b.includes(p))) return err('Guerre introuvable.');
+      const mine = sideOf(w, p), other = (mine === 'a' ? w.b : w.a)[0]; if (!S.realms[other] || String(other).startsWith('R_')) return err('On n\'épouse pas une révolte.');
+      const my = mine === 'a' ? warScore(w) : -warScore(w); if (my < -25) return err(`${rname(other)} pense gagner : il refuse de marier les siens à un vaincu (score ${my}).`);
+      const A0 = ch(a.a), B0 = ch(a.b); if (!A0 || !B0 || A0.spouse || B0.spouse || A0.sex === B0.sex) return err('Ce mariage est impossible.');
+      endWar(w, null); marry(A0, B0); addTreaty('marriage', p, other); addRel(p, other, 20); r.prestige += 4;
+      return ok(`La paix est scellée par les noces de ${chName(A0)} et de ${chName(B0)}. ${rname(other)} devient votre allié par le sang.`);
+    }
+    case 'autoIron': { const G = g51(); G.autoIron = G.autoIron ? 0 : 1; return ok(G.autoIron ? 'Vos intendants achèteront le fer manquant à chaque saison.' : 'Achat automatique du fer arrêté.') }
+  }
+  return _act51.apply(this, arguments);
+};
+// les ordres écrits connaissent aussi ces actions
+const _idsContext51 = idsContext; idsContext = function () {
+  return _idsContext51() + `
+NOUVEAU : {"type":"allyTask","ally":"code royaume allié","target":"id province ennemie"} un allié attaque une cible · {"type":"garrison","prov":"id","men":1000} laisser une garnison · {"type":"ungarrison","prov":"id"} · {"type":"spy","target":"code royaume"} envoyer un espion (40) · {"type":"ransomOwn","char":"id"} racheter un proche captif · {"type":"swapPrisoner","mine":"id proche captif","theirs":"id prisonnier"} · {"type":"marryPeace","war":"id","a":"id de votre famille","b":"id famille ennemie"} paix scellée par un mariage.`;
+};
+
+// ---------- 6. la saison ----------
+const _endSeason51 = endSeason; endSeason = function () {
+  const r = _endSeason51.apply(this, arguments);
+  for (const f of [garTick51, allyTick51, autoIron51]) { try { f() } catch (e) { console.error && console.error(f.name, e) } }
+  return r;
+};
+
+// ---------- 7. interface : une page par onglet, chaque commande à un seul endroit ----------
+// (les boutons repliés « ⋯ de plus » ont été retirés du code)
+const H51 = (t, extra) => `<div class="lbl l51${extra ? ' row between' : ''}">${extra ? `<span>${t}</span>${extra}` : t}</div>`;
+const B51 = (l, on, tip, cls, dis) => `<button class="btn small${cls ? ' ' + cls : ''}" ${dis ? 'disabled' : ''} title="${esc(tip || '')}" onclick="${on.replace(/"/g, '&quot;')}">${l}</button>`;
+function el51(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content }
+function lblOf51(pn, re) { return [...pn.querySelectorAll(':scope > .lbl')].find(x => re.test(x.textContent)) }
+function cardAfter51(lbl) { let n = lbl && lbl.nextElementSibling; return n }
+function rmSec51(pn, re) { const l = lblOf51(pn, re); if (!l) return; let n = l.nextElementSibling; l.remove(); while (n && !n.matches('.lbl')) { const x = n.nextElementSibling; n.remove(); n = x } }
+
+// --- Ordres : écrire ses ordres ; les décrets sont rangés là où ils servent ---
+function org51_ordres(pn) {
+  rmSec51(pn, /^Décrets rapides/);
+  [...pn.querySelectorAll(':scope > .card')].forEach(c => { if (c.querySelector('select[onchange*="type:\'tax\'"]')) c.remove() });
+  pn.querySelectorAll(':scope > .qa').forEach(e => e.remove());
+}
+// --- Domaine : résumé, politique, or, marché, chantiers ---
+function org51_dev(pn) {
+  const r = P0(), p = S.player, G = g51();
+  // fer : la forge locale et l'achat automatique
+  const fe = [...pn.querySelectorAll(':scope > .card')].find(c => /Fer & équipement/.test(c.textContent));
+  if (fe) {
+    const need = ironNeed(p), mine = realmRes(p).fer || 0, imp = importedIron(p), forg = forge51(p), eq = equip(p);
+    fe.innerHTML = `<div class="row between"><b>⚒️ Fer & équipement</b><span class="${eq >= 1 ? 'ok' : 'warn'}">${eq >= 1.05 ? 'excellent' : eq >= 1 ? 'normal' : 'insuffisant'} · ${Math.round(eq * 100)} %</span></div>${bar(mine + imp + forg, need, eq >= 1 ? '#5fa86f' : '#d6a548')}
+     <div class="faint" style="font-size:12.5px;margin-top:4px">Forges du royaume ${fr1(forg)} · mines ${fr1(mine)} · commerce et halle ${fr1(imp)} — pour ${fr1(need)} nécessaire${need >= 2 ? 's' : ''}. Au-delà du besoin, vos soldats frappent plus fort (jusqu'à +10 %).</div>
+     <label class="row between" style="margin-top:6px;font-size:13px"><span>🛒 Acheter le fer manquant à chaque saison</span><input type="checkbox" ${G.autoIron ? 'checked' : ''} onchange="doAct({type:'autoIron'})"></label>`;
+  }
+  // politique : l'autorité rejoint les impôts
+  const pl = lblOf51(pn, /^Politique économique/), pc = cardAfter51(pl);
+  if (pc && !pc.querySelector('[data-auth51]')) pc.insertAdjacentHTML('afterbegin', `<div class="row between wk" data-auth51="1"><span><b>⚜️ Autorité de la couronne</b><div class="faint" style="font-size:12px">Plus d'autorité = plus d'or et de soldats, mais des vassaux mécontents.</div></span><select onchange="doAct({type:'auth',level:+this.value})">${['Faible', 'Féodale', 'Centralisée'].map((l, i) => `<option value="${i}" ${r.auth === i ? 'selected' : ''}>${l}</option>`).join('')}</select></div>`);
+  if (pl) pl.textContent = '⚖️ Politique du royaume';
+  const fl = lblOf51(pn, /^Finances & monnaie/); if (fl) fl.textContent = '💰 Trouver de l\'or';
+  // halle : des boutons qui disent ce qu'ils font
+  pn.querySelectorAll('.mk38').forEach(row => { const bs = row.querySelectorAll('.bs button'); if (bs.length === 2 && !row.dataset.m51) { row.dataset.m51 = 1; bs[0].textContent = 'Vendre'; bs[1].textContent = 'Acheter'; bs.forEach(b => b.classList.add('m51')) } });
+}
+// --- Cour : les faveurs royales et les prisonniers ---
+function org51_cour(pn) {
+  const r = P0(), p = S.player;
+  const q = (l, a, tip) => B51(l, `doAct(${JSON.stringify(a).replace(/"/g, "'")})`, tip);
+  const cc = canCrown();
+  const fav = `${H51('🎁 Faveurs de la couronne')}<div class="card"><div class="acts">${q('🍷 Festin · 40', { type: 'feast' }, 'Noblesse +, prestige +')}${B51('🏇 Tournoi · 90', 'joustStart()', 'Organisez un tournoi et joutez !')}${q('🥖 Aumônes · 40', { type: 'alms' }, 'Peuple +, troubles −')}${q('⛪ Don à l\'Église · 60', { type: 'tithe' }, 'Clergé +, légitimité +')}${cc.ok ? q('👑 Couronnement', { type: 'crown' }, 'Devenir Haut-Roi d\'Argenthal !') : ''}</div>${cc.ok ? '' : `<div class="faint" style="font-size:12px;margin-top:4px">👑 Couronnement : ${esc(cc.why || '')}</div>`}</div>`;
+  const anchor = lblOf51(pn, /Grandes maisons vassales/) || lblOf51(pn, /Petit conseil/);
+  if (anchor) anchor.before(el51(fav)); else pn.appendChild(el51(fav));
+  // vos proches captifs à l'étranger
+  const held = Object.values(S.chars).filter(c => c.alive && c.prison && c.prison !== p && c.house === r.house);
+  if (held.length) {
+    const mineCells = Object.values(S.chars).filter(c => c.alive && c.prison === p);
+    const html = `${H51('⛓️ Vos proches captifs')}<div class="card">${held.map(c => { const sw = mineCells.filter(x => x.realm === c.prison); return `<div class="row between wk"><span><b>${esc(chName(c))}</b> <span class="faint" style="font-size:12px">retenu par ${esc(rn(c.prison))}</span></span><span class="row">${B51('💰 Racheter', `doAct({type:'ransomOwn',char:'${c.id}'})`)}${sw.length ? `<select class="btn small" onchange="if(this.value)doAct({type:'swapPrisoner',mine:'${c.id}',theirs:this.value})"><option value="">🔁 Échanger contre…</option>${sw.map(x => `<option value="${x.id}">${esc(chName(x))}</option>`).join('')}</select>` : ''}</span></div>` }).join('')}</div>`;
+    const cl = lblOf51(pn, /^Cachots/); if (cl) cl.before(el51(html)); else pn.appendChild(el51(html));
+  }
+}
+// --- Guerre : vos guerres, lever des troupes, vos armées, campagne, mercenaires et flotte ---
+function men51(list) { return list.reduce((s, k) => s + (S.realms[k] ? armiesOf(k).reduce((x, a) => x + a.men, 0) : String(k).startsWith('R_') ? Object.values(S.armies).filter(a => a.realm === k).reduce((x, a) => x + a.men, 0) : 0), 0) }
+function warBlock51(w) {
+  const p = S.player, mine = sideOf(w, p), my = mine === 'a' ? warScore(w) : -warScore(w), us = mine === 'a' ? w.a : w.b, them = mine === 'a' ? w.b : w.a;
+  const mU = men51(us), mT = men51(them), tot = Math.max(1, mU + mT), lead = them[0];
+  const letters = (S.letters || []).filter(L => L.kind === 'peace' && L.war === w.id);
+  const fam = Object.values(S.chars).filter(c => c.alive && c.house === P0().house && !c.spouse && c.age >= 16 && !c.prison && c.id !== P0().ruler);
+  const theirs = S.realms[lead] ? royalSingles(lead) : [];
+  const pairs = []; fam.forEach(a => theirs.filter(b => b.sex !== a.sex).slice(0, 1).forEach(b => pairs.push([a, b])));
+  const allies = us.filter(k => k !== p && S.realms[k]);
+  const name = k => esc(rn(k));
+  let h = `<div class="card w51" style="border-color:#7a3a33"><div class="row between"><b>${esc(w.name)}</b><span class="faint" style="font-size:12px">depuis ${S.turn - w.start} saison(s)</span></div>
+   <div class="row between" style="font-size:13px;margin-top:4px"><span class="ok">${us.map(name).join(', ')}</span><span class="bad" style="text-align:right">${them.map(name).join(', ')}</span></div>
+   <div class="row between" style="font-size:13px"><b class="ok">${fmtMen(mU)} hommes</b><b class="bad">${spiedAll51(them) ? '' : '~'}${fmtMen(spiedAll51(them) ? mT : Math.round(mT / 500) * 500)} hommes</b></div>
+   <div class="rk-bar" style="height:6px;margin:3px 0 8px"><i style="width:${Math.round(mU / tot * 100)}%;background:#5fa86f"></i></div>
+   <div class="ws"><i style="left:calc(${(my + 100) / 2}% - 2px)"></i></div><div class="row between" style="font-size:12px"><span class="bad">Défaite</span><b>Score : ${my > 0 ? '+' : ''}${my}</b><span class="ok">Victoire</span></div>`;
+  if (letters.length) h += letters.map(L => `<div class="card" style="margin:8px 0 0;border-color:var(--brass)"><b>📨 ${esc(L.t)}</b><div class="mute" style="font-size:12.5px">${L.body}</div><div class="acts">${(L.acts || []).map(([l, a]) => B51(esc(l), `letterUI('${L.id}','${a}')`, '', a === 'accPeace' ? 'primary' : '')).join('')}</div></div>`).join('');
+  if (w.civil) h += `<div class="faint" style="font-size:12.5px;margin-top:6px">Battez les armées rebelles et prenez leur château : la révolte plie dès que sa capitale tombe.</div>`;
+  else {
+    h += `<div class="acts">${B51('📜 Négocier un traité', `treatyUI('${w.id}')`, 'Choisir terres, tribut, vassalité', 'primary')}${B51('🕊️ Paix blanche', `doAct({type:'peace',war:'${w.id}',terms:'white'})`)}${B51('🗺️ Exiger les terres', `doAct({type:'peace',war:'${w.id}',terms:'provs'})`)}${B51('💰 Tribut', `doAct({type:'peace',war:'${w.id}',terms:'gold'})`)}${B51('⛓️ Vassaliser', `doAct({type:'peace',war:'${w.id}',terms:'vassal'})`)}${B51('🤝 Céder une terre', `doAct({type:'peace',war:'${w.id}',terms:'cede'})`)}${B51('🏳️ Capituler', `askConfirm('Capituler ?','',()=>{doAct({type:'peace',war:'${w.id}',terms:'surrender'})})`, '', 'danger')}</div>`;
+    const extra = [];
+    if (allies.length) extra.push(B51('🎯 Un allié attaque…', `ally51UI('${w.id}')`, 'Demander à un allié de frapper une cible précise'));
+    if (pairs.length) extra.push(B51('💍 Paix par mariage', `marry51UI('${w.id}')`, 'Finir la guerre par des noces : paix blanche et alliance'));
+    if (S.realms[lead] && !spied51(lead)) extra.push(B51('🕵️ Espionner · 40', `doAct({type:'spy',target:'${lead}'})`, 'Connaître ses armées exactes'));
+    if (extra.length) h += `<div class="acts">${extra.join('')}</div>`;
+  }
+  const tasks = g51().ally.filter(t => us.includes(t.ally));
+  if (tasks.length) h += `<div class="faint" style="font-size:12px;margin-top:4px">${tasks.map(t => `🎯 ${esc(rn(t.ally))} marche sur ${esc(PV[t.target].n)} (encore ${t.until - S.turn} saison(s))`).join(' · ')}</div>`;
+  return h + `</div>`;
+}
+function spiedAll51(list) { return list.every(k => !S.realms[k] || spied51(k)) }
+function levy51() {
+  const p = S.player, r = P0(), roy = armiesOf(p).find(x => x.royal), cost = u => UNIT[u][1];
+  return `${H51('📯 Lever des troupes')}<div class="card"><div class="mute" style="font-size:12.5px;margin-bottom:6px">Le ban : ${r.ban ? `<b class="warn">convoqué depuis ${r.banT || 0} saison(s)</b> — un ban trop long vide les champs et lasse les vassaux.` : `non convoqué · ${fmtMen(levyOf(p))} hommes mobilisables.`} Trésor : <b>${Math.round(r.gold)} écus</b>.</div>
+   <div class="acts">${r.ban ? B51('🏠 Renvoyer le ban', `doAct({type:'dismiss'})`) : B51('📯 Convoquer le ban', `doAct({type:'ban'})`, 'Lever les armées de la couronne et des vassaux', 'primary')}
+   ${['inf', 'cav', 'arc'].map(u => B51(`${UNIT[u][2]} 1 000 ${u === 'inf' ? 'fantassins' : u === 'cav' ? 'chevaliers' : 'archers'} · ${cost(u)}`, `doAct({type:'recruitType',unit:'${u}'})`, UNIT[u][0], '', r.gold < cost(u))).join('')}
+   ${B51(`🗡️ 2 500 mercenaires · ${p === 'ORV' ? 90 : 130}`, `doAct({type:'mercs'})`, 'Coûteux à entretenir')}
+   ${roy ? B51('🏠 Démobiliser la garde', `demobUI('${roy.id}')`) : ''}</div></div>`;
+}
+function org51_guerre(pn) {
+  const p = S.player, ws = warsOf(p);
+  const fz = pn.querySelector(':scope > .card.fz'), fzL = lblOf51(pn, /Vos forces/);
+  const cp = pn.querySelector(':scope > .card.cp'), cpL = lblOf51(pn, /Ordres de campagne/);
+  const det = pn.querySelector(':scope > details.wdet');
+  const forces = [...pn.querySelectorAll(':scope > .card')].find(c => /Forces en présence/.test(c.textContent));
+  const keep = [];
+  // tout ce qui est dans la « gestion détaillée » remonte sur la page
+  if (det) { const inner = det.querySelector(':scope > div') || det; [...inner.children].forEach(c => keep.push(c)); det.remove() }
+  if (forces) forces.remove();
+  // doublons : l'ancien bloc du ban, les anciennes cartes de guerre, les boutons de recrutement des forces
+  const old = []; let section = null; const sec = {};
+  keep.forEach(c => { if (c.matches('.lbl')) { section = c.textContent.trim(); sec[section] = sec[section] || [c]; return } if (section) sec[section].push(c); else old.push(c) });
+  const help = old.find(c => c.matches('details') && /Comment prendre/.test(c.textContent));
+  if (fz) fz.querySelectorAll(':scope > .acts').forEach(e => e.remove());
+  // missions par armée : on reprend les sélecteurs de la campagne
+  const sels = {}; if (cp) { cp.querySelectorAll('.cp-army').forEach(x => { const mv = x.querySelector('[onclick*="moveArmyUI"]'), m = mv && /moveArmyUI\('([^']+)'/.exec(mv.getAttribute('onclick')); const s = x.querySelector('select'); if (m && s) sels[m[1]] = s }); const list = cp.querySelector('.cp-list'); if (list) list.remove(); cp.querySelectorAll('.cw-row').forEach(e => e.remove()) }
+  const frag = document.createDocumentFragment(), add = n => { if (n) frag.appendChild(n) };
+  add(el51(H51('⚔️ Vos guerres' + (ws.length ? '' : ''))));
+  add(el51(ws.length ? ws.map(warBlock51).join('') : `<div class="card mute" style="font-size:13px">Vous êtes en paix. Pour déclarer une guerre : onglet Diplo, touchez un royaume.</div>`));
+  add(el51(levy51()));
+  if (fz) { add(fzL || el51(H51('⚔️ Vos forces'))); add(fz) }
+  // vos armées : une carte par armée, mission comprise
+  const armL = sec['Vos armées'];
+  if (armL) { add(el51(H51('🛡️ Vos armées'))); armL.slice(1).forEach(c => { const mv = c.querySelector('[onclick*="moveArmyUI"]'), m = mv && /moveArmyUI\('([^']+)'/.exec(mv.getAttribute('onclick')); if (m && sels[m[1]]) { const row = document.createElement('div'); row.className = 'row between'; row.style.cssText = 'margin-top:6px;font-size:12.5px'; row.innerHTML = '<span class="faint">🎯 Mission</span>'; const s = sels[m[1]]; s.addEventListener('click', e => e.stopPropagation()); row.appendChild(s); c.appendChild(row) } add(c) }) }
+  if (cp) { add(cpL ? (cpL.textContent = '🎯 Stratégie de toutes les armées', cpL) : el51(H51('🎯 Stratégie de toutes les armées'))); add(cp) }
+  // garnisons
+  const gars = realmProvs(p).filter(q => S.prov[q].gar51);
+  add(el51(`${H51('🏰 Garnisons')}<div class="card" style="font-size:13px">${gars.length ? gars.map(q => `<div class="row between wk"><span>${esc(PV[q].n)} · <b>${fmtMen(S.prov[q].gar51)}</b>${S.prov[q].siege > 0 ? ' <span class="bad">assiégée</span>' : ''}</span>${B51('Sortir', `doAct({type:'ungarrison',prov:'${q}'})`)}</div>`).join('') : '<div class="faint">Aucune garnison. Touchez une de vos provinces où se trouve une armée, puis « 🏰 Garnison », pour y laisser des hommes : les sièges y durent bien plus longtemps.</div>'}</div>`));
+  for (const k in sec) { if (k === 'Vos armées') continue; sec[k].forEach(add) }
+  old.filter(c => c !== help && !(c.matches('.card') && (/Le ban/.test(c.textContent.slice(0, 20)) || c.querySelector('[onclick*="treatyUI"]')))).forEach(add);
+  [...pn.children].forEach(c => { if (!c.matches('.lbl, .card.fz, .card.cp') || c === fz || c === cp || c === fzL || c === cpL) return; frag.appendChild(c) });
+  if (help) add(help);
+  pn.innerHTML = ''; pn.appendChild(frag);
+  // ennemis : chiffres exacts pour les royaumes espionnés
+  pn.querySelectorAll('.card .row.between').forEach(rw => { const t = rw.textContent; const k = REALM_IDS.find(x => t.startsWith(rn(x) + ' ·')); if (k && spied51(k)) { const b = rw.querySelector('b'); const a = Object.values(S.armies).filter(x => x.realm === k && PV[x.loc] && t.includes(PV[x.loc].n))[0]; if (b && a) b.textContent = fmtMen(a.men) + ' 🕵️' } });
+}
+function ally51UI(wid) {
+  const w = S.wars.find(x => x.id === wid); if (!w) return; const p = S.player, mine = sideOf(w, p), us = (mine === 'a' ? w.a : w.b).filter(k => k !== p && S.realms[k]), them = mine === 'a' ? w.b : w.a;
+  const targets = Object.keys(S.prov).filter(q => them.includes(S.prov[q].k) && !S.prov[q].occ).sort((a, b) => provValue(b) - provValue(a)).slice(0, 12);
+  modal(`<h2>🎯 Un allié attaque</h2><p class="mute" style="font-size:14px">Votre allié lance ses deux plus grandes armées sur la cible pendant un an. Il faut de bonnes relations.</p>
+   <label class="row between" style="margin:8px 0">Allié <select id="al51">${us.map(k => `<option value="${k}">${esc(rn(k))} (relations ${rel(p, k)})</option>`).join('')}</select></label>
+   <div class="ch">${targets.map(q => `<button class="btn" onclick="closeModal();doAct({type:'allyTask',ally:document.getElementById('al51')?document.getElementById('al51').value:'${us[0]}',target:'${q}'})">${PV[q].cap ? '👑 ' : ''}${esc(PV[q].n)} <span class="faint">${esc(rn(S.prov[q].k))}${S.prov[q].castle ? ' · château ' + S.prov[q].castle : ''}</span></button>`).join('')}<button class="btn ghost" onclick="closeModal()">Annuler</button></div>`);
+  // la valeur doit être lue au clic : on la recopie
+  setTimeout(() => { const s = document.getElementById('al51'); if (s) s.onchange = () => { } }, 0);
+}
+function marry51UI(wid) {
+  const w = S.wars.find(x => x.id === wid); if (!w) return; const p = S.player, mine = sideOf(w, p), lead = (mine === 'a' ? w.b : w.a)[0];
+  const fam = Object.values(S.chars).filter(c => c.alive && c.house === P0().house && !c.spouse && c.age >= 16 && !c.prison && c.id !== P0().ruler), theirs = royalSingles(lead);
+  const pairs = []; fam.forEach(a => theirs.filter(b => b.sex !== a.sex).slice(0, 2).forEach(b => pairs.push([a, b])));
+  modal(`<h2>💍 La paix par un mariage</h2><p class="mute" style="font-size:14px">La guerre s'arrête sans perte ni gain, et les deux maisons deviennent alliées par le sang. ${esc(rn(lead))} refusera s'il pense gagner.</p>
+   <div class="ch">${pairs.map(([a, b]) => `<button class="btn" onclick="closeModal();doAct({type:'marryPeace',war:'${wid}',a:'${a.id}',b:'${b.id}'})"><b>${esc(chName(a))}</b> (${a.age} ans) ∞ <b>${esc(chName(b))}</b> (${b.age} ans)</button>`).join('') || '<p class="mute">Aucun parti possible.</p>'}<button class="btn ghost" onclick="closeModal()">Annuler</button></div>`);
+}
+// --- Diplo : une ligne par royaume, ses actions s'ouvrent sur place ---
+function org51_diplo(pn) {
+  const G = g51();
+  pn.querySelectorAll(':scope > .card').forEach(card => {
+    const acts = card.querySelector(':scope > .acts'); if (!acts) return;
+    const m = (acts.innerHTML.match(/(?:target|dealUI\(|plotUI\(|warUI\()'?:?'?([A-Z0-9_]+)'/) || [])[1] || (acts.innerHTML.match(/'([A-Z]{3}|N\d+)'/) || [])[1]; if (!m || !S.realms[m]) return;
+    const k = m; if (!spied51(k) && !acts.querySelector('[data-spy51]')) acts.insertAdjacentHTML('beforeend', `<button class="btn small" data-spy51="1" onclick="doAct({type:'spy',target:'${k}'})">🕵️ Espion · 40</button>`);
+    if (spied51(k)) { const R = S.realms[k]; acts.insertAdjacentHTML('beforebegin', `<div class="faint" style="font-size:12px;margin-top:4px">🕵️ ${fmtMen(menOf(k))} hommes sous les armes · ${Math.round(R.gold)} écus · alliés : ${S.treaties.filter(t => t.type === 'alliance' && t.p.includes(k)).map(t => esc(rn(t.p.find(x => x !== k)))).join(', ') || 'aucun'}</div>`) }
+    const war = atWar(S.player, k), open = !!G.dipOpen[k] || war;
+    acts.classList.toggle('h51', !open);
+    const tg = document.createElement('button'); tg.className = 'btn small ghost t51'; tg.type = 'button'; tg.textContent = open ? '▴ Fermer' : '▾ Actions';
+    tg.onclick = e => { e.stopPropagation(); G.dipOpen[k] = !G.dipOpen[k]; acts.classList.toggle('h51', !G.dipOpen[k]); tg.textContent = G.dipOpen[k] ? '▴ Fermer' : '▾ Actions' };
+    if (!war) acts.before(tg);
+  });
+}
+// --- Chronique : lettres et histoire ; réglages regroupés à la fin ---
+function org51_chron(pn) {
+  // l'ancien objectif « tenir 10 ans » n'existe plus : seul compte celui du chapitre
+  rmSec51(pn, /^🎯 Objectif du chapitre/);
+  if (S.flags && S.flags.ch50) { const o = obj50Card(); if (o) { const f = pn.firstElementChild; const n = el51(o); if (f && f.nextSibling) f.after(n); else pn.prepend(n) } }
+  const set = [...pn.querySelectorAll(':scope > .card')].filter(c => /Animations et effets|Difficulté|Rumeurs de Valmor|Terres conquises|Nommer les royaumes|Interface à pastilles|Transférer la partie|Économie d'énergie/.test(c.textContent));
+  set.forEach(c => { if (/Interface à pastilles/.test(c.textContent)) c.remove() });
+  const rest = set.filter(c => c.isConnected); if (rest.length) { rest[0].before(el51(H51('⚙️ Réglages et sauvegarde'))); }
+}
+const ORG51 = { ordres: org51_ordres, dev: org51_dev, cour: org51_cour, guerre: org51_guerre, diplo: org51_diplo, chron: org51_chron };
+const _renderPanel51 = renderPanel; renderPanel = function () {
+  const pn = $('#panel'), sc = pn ? pn.scrollTop : 0, k0 = VIEW.tab;
+  _renderPanel51.apply(this, arguments);
+  try { if (pn && ORG51[VIEW.tab]) ORG51[VIEW.tab](pn); if (pn && renderPanel.k51 === k0) pn.scrollTop = sc; renderPanel.k51 = k0 } catch (e) { console.error && console.error('org51', VIEW.tab, e) }
+};
+// badge « Guerre » : une proposition de paix attend une réponse
+const _renderTabs51 = renderTabs; renderTabs = function () {
+  _renderTabs51.apply(this, arguments);
+  try { const n = (S.letters || []).filter(L => L.kind === 'peace').length; if (!n) return; document.querySelectorAll('#tabs button, #mnav button').forEach(b => { if (/Guerre/.test(b.textContent) && !b.querySelector('.pz51')) b.insertAdjacentHTML('beforeend', `<span class="badge pz51">📨</span>`) }) } catch (e) { }
+};
+// province : garnison
+const _renderCard51 = renderCard; renderCard = function () {
+  _renderCard51.apply(this, arguments);
+  try { const id = VIEW.sel, p = S.player; if (!id || !S.prov[id]) return; const P = S.prov[id], ac = $('#pcard .acts'); if (!ac || P.k !== p || P.occ) return;
+    if (P.gar51) ac.insertAdjacentHTML('beforeend', `<button class="btn small" onclick="doAct({type:'ungarrison',prov:'${id}'})">🏰 Garnison ${fmtMen(P.gar51)} · sortir</button>`);
+    if (armiesAt(id, x => x.realm === p && !x.merc && x.men >= 600).length) ac.insertAdjacentHTML('beforeend', `<button class="btn small" onclick="doAct({type:'garrison',prov:'${id}',men:1000})">🏰 Garnison · 1 000</button>`);
+  } catch (e) { }
+};
+// barre de raccourcis sur la carte : elle mène vers l'onglet, elle ne double aucune commande
+function go51(tab) { VIEW.tab = tab; VIEW.side = true; render(); const pn = $('#panel'); if (pn) pn.scrollTop = 0 }
+function quick51() {
+  const mw = $('#mapwrap'); if (!mw || !S || !S.realms[S.player]) return; let el = $('#qb45'); if (!el) { el = document.createElement('div'); el.id = 'qb45'; mw.appendChild(el) }
+  const nl = (S.letters || []).length, np = (S.letters || []).filter(L => L.kind === 'peace').length, ws = warsOf(S.player).length;
+  const B = [['✍️', 'Ordre', `go51('ordres')`], ['⚒️', 'Domaine', `go51('dev')`], ['👑', 'Cour', `go51('cour')`], ['⚔️', 'Guerre', `go51('guerre')`, np || ws], ['🤝', 'Diplo', `go51('diplo')`], nl ? ['✉️', 'Lettres', `go51('chron')`, nl] : null].filter(Boolean);
+  const h = B.map(([ic, l, fn, n]) => `<button type="button" onclick="${fn}">${n ? `<i>${n}</i>` : ''}<span>${ic}</span>${l}</button>`).join(''); if (el._h !== h) { el._h = h; el.innerHTML = h }
+}
+const _renderTop51 = renderTop; renderTop = function () { _renderTop51.apply(this, arguments); try { if (isMobile()) quick51(); else { const e = $('#qb45'); if (e) e.remove() } } catch (e) { } };
+const _enterGame51 = enterGame; enterGame = function () { try { if (S) { S.settings = S.settings || {}; S.settings.simple = false } } catch (e) { } const r = _enterGame51.apply(this, arguments); try { render() } catch (e) { } return r };
+
+// carte : un seul bouton de vue, qui se déplie (comme avant, mais toujours)
+const _updateMap51 = updateMap; updateMap = function () {
+  _updateMap51.apply(this, arguments);
+  try { const m = $('#modes'); if (!m) return; m.classList.add('m40'); m.classList.toggle('open', !!VIEW.mo40);
+    if (!m.querySelector('button.sel')) { const b = m.querySelector('button'); b && b.classList.add('sel') }
+    if (!m._h51) { m._h51 = 1; m.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; if (!VIEW.mo40) { VIEW.mo40 = 1; m.classList.add('open'); e.stopPropagation(); e.preventDefault() } else { VIEW.mo40 = 0; setTimeout(() => m.classList.remove('open'), 0) } }, true) }
+  } catch (e) { }
+};
+try { const t = TABS.find(x => x[0] === 'dev'); if (t) { t[2] = 'Domaine'; t[3] = 'Domaine' } } catch (e) { }
+// ---------- 8. le menu : la saga en six chapitres, dès l'ouverture ----------
+try { if (!S && document.querySelector('#menu')) showMenu() } catch (e) { }
+
+// ---------- 9. styles de la refonte ----------
+(() => { const st = document.createElement('style'); st.id = 'st51'; st.textContent = `
+#panel .acts.h51{display:none}
+#panel .t51{margin-top:6px}
+#panel .mk38 .bs button.m51{width:auto;min-width:0;padding:3px 9px;font-size:12px;border-radius:7px}
+#panel .lbl.l51{margin-top:14px}
+#panel select.btn.small{font-size:12.5px;max-width:100%}
+#panel .acts{display:flex;flex-wrap:wrap;gap:6px}
+#panel .w51 .acts{margin-top:8px}
+#panel .card .row.between select.btn.small{max-width:170px}
+`; document.head.appendChild(st) })();
+
+// ---------- 10. des noms de provinces variés, chaque royaume avec sa langue ----------
+const PN51 = {
+  CIM: ['Isenwald', 'Grimstein', 'Ulfsberg', 'Hrodmarck', 'Wolfsgard', 'Skaldheim', 'Eisenfurt', 'Brannholt', 'Kaltenbrück', 'Sturmfels', 'Nordwacht', 'Fendmoor', 'Hallgrim', 'Ravenskar', 'Frostholm', 'Gletscherau', 'Tannwald', 'Hirschfeld', 'Bärenklamm', 'Steinach', 'Weißhorn', 'Dunkelsee', 'Hohenwacht', 'Ostermark', 'Grauwolf', 'Eschenhal', 'Kragenfels', 'Schneefurt', 'Adlerhorst', 'Fjellvik', 'Vargholt', 'Ulmenbach', 'Jarlsberg', 'Torvanger', 'Helmgard', 'Runenfels', 'Wintermark', 'Bergwacht', 'Sigmarsdal', 'Haldenstein', 'Graustein', 'Felsenau', 'Nebelhorn', 'Kaltwasser', 'Wolfsklamm', 'Eiskamm', 'Rabenfels', 'Mjollhof', 'Gunnarsheim', 'Hagenbruck', 'Lindwurm', 'Thorsvik', 'Ostwacht', 'Birkenhal', 'Silberklamm', 'Hrafnholt', 'Dunfell', 'Krähenfels', 'Odalsberg', 'Weidenhal', 'Schwarzforst', 'Fenrisdal', 'Holmgard', 'Eisenhut'],
+  ROS: ['Montvergier', 'Rosevals', 'Belcastel', 'Aigueverte', 'Florençac', 'Saint-Aymeric', 'Vignelaure', 'Clairac', 'Pommerol', 'Lusignac', 'Beaurepaire', 'Mirabel', 'Castelrose', 'Valfleurie', 'Sauveterre', 'Montaigu', 'Roquebrune', 'Peyrolles', 'Lauzerte', 'Cordelune', 'Brassac', 'Gaillac-des-Prés', 'Vergeroux', 'Sainte-Mélisende', 'Bastide-aux-Roses', 'Puylaurens', 'Arbrissel', 'Fontfroide', 'Lavaur', 'Cazères', 'Blanquefort', 'Muscadel', 'Champ-Doré', 'Bellegarde', 'Tournesol', 'Rivesaltes', 'Mont-Ségur', 'Aubeterre', 'Cassagne', 'Villerose', 'Frontenac', 'Lombrives', 'Saint-Gontran', 'Mazères', 'Pradelles', 'Cerisaie', 'Gerbeval', 'Roseraie-le-Comte', 'Castelvigne', 'Montbrison', 'Prunelles', 'Aiguebelle', 'Sauvagnac', 'Courtebelle', 'Fontevraud', 'Lys-de-Rosemont', 'Grandchamp', 'Vauclair'],
+  AUB: ['Argentoile', 'Clairval', 'Aubemont', 'Saint-Aurèle', 'Portblanc', 'Valcouronne', 'Lys-d\'Argent', 'Albaterre', 'Sainte-Vaelis', 'Haute-Isthme', 'Miroir-des-Mers', 'Blancastel', 'Pont-d\'Argent', 'Aelmont', 'Candelys', 'Port-Lumière', 'Neigebourg', 'Saint-Ysaure', 'Belle-Écume', 'Tour-d\'Albâtre', 'Ivoirine', 'Mont-Sacre', 'Basilique-aux-Cygnes', 'Rive-Blanche', 'Cygneval', 'Hermine-sur-Mer', 'Clos-du-Prélat', 'Perle-d\'Isthme', 'Ostrevent', 'Lunargent', 'Calcédoine', 'Opaline'],
+  ORV: ['Aurelmont', 'Mine-aux-Lions', 'Goldenach', 'Filon-Royal', 'Orbrune', 'Lingotière', 'Dorval', 'Fauvecourt', 'Pépite-sur-Roc', 'Ambrecourt', 'Topazière', 'Cuivrelande', 'Mont-Midas', 'Auréole', 'Soleil-des-Cimes', 'Saint-Florin', 'Ducatelle', 'Fonte-aux-Cloches', 'Lionceaux', 'Gemmeval', 'Ocrefosse', 'Bronzelune', 'Crinière', 'Écu-d\'Or', 'Orpaille', 'Lustre-Haut', 'Galène', 'Vermeil', 'Sesterce', 'Besant-sur-Mer', 'Grotte-aux-Trésors', 'Lion-d\'Aurevent'],
+  VAL: ['Gué-Saint-Merle', 'Aulnaie', 'Bief-aux-Saules', 'Confluence', 'Moulin-Vieux', 'Île-aux-Hérons', 'Vannebourg', 'Truitebec', 'Roselière', 'Pont-de-Brume', 'Écluse-du-Roi', 'Berge-Fleurie', 'Fontaine-aux-Joncs', 'Méandre', 'Delarive-sur-Gué', 'Bac-aux-Loutres', 'Saulnaie', 'Cressonnière', 'Rivebelle', 'Saint-Batelier', 'Grève-Dorée', 'Lavandière', 'Passeur', 'Courlis', 'Héronnière', 'Martin-Pêcheur', 'Estuaire', 'Nénuphar'],
+  SOL: ['Qasr-al-Shams', 'Zahirat', 'Al-Safran', 'Bab-el-Rimal', 'Oued-Sahrane', 'Djebel-Ocre', 'Tamarzit', 'Kasbah-des-Ardents', 'Ain-Zafira', 'Mirazir', 'Bir-al-Nahr', 'Ksar-Mirage', 'Dunes-d\'Ambre', 'Medina-al-Bahr', 'Tafilalt', 'Rabat-des-Épices', 'Sidi-Kamar', 'Oasis-des-Palmes', 'Erg-Rouge', 'Souk-al-Zaafran', 'Taourirt', 'Ksar-Scorpion', 'Al-Ghazal', 'Dar-Cannelle', 'Ras-al-Nour', 'Hammadat', 'Zagora'],
+  FER: ['Skerholm', 'Brisevague', 'Grimsvik', 'Mouettenes', 'Récifholm', 'Varechness', 'Saltvik', 'Tempêteroc', 'Haakonsund', 'Brumøy'],
+};
+const PNKEEP51 = new Set(['Val-de-Saint', 'Saint-Moulin', 'Roche-Lys', 'Val-de-Faucon', 'Lande-aux-Cuivres', 'Fort-Sainte', 'Val-de-Sainte', 'Bronze-sur-Mer', 'Fort-Rive', 'Tour-Houle']);
+function provNames51() {
+  try {
+    if (!MAP || !MAP.provs || MAP.pn51) return; const used = {}, idx = {};
+    for (const p of MAP.provs.slice().sort((a, b) => a.id < b.id ? -1 : 1)) {
+      if (p.cap || PNKEEP51.has(p.n) || !PN51[p.k]) continue;
+      const L = PN51[p.k]; idx[p.k] = idx[p.k] || 0; let nm = null;
+      while (idx[p.k] < L.length) { const c = L[idx[p.k]++]; if (!used[c]) { nm = c; break } }
+      if (!nm) nm = p.n.replace(/^Val-de-([AEIOUÉÈÊaeiouéèê])/, 'Val-d\'$1');
+      used[nm] = 1; p.n0 = p.n; p.n = nm; if (PV[p.id]) PV[p.id].n = nm;
+    }
+    MAP.pn51 = 1;
+  } catch (e) { console.error && console.error('names51', e) }
+}
+const _useMap51 = useMap; useMap = function () { const r = _useMap51.apply(this, arguments); try { provNames51() } catch (e) { } return r };
+try { provNames51() } catch (e) { }
+
+// ---------- 11. la carte : plus nette, plus fine, plus vivante ----------
+// eaux côtières : un dégradé lisse et deux lignes d'eau nettes, sans escaliers ni grain
+buildWaterArt = function (cb) {
+  const W = MAP.W, H = MAP.H, s = isMobile() ? .8 : 1.05, cv = document.createElement('canvas'); cv.width = Math.round(W * s); cv.height = Math.round(H * s); const x = cv.getContext('2d');
+  x.scale(s, s); x.lineJoin = 'round'; x.lineCap = 'round';
+  const L = landPath();
+  try { x.filter = 'blur(10px)' } catch (e) { }
+  for (const [w, o] of [[90, .05], [62, .07], [40, .1], [22, .14]]) { x.strokeStyle = `rgba(190,222,240,${o})`; x.lineWidth = w; x.stroke(L) }
+  try { x.filter = 'none' } catch (e) { }
+  x.setLineDash([]); x.strokeStyle = 'rgba(225,240,248,.32)'; x.lineWidth = 1.2;
+  // lignes d'eau à la manière des portulans
+  for (const [w, o, dash] of [[30, .22, [7, 6]], [54, .13, [3, 7]]]) { x.save(); x.setLineDash(dash); x.lineWidth = 1; x.strokeStyle = `rgba(232,244,250,${o})`; x.lineWidth = w; x.globalCompositeOperation = 'source-over'; x.restore() }
+  const ring = (w, o, dash) => { const c2 = document.createElement('canvas'); c2.width = cv.width; c2.height = cv.height; const y = c2.getContext('2d'); y.scale(s, s); y.lineJoin = 'round'; y.strokeStyle = '#000'; y.lineWidth = w; y.stroke(L); y.globalCompositeOperation = 'destination-out'; y.lineWidth = w - 2.2; y.stroke(L); y.globalCompositeOperation = 'source-in'; y.setTransform(1, 0, 0, 1, 0, 0); y.fillStyle = `rgba(236,246,252,${o})`; y.fillRect(0, 0, c2.width, c2.height); x.save(); x.setTransform(1, 0, 0, 1, 0, 0); x.drawImage(c2, 0, 0); x.restore() };
+  ring(26, .34); ring(52, .18);
+  x.strokeStyle = 'rgba(240,250,255,.5)'; x.lineWidth = 3; x.stroke(L);
+  x.globalCompositeOperation = 'destination-out'; x.fill(L);
+  canvasURL(cv, cb);
+};
+// liserés des royaumes : plus fins et plus élégants
+buildBandArt = function (cb) {
+  const W = MAP.W, H = MAP.H, s = MAP3.sc * 1.4, cv = document.createElement('canvas'); cv.width = Math.round(W * s); cv.height = Math.round(H * s); const x = cv.getContext('2d'); x.scale(s, s);
+  MAP3.ep = MAP3.ep || {}; const by = {};
+  for (const kk in MAP.edges) { const [a, b] = kk.split('|'); if (!S.prov[a] || !S.prov[b] || S.prov[a].k === S.prov[b].k) continue; const e = MAP3.ep[kk] || (MAP3.ep[kk] = new Path2D(MAP.edges[kk])); (by[a] = by[a] || []).push(e); (by[b] = by[b] || []).push(e) }
+  for (const q in by) { const p = provPath(q); x.save(); x.clip(p); x.strokeStyle = rcol(S.prov[q].k); x.lineCap = 'round'; x.lineJoin = 'round'; for (const e of by[q]) { x.globalAlpha = .18; x.lineWidth = 16; x.stroke(e); x.globalAlpha = .75; x.lineWidth = 5; x.stroke(e) } x.restore() }
+  canvasURL(cv, cb);
+};
+// petits motifs médiévaux : moulins, chapelles, villages
+Object.assign(G39, {
+  mill: [[el39(1, .4, 4.2, 1.1), 'rgba(0,0,0,.28)'], ['M-2.4 0L-1.7 -7L1.7 -7L2.4 0Z', '#dccba4', 'rgba(40,28,14,.7)', .5], ['M-2.1 -7L0 -9.2L2.1 -7Z', '#7c3b22', 'rgba(40,28,14,.6)', .4], ['M0 -7.6L-5 -12.6M0 -7.6L5 -12.6M0 -7.6L-5 -2.6M0 -7.6L5 -2.6', null, '#3a2a18', .9], ['M-.6 0v-1.8h1.2v1.8', '#3a2616']],
+  chapel: [[el39(1, .4, 5.5, 1.2), 'rgba(0,0,0,.28)'], ['M-4.5 0v-4h5v4z', '#e2d4b0', 'rgba(40,28,14,.7)', .5], ['M.5 0v-8h3v8z', '#e8dcc0', 'rgba(40,28,14,.7)', .5], ['M.2 -8L2 -11.6L3.8 -8Z', '#4a5568', 'rgba(30,24,14,.6)', .4], ['M-5.1 -3.7L-2 -6.3L1 -3.7', null, '#7c3b22', 1.2], ['M2 -12.6v-1.6M1.3 -13.6h1.4', null, '#c9a227', .6]],
+  village: [[el39(1, .4, 9, 1.6), 'rgba(0,0,0,.26)'], ['M-8 0v-3l2.4 -2.1l2.4 2.1V0z', '#d6c49c', 'rgba(40,28,14,.65)', .45], ['M-8.7 -2.8L-5.6 -5.6L-2.5 -2.8', null, '#7c3b22', 1.1], ['M-2 0v-3.8l3 -2.6l3 2.6V0z', '#e0cfa8', 'rgba(40,28,14,.7)', .5], ['M-2.8 -3.5L1 -6.9L4.8 -3.5', null, '#8a4426', 1.2], ['M4.4 0v-2.8l2.2 -1.9l2.2 1.9V0z', '#d2bf96', 'rgba(40,28,14,.65)', .45], ['M3.8 -2.6L6.6 -5L9.4 -2.6', null, '#7c3b22', 1]],
+});
+const _place51 = place39; place39 = function (px) {
+  const byP = _place51.apply(this, arguments);
+  try {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 2; const cx = cv.getContext('2d');
+    for (const p of MAP.provs) {
+      const B = byP[p.id]; if (!B) continue; const t = p.t0 || p.t, path = provPath(p.id), inP = (x, y) => cx.isPointInPath(path, x, y), rnd = rng39(Math.floor(hashStr(p.id + 'v51') * 4294967296));
+      const free = (x, y, d) => B.it.every(q => Math.abs(q[0] - x) > d || Math.abs(q[1] - y) > d * .8) && (Math.abs(x - p.c[0]) > 34 || Math.abs(y - p.c[1]) > 26);
+      const add = (x, y, g, k) => { if (inP(x, y) && inP(x - 8, y) && inP(x + 8, y) && free(x, y, 11)) { B.it.push([x, y, g, k]); return true } return false };
+      if (t === 'p' || t === 'h') {
+        const fields = B.it.filter(q => q[2] === 'field' || q[2] === 'fieldG');
+        if (fields.length && rnd() < .55) { const f = fields[Math.floor(rnd() * fields.length)]; add(f[0] + 13, f[1] - 1, 'mill', .95) }
+        for (let i = 0; i < 6; i++) { const a = rnd() * Math.PI * 2, r = 30 + rnd() * 26; if (add(p.c[0] + Math.cos(a) * r, p.c[1] + Math.sin(a) * r * .7, rnd() < .35 ? 'chapel' : 'village', .9 + rnd() * .2)) break }
+      }
+      B.it.sort((a, b) => a[1] - b[1]);
+    }
+  } catch (e) { console.error && console.error('place51', e) }
+  return byP;
+};
+(() => { const st = document.createElement('style'); st.textContent = `.wx-petal{display:none!important}#gr39{opacity:.45}`; document.head.appendChild(st) })();
+// étiquettes : quand deux noms se chevauchent, le second glisse juste en dessous
+function declutter51() {
+  const gl = $('#glab'); if (!gl) return; const key = Math.round(MV.w) + '|' + gl.childElementCount; if (gl.dataset.k51 === key) return; gl.dataset.k51 = key;
+  const L = [...gl.querySelectorAll('text.plab')]; if (!L.length || L.length > 400) return;
+  L.forEach(t => { if (t.dataset.y51 == null) t.dataset.y51 = t.getAttribute('y'); else t.setAttribute('y', t.dataset.y51) });
+  const boxes = []; 
+  for (const t of L) {
+    if (t.getAttribute('display') === 'none' || getComputedStyle(t).display === 'none') continue;
+    let b; try { b = t.getBBox() } catch (e) { continue } if (!b.width) continue;
+    let y = parseFloat(t.getAttribute('y')), dy = 0, tries = 0;
+    const hit = () => boxes.find(o => b.x < o.x + o.w && b.x + b.width > o.x && b.y + dy < o.y + o.h && b.y + dy + b.height > o.y);
+    let o; while ((o = hit()) && tries++ < 3) dy = o.y + o.h - b.y + 1;
+    if (dy) t.setAttribute('y', (y + dy).toFixed(1));
+    boxes.push({ x: b.x, y: b.y + dy, w: b.width, h: b.height });
+  }
+}
+const _updateMap51b = updateMap; updateMap = function () { _updateMap51b.apply(this, arguments); try { clearTimeout(declutter51.t); declutter51.t = setTimeout(declutter51, 120) } catch (e) { } };
+
+</script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
 </body></html>
