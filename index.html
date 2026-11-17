@@ -10223,7 +10223,7 @@ const _newGameUI50 = newGameUI; newGameUI = function (k) {
 };
 // ---------- 11. la carte d'objectif du chapitre ----------
 function obj50Card() {
-  if (!S || !S.flags || !S.flags.ch50 || !SCEN50[S.flags.ch50] || (S.flags.ch50 === 'conquete' && S.flags.role50 !== 'MOR')) return '';
+  if (!S || !S.flags || !S.flags.ch50 || !SCEN50[S.flags.ch50] || (S.flags.ch50 === 'conquete' && S.flags.role50 === 'AUB')) return '';
   const sg = SAGA50.find(x => x[0] === S.flags.ch50), F = role50Now(), nx = SAGA50[SAGA50.indexOf(sg) + 1];
   return `<div class="lbl">📖 ${esc(sg[2])}</div><div class="card" style="border-color:var(--brass)"><div style="font-size:13px">${S.flags.obj50 ? '✅' : '⬜'} ${esc(F ? F.obj : 'Vivez votre propre histoire : ce chapitre est survenu dans votre règne.')}</div>${nx ? `<div class="faint" style="font-size:12px;margin-top:4px">Prochain chapitre : ${esc(nx[2])} — an ${nx[1]}${S.year < nx[1] ? ` (dans ${nx[1] - S.year} an${nx[1] - S.year > 1 ? 's' : ''})` : ''}.</div>` : '<div class="faint" style="font-size:12px;margin-top:4px">Dernier chapitre de la saga.</div>'}</div>`;
 }
@@ -10287,6 +10287,10 @@ Object.assign(STORY38, {
   ],
 });
 </script>
+
+
+
+
 
 
 
@@ -11355,6 +11359,59 @@ OBJ50.pont.ARD = () => { const E = e52(), a = E.ard; return !!E.off && alive50(a
   _t53.apply(this, arguments); const E = e52(); if (S.flags.ch50 !== 'pont' || E.ch !== 'pont' || E.off || E.wed || !alive50(E.ard)) return;
   if (S.player === E.ard) { if ((S.turn - E.t0) % 3 === 1) offer52(S.player, '🔥 Le détroit', 'Vos capitaines peuvent provoquer un incident au détroit. Si une guerre éclate, le mariage est annulé.', [['Provoquer un incident', 'e52incident'], ['Attendre', 'e52no']]) }
   else if (chance(.1) && S.player !== E.king && S.player !== 'KES') { incident52(); if (alive50(E.ard)) joinWar52(E.ard, 'KES', E.king, 0) }
+} }
+
+// ---------- 16. contrôle des règles : armées sur la même terre ----------
+// Deux armées ennemies qui partagent une terre en début de saison se battent avant tout mouvement : plus d'esquive.
+function preFight53() {
+  const seen = new Set();
+  for (const a of Object.values(S.armies)) {
+    if (S.pendBattle) return; if (!S.armies[a.id] || seen.has(a.loc)) continue; seen.add(a.loc);
+    const here = armiesAt(a.loc); const k0 = here[0]; if (!k0) continue; const foes = here.filter(b => atWar(k0.realm, b.realm)); if (!foes.length) continue;
+    const mine = here.filter(b => !atWar(k0.realm, b.realm)), defOwn = ctrl(a.loc), att = mine.some(b => b.realm === defOwn) ? foes : mine, def = att === foes ? mine : foes; fight(a.loc, att, def);
+  }
+}
+{ const _sa53 = stepArmies; stepArmies = function () { try { preFight53() } catch (e) { } return _sa53.apply(this, arguments) } }
+{ const _es53 = endSeason; endSeason = function () { try { if (S && !S.pendBattle) preFight53() } catch (e) { } return _es53.apply(this, arguments) } }
+
+// ---------- 17. progression des objectifs de chapitre ----------
+function bar53(label, cur, max, good) {
+  const p = Math.max(0, Math.min(1, max ? cur / max : 0)), c = good === false ? 'var(--bad,#c0392b)' : 'var(--brass,#c9a227)';
+  return `<div style="margin-top:6px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>${label}</span><b>${cur} / ${max}</b></div><div style="height:6px;border-radius:3px;background:rgba(128,128,128,.25);overflow:hidden"><div style="height:100%;width:${Math.round(p * 100)}%;background:${c}"></div></div></div>`;
+}
+function left53(n) { const t = S.turn - (S.flags.t050 || S.turn), r = Math.max(0, n - t); return `<div class="faint" style="font-size:12px;margin-top:4px">⏳ ${r ? `Il reste ${r} saison${r > 1 ? 's' : ''} à tenir (${Math.ceil(r / 4)} an${Math.ceil(r / 4) > 1 ? 's' : ''})` : 'La durée est atteinte'}</div>` }
+function prog53() {
+  const ch0 = S.flags.ch50, role = S.flags.role50, p = S.player, E = (S.flags.e52 || {}), t = S.turn - (S.flags.t050 || S.turn); let h = '';
+  const couList = MAP.provs.filter(q => q.reg === 'couchant').map(q => q.id);
+  const own = (k, list) => list.filter(q => S.prov[q] && (S.prov[q].k === k || ctrl(q) === k)).length;
+  switch (ch0 + ':' + role) {
+    case 'conquete:AUB': case 'conquete:AEL': { const left = conqLeft().length; h = bar53('Couronnes soumises', 6 - left, 6); break }
+    case 'conquete:AZU': h = `<div class="faint" style="font-size:12px;margin-top:4px">💰 Prêt : ${E.loan ? 'à ' + esc(rname(E.loan)) : 'pas encore accordé'}</div>`; break;
+    case 'nord:FER': h = left53(20); break;
+    case 'nord:TAI': h = `<div style="font-size:12px;margin-top:4px">🐺 Pacte des Loups : ${E.pact ? '<b class="ok">scellé</b>' : 'pas encore'}</div>` + left53(12); break;
+    case 'aigle:KES': h = `<div style="font-size:12px;margin-top:4px">👑 Couronnement : ${E.crowned ? '<b class="ok">fait</b>' : 'prenez la cité de Kesh'}</div>` + (E.crowned ? '' : left53(28)); break;
+    case 'aigle:DES': case 'aigle:AZU': h = left53(20); break;
+    case 'ports:AZU': h = bar53('Cités tenues', own('AZU', E.cities || []), 7) + `<div class="faint" style="font-size:12px">Il en faut au moins 5.</div>` + left53(12); break;
+    case 'ports:KES': h = bar53('Cités prises', own('KES', E.cities || []), 5); break;
+    case 'pretendant:TAI': h = bar53('Provinces prises à Kesh', ownOrig52('TAI', 'KES'), 3); break;
+    case 'pretendant:AZU': h = `<div style="font-size:12px;margin-top:4px">⚓ Votre camp : ${E.azuSide === 'garran' ? 'Garran' : E.azuSide === 'saeryn' ? 'Saeryn' : 'pas encore choisi'}</div>`; break;
+    case 'ligue:ROS': h = bar53('Provinces de la Marche tenues', own(p, couList), 6); break;
+    case 'ligue:AZU': h = bar53('Ports de l\'Empire pris', ownOrig52('AZU', 'KES'), 3); break;
+    case 'ligue:TAI': h = bar53('Provinces de l\'Empire prises', ownOrig52('TAI', 'KES'), 4); break;
+    case 'ligue:KES': h = left53(8); break;
+    case 'pont:ROS': case 'pont:KES': h = E.wed ? bar53('Paix tenue après le mariage', Math.min(20, S.turn - E.wedT), 20) : E.off ? '<div class="bad" style="font-size:12px;margin-top:4px">💔 Le mariage est annulé</div>' : bar53('Négociations du mariage', Math.max(0, E.prog || 0), E.need || 4); break;
+    case 'pont:CIM': h = E.off ? bar53('Provinces prises à Kesh', Math.max(0, (E.kesStart || 0) - realmProvs('KES').length), 6) : bar53('Mariage (à faire échouer)', Math.max(0, E.prog || 0), E.need || 4, false); break;
+    case 'pont:ARD': h = E.off ? bar53('Provinces de la Marche tenues', own(E.ard, couList), 3) : bar53('Mariage (à faire échouer)', Math.max(0, E.prog || 0), E.need || 4, false); break;
+    case 'pont:AZU': h = E.off ? '<div class="ok" style="font-size:12px;margin-top:4px">💔 L\'union a échoué</div>' : bar53('Mariage (à empêcher)', Math.max(0, E.prog || 0), E.need || 4, false) + left53(16); break;
+    case 'pont:TAI': h = left53(20); break;
+    case 'tete:MAR': case 'tete:SOL': h = `<div style="font-size:12px;margin-top:4px">🏰 Vaeloria : ${(() => { const v = vael52(); return v && ctrl(v) === p ? '<b class="ok">à vous</b>' : 'pas encore prise' })()}</div>`; break;
+  }
+  return h;
+}
+{ const _oc53 = obj50Card; obj50Card = function () {
+  let h = ''; try { h = _oc53.apply(this, arguments) } catch (e) { }
+  if (!h) return h; let pr = ''; try { pr = S.flags.obj50 ? '' : prog53() } catch (e) { }
+  if (!pr) return h; const i = h.lastIndexOf('</div>'); return i > 0 ? h.slice(0, i) + pr + h.slice(i) : h + pr;
 } }
 
 </script><!--/a51-->
