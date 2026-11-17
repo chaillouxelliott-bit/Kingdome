@@ -695,7 +695,7 @@ const REALMS = {
 Object.assign(REALMS, {
   KES: { name: 'Empire de Kesh', short: 'Kesh', col: '#a8283a', adj: 'keshite', house: 'Keshar', title: 'Empereur de Kesh', east: 1,
     spec: ['🦅 Légions impériales', 'Levées immenses et soldats moins chers : sel, argent et épices remplissent les caisses.'], spec2: ['🔥 Satrapes turbulents', 'Les gouverneurs des provinces lointaines se révoltent souvent.'],
-    desc: 'Le géant d\'Ossyrian : hauts plateaux, déserts de sel et vallées fertiles, de la Mer de Glace à la Mer Ardente. Ses empereurs regardent Westerhald par-delà le détroit.', inc: 1.0, lev: 1.25, loy: -12, ai: { agg: .6, honor: .5, greed: .6 } },
+    desc: 'Le géant d\'Ossyrian : hauts plateaux, déserts de sel et vallées fertiles, de la Mer de Glace à la Mer Ardente. Ses empereurs regardent Westerhald par-delà le détroit.', inc: 1.0, lev: 1.25, loy: -6, ai: { agg: .6, honor: .5, greed: .6 } },
   AZU: { name: 'Thalassocratie d\'Azurée', short: 'Azurée', col: '#1fa3a3', adj: 'azuréen', house: 'Venier', title: 'Doge d\'Azurée', east: 1,
     spec: ['⚓ Plus grande flotte', 'Peut débarquer sur toutes les côtes ; ses banquiers prêtent à tous.'], spec2: ['🗳️ Élections disputées', 'Armée de terre faible ; le doge est élu par les sept cités.'],
     desc: 'L\'archipel du sud-est : sept cités marchandes, des corsaires et des banques. Azurée vend des navires à tout le monde… et des mercenaires aux deux camps.', inc: 1.45, lev: .7, loy: 0, ai: { agg: .3, honor: .45, greed: .85 } },
@@ -10317,6 +10317,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -10747,7 +10748,7 @@ buildBandArt = function (cb) {
   const W = MAP.W, H = MAP.H, s = MAP3.sc * 1.4, cv = document.createElement('canvas'); cv.width = Math.round(W * s); cv.height = Math.round(H * s); const x = cv.getContext('2d'); x.scale(s, s);
   MAP3.ep = MAP3.ep || {}; const by = {};
   for (const kk in MAP.edges) { const [a, b] = kk.split('|'); if (!S.prov[a] || !S.prov[b] || S.prov[a].k === S.prov[b].k) continue; const e = MAP3.ep[kk] || (MAP3.ep[kk] = new Path2D(MAP.edges[kk])); (by[a] = by[a] || []).push(e); (by[b] = by[b] || []).push(e) }
-  for (const q in by) { const p = provPath(q); x.save(); x.clip(p); x.strokeStyle = rcol(S.prov[q].k); x.lineCap = 'round'; x.lineJoin = 'round'; for (const e of by[q]) { x.globalAlpha = .18; x.lineWidth = 16; x.stroke(e); x.globalAlpha = .75; x.lineWidth = 5; x.stroke(e) } x.restore() }
+  for (const q in by) { const p = provPath(q); x.save(); x.clip(p); x.strokeStyle = rcol(S.prov[q].k); x.lineCap = 'round'; x.lineJoin = 'round'; const lis = String(rcol(S.prov[q].k)).toLowerCase() === '#b8892b'; for (const e of by[q]) { x.globalAlpha = .18; x.lineWidth = 16; x.stroke(e); x.globalAlpha = .75; x.lineWidth = 5; x.stroke(e); if (lis) { x.save(); x.strokeStyle = '#1e1a14'; x.globalAlpha = .9; x.lineWidth = 2.4; x.stroke(e); x.restore() } } x.restore() }
   canvasURL(cv, cb);
 };
 // petits motifs médiévaux : moulins, chapelles, villages
@@ -11011,7 +11012,7 @@ function tick52() {
     const v = capitalOf(king), rosHas = alive50('ROS') && v && ctrl(v) === 'ROS';
     if (!E.saeryn && rosHas) { E.saeryn = -1; if (mar && alive50(mar)) note50('⛵ Saeryn renonce', 'Garran tient Vaeloria. De l\'autre côté du détroit, <b>Saeryn</b> range ses navires : l\'occasion est passée… pour cette fois.') }
     if (!E.saeryn && t >= 12 && mar && alive50(mar) && alive50(king) && v && warsOf(king).length) {
-      E.saeryn = 1; const w = ewar52(mar, king, [], []); const land = [...NB[v]].filter(q => S.prov[q] && S.prov[q].k === king && PV[q].coast)[0] || v; const L = mkArmy(mar, null, land, 4000, S.realms[mar].ruler, true); L.legion52 = 1;
+      const w = ewar52(mar, king, [], []); if (!w && !atWar(mar, king)) return; E.saeryn = 1; const land = [...NB[v]].filter(q => S.prov[q] && S.prov[q].k === king && PV[q].coast)[0] || v; const L = mkArmy(mar, null, land, 4000, S.realms[mar].ruler, true); L.legion52 = 1;
       note50('⛵ Le débarquement de Saeryn', 'La guerre dure depuis trois ans. <b>Saeryn</b>, fils de Daemyr et Satrape du Couchant, débarque sur la presqu\'île de Vaeloria avec une légion de Kesh : il vient prendre le Trône d\'Argent à la faveur du chaos.');
     }
   }
