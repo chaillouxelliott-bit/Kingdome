@@ -10329,6 +10329,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11458,12 +11459,12 @@ function labels54later() { clearTimeout(labels54.t); labels54.t = setTimeout(() 
 // ---------- 20. couleurs des royaumes : plus franches, comme sur la carte modèle ----------
 const COL54 = { CIM: ['#9583c0', '#b3a3d9'], ORV: ['#d9ac43', '#d6a531'], VAL: ['#5a95c4', '#6a9ccc'], ROS: ['#78b263', '#7dba55'], SOL: ['#da8549', '#dd8a45'], FER: ['#6d7178', '#7d8189'], KES: ['#a8283a', '#b3313b'], TAI: ['#2f6b45', '#2e7a4c'], AZU: ['#1fa3a3', '#22a9a6'] };
 for (const k in COL54) if (REALMS[k]) REALMS[k].col = COL54[k][1];
-function cols54() { if (!S || !S.realms) return; for (const k in COL54) { const R = S.realms[k]; if (R && (!R.col || R.col === COL54[k][0])) R.col = COL54[k][1] } }
+function cols54() { if (!S || !S.realms) return; S.settings = S.settings || {}; if (!S.settings.names54) { S.settings.names54 = 1; S.settings.houseNames = false } for (const k in COL54) { const R = S.realms[k]; if (R && (!R.col || R.col === COL54[k][0])) R.col = COL54[k][1] } }
 { const _pf54 = provFill; provFill = function (id) { const v = _pf54.apply(this, arguments); if (VIEW.mode === 'pol' && v && v[1] > 0 && v[1] < .4) { const P = S.prov[id]; return [v[0], P && P.k === S.player ? .5 : .42] } return v } }
 { const _mg54 = migrate; migrate = function () { const r = _mg54.apply(this, arguments); try { cols54() } catch (e) { } return r } }
 { const _ng54 = newGameUI; newGameUI = function () { const r = _ng54.apply(this, arguments); try { cols54() } catch (e) { } return r } }
 // frontières des royaumes : un trait sombre et net
-(() => { const st = document.createElement('style'); st.textContent = '#gbord path:nth-child(1){stroke-width:3.4px;stroke-opacity:.8}#gbord path:nth-child(2){stroke:#24180c;stroke-opacity:.95;stroke-width:1.5px}'; document.head.appendChild(st) })();
+(() => { const st = document.createElement('style'); st.textContent = '#gbord path:nth-child(1){stroke-width:2.2px;stroke-opacity:.38}#gbord path:nth-child(2){stroke:#2a1d10;stroke-opacity:.55;stroke-width:1px}'; document.head.appendChild(st) })();
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
