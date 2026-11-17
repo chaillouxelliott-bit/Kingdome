@@ -10320,6 +10320,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11316,6 +11317,45 @@ const _tick52c = tick52; tick52 = function () {
     { y: 150, k: ['KES', 'AZU'], t: 'La Guerre des Épices', d: 'Les satrapes du sud se révoltent ; Azurée en profite pour prendre la route maritime des épices.' });
   LORE_CANON.sort((a, b) => a.y - b.y);
 })();
+
+// ---------- 15. derniers arbitrages, au plus près de l'histoire ----------
+// Un roi qui prête hommage au Haut-Roi garde sa couronne : il devient son fidèle, il n'est pas absorbé
+{ const _hk53 = hkSet; hkSet = function (o, st) { if (st === 'sworn' && east52(o)) return; if (st === 'sworn' && S.hk && S.hk.king === S.player && o !== S.player && typeof _hkSet10 === 'function') return _hkSet10(o, st); return _hk53.apply(this, arguments) } }
+// Kesharan V : couronné en 158, il affermit son pouvoir en 164 (chapitre VI : il est déjà empereur)
+(() => {
+  const e = LORE_CANON.find(x => x.t === 'Kesharan V'); if (e) { e.y = 158; e.d = 'Un jeune empereur cruel et ambitieux, Kesharan V, monte sur le trône de Kesh.' }
+  LORE_CANON.push({ y: 164, k: ['KES'], t: 'L\'empereur affermi', d: 'Kesharan V affermit son pouvoir à Kesh. « De l\'autre côté du détroit, la lignée du Bâtard attend son heure. »' },
+    { y: -60, k: ['KES'], big: 1, t: 'Keshar Ier', d: 'Keshar Ier unit le plateau, le delta et les déserts, et fonde Kesh au bord du lac salé.' },
+    { y: -40, k: ['AZU'], big: 1, t: 'Le Pacte des Sept Ports', d: 'Les cités de l\'archipel fondent la Ligue d\'Azurée pour échapper à l\'Empire.' },
+    { y: -10, k: ['KES'], t: 'Qasr-Daral', d: 'L\'Empire fortifie sa côte ouest : la Marche du Couchant et la forteresse de Qasr-Daral, face à Vaeloria.' },
+    { y: -60, k: ['AUB'], t: 'Les six couronnes', d: 'Six couronnes rivales se partagent Westerhald ; la maison Saevar règne sur l\'isthme.' });
+  LORE_CANON.sort((a, b) => a.y - b.y); if (!LORE_ERAS.some(x => x[0] < 1)) LORE_ERAS.unshift([-60, 'Les Temps anciens']);
+})();
+// I et III : une maison de l'isthme se rallie au rebelle dès le premier jour
+function rally53(reb, from) {
+  if (!alive50(reb) || !alive50(from)) return; const mine = new Set(realmProvs(reb));
+  const h = Object.values(S.houses).filter(x => x.realm === from && !x.royal && !x.gone && houseProvs(x.id).length && houseProvs(x.id).length <= 4 && houseProvs(x.id).some(q => [...NB[q]].some(n => mine.has(n)))).sort((a, b) => houseProvs(a.id).length - houseProvs(b.id).length)[0];
+  if (!h) return; const ps = houseProvs(h.id).filter(q => S.prov[q].k === from && q !== capitalOf(from)); if (!ps.length) return;
+  ps.forEach(q => { S.prov[q].k = reb; S.prov[q].occ = null }); h.realm = reb; Object.values(S.chars).forEach(c => { if (c.house === h.id) c.realm = reb });
+  note50('🏳️ Un premier ralliement', `Dès le premier jour, la <b>${houseLabel(h)}</b> se rallie à ${rname(reb)} avec ${ps.length} province${ps.length > 1 ? 's' : ''} de l'isthme.`);
+}
+{ const _c1 = CH50.conquete.setup; CH50.conquete.setup = function (cont) { _c1.apply(this, arguments); try { rally53(S.flags.f50.AEL, 'AUB') } catch (e) { } } }
+{ const _c3 = CH50.batard.setup; CH50.batard.setup = function (cont) { _c3.apply(this, arguments); try { rally53(S.flags.f50.BAT, 'AUB') } catch (e) { } } }
+// XI : Ardashir, cousin de l'empereur et chef des faucons, gouverne les Deux Déserts
+PLAY50.pont.splice(3, 0, { id: 'ARD', realm: 'KES', nm: 'Le prince Ardashir', role: 'Les faucons de Kesh', obj: 'Faire échouer l\'union et reprendre la Marche du Couchant : tenir trois de ses provinces.' });
+OBJ50.pont.ARD = () => { const E = e52(), a = E.ard; return !!E.off && alive50(a) && MAP.provs.filter(q => q.reg === 'couchant' && S.prov[q.id] && (S.prov[q.id].k === a || ctrl(q.id) === a)).length >= 3 };
+{ const _c11 = CH50.pont.setup; CH50.pont.setup = function (cont) {
+  _c11.apply(this, arguments); const E = e52(); if (!E.king || !alive50('KES')) return;
+  const old = Object.values(S.chars).find(c => c.name === 'Ardashir' && c.realm === 'KES' && c.alive); if (old) old.alive = false;
+  const ard = splitList52('KES', kesGeo52().des, { name: 'Satrapie des Deux Déserts', short: 'Ardashir', title: 'Satrape des Deux Déserts', col: '#c0603a', house: 'Ardashirid', motto: 'L\'Est ne s\'agenouille pas', ruler: 'Ardashir', age: 33, traits: ['ambit'], men: 3500, east: 1, peaceful: true });
+  if (!ard) return; E.ard = ard; addTreaty('vassal', 'KES', ard, 999); setRel(ard, E.king, -40);
+  if (S.flags.role50 === 'ARD' && !cont) S.player = ard;
+} }
+{ const _t53 = tick52; tick52 = function () {
+  _t53.apply(this, arguments); const E = e52(); if (S.flags.ch50 !== 'pont' || E.ch !== 'pont' || E.off || E.wed || !alive50(E.ard)) return;
+  if (S.player === E.ard) { if ((S.turn - E.t0) % 3 === 1) offer52(S.player, '🔥 Le détroit', 'Vos capitaines peuvent provoquer un incident au détroit. Si une guerre éclate, le mariage est annulé.', [['Provoquer un incident', 'e52incident'], ['Attendre', 'e52no']]) }
+  else if (chance(.1) && S.player !== E.king && S.player !== 'KES') { incident52(); if (alive50(E.ard)) joinWar52(E.ard, 'KES', E.king, 0) }
+} }
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
