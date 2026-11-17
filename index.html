@@ -10325,6 +10325,8 @@ Object.assign(STORY38, {
 
 
 
+
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11413,6 +11415,17 @@ function prog53() {
   if (!h) return h; let pr = ''; try { pr = S.flags.obj50 ? '' : prog53() } catch (e) { }
   if (!pr) return h; const i = h.lastIndexOf('</div>'); return i > 0 ? h.slice(0, i) + pr + h.slice(i) : h + pr;
 } }
+
+// ---------- 18. la fiche du Détroit ----------
+function strait53() {
+  const v = vael52(), qd = (MAP.provs.find(q => q.capc) || {}).id; if (!v || !qd || !S.prov[v] || !S.prov[qd]) return '';
+  const who = q => { const k = S.prov[q].occ || S.prov[q].k; return k === S.player ? '<b>vous</b>' : `<b>${esc(rn(k))}</b>` };
+  const E = S.flags && S.flags.e52 || {}, hv = S.prov[v].occ || S.prov[v].k; let bl = 'ouvert';
+  if (E.strait) bl = '<b class="warn">bloqué par la flotte d\'Azurée</b>'; else if (E.cut) bl = `<b class="warn">fermé à l'or de Kesh par ${esc(rn(hv))}</b>`; else if (E.ferry) bl = 'ouvert ; Azurée y transporte les renforts de Kesh';
+  const war = alive50(hv) && warsOf(hv).some(w => w.a.concat(w.b).some(east52)), toll = !alive50(hv) ? '—' : war ? `suspendus (${hv === S.player ? 'vous êtes' : esc(rn(hv)) + ' est'} en guerre avec l'Est)` : `+12 écus par saison pour ${hv === S.player ? 'vous' : esc(rn(hv))}`;
+  return `<div class="card" style="font-size:12.5px;line-height:1.5">⚓ <b>Détroit de Vaeloria</b> · Vaeloria : ${who(v)} · Qasr-Daral : ${who(qd)} · Passage : ${bl} · Péages : ${toll}</div>`;
+}
+{ const _og53 = org51_guerre; org51_guerre = ORG51.guerre = function (pn) { const r = _og53.apply(this, arguments); try { const h = strait53(); if (h) { const n = el51(h), f = pn.firstElementChild; if (f && f.nextSibling) f.after(n); else pn.prepend(n) } } catch (e) { } return r } }
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
