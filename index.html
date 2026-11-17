@@ -5025,7 +5025,7 @@ function updateMap() {
   for (const p of MAP.provs) {
     const cap = Object.values(S.realms).some(r => r.alive && r.cap === p.id);
     if (cap) { const rr = C(z / 170, 6, 14); lab += S.highKing && p.id === MAP.provs.find(q => q.k === 'AUB' && q.cap).id ? `<text x="${p.c[0]}" y="${p.c[1] - 8}" font-size="${rr * 2.6}" text-anchor="middle" pointer-events="none">👑</text>` : `<g pointer-events="none" filter="url(#ash)"><circle cx="${p.c[0]}" cy="${p.c[1] - 8}" r="${rr}" fill="#f3d77e" stroke="#2a2015" stroke-width="1.6"/><circle cx="${p.c[0]}" cy="${p.c[1] - 8}" r="${rr * .42}" fill="#7a2a1a"/></g>` }
-    if (z < 1400) lab += `<text class="plab" x="${p.c[0]}" y="${p.c[1] + (cap ? 14 : 4)}" font-size="${C(z / 75, 9, 16)}">${esc(p.n)}</text>`;
+    if (z < 1400 || cap) lab += `<text class="plab" data-p="${p.id}"${cap ? ' data-cap="1"' : ''} x="${p.c[0]}" y="${p.c[1] + (cap ? 14 : 4)}" font-size="${C(z / 75, 9, 16)}">${esc(p.n)}</text>`;
     const P = S.prov[p.id]; if (P.siege > 0 && !P.occ) lab += `<text x="${p.c[0] + 16}" y="${p.c[1] - 8}" font-size="${C(z / 70, 12, 22)}" pointer-events="none">⚔️</text>`;
   }
   $('#glab').innerHTML = lab;
@@ -10327,6 +10327,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11426,6 +11427,32 @@ function strait53() {
   return `<div class="card" style="font-size:12.5px;line-height:1.5">⚓ <b>Détroit de Vaeloria</b> · Vaeloria : ${who(v)} · Qasr-Daral : ${who(qd)} · Passage : ${bl} · Péages : ${toll}</div>`;
 }
 { const _og53 = org51_guerre; org51_guerre = ORG51.guerre = function (pn) { const r = _og53.apply(this, arguments); try { const h = strait53(); if (h) { const n = el51(h), f = pn.firstElementChild; if (f && f.nextSibling) f.after(n); else pn.prepend(n) } } catch (e) { } return r } }
+
+// ---------- 19. noms lisibles : jamais deux étiquettes l'une sur l'autre ----------
+// Taille constante à l'écran, priorité aux capitales puis aux grandes provinces, et on cache ce qui ne tient pas.
+declutter51 = function () { };
+function labels54() {
+  const gl = $('#glab'), svg = $('#map'); if (!gl || !svg || !MV.w) return;
+  const sc = (svg.clientWidth || 800) / MV.w, pad = 3 / sc, X0 = MV.x - 40 / sc, Y0 = MV.y - 40 / sc, X1 = MV.x + MV.w + 40 / sc, Y1 = MV.y + MV.h + 40 / sc;
+  const boxes = [], hit = b => boxes.some(o => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+  for (const t of gl.querySelectorAll('text.rlab')) { if (t.getAttribute('display') === 'none') continue; const fs = +t.getAttribute('font-size') || 30, x = +t.getAttribute('x'), y = +t.getAttribute('y'), w = t.textContent.length * fs * .62; boxes.push([x - w / 2, y - fs * .8, x + w / 2, y + fs * .25]) }
+  const L = [];
+  for (const t of gl.querySelectorAll('text.plab')) {
+    if (t.dataset.y0 == null) { t.dataset.y0 = t.getAttribute('y') } const id = t.dataset.p, cap = !!t.dataset.cap, P = id && PV[id];
+    const px = cap ? 12.5 : 10.5, fs = px / sc, x = +t.getAttribute('x'), y = +t.dataset.y0;
+    if (x < X0 || x > X1 || y < Y0 || y > Y1) { t.setAttribute('display', 'none'); continue }
+    t.setAttribute('font-size', fs.toFixed(1)); const w = t.textContent.length * fs * .56;
+    L.push({ t, cap, pr: cap ? 1e12 : (P ? P.area : 0), b: [x - w / 2 - pad, y - fs * .82 - pad, x + w / 2 + pad, y + fs * .22 + pad] });
+  }
+  L.sort((a, b) => b.pr - a.pr);
+  // les capitales d'abord, puis les armées comme obstacles, puis les autres noms
+  for (const l of L) if (l.cap) { l.t.setAttribute('display', hit(l.b) ? 'none' : 'inline'); if (l.t.getAttribute('display') === 'inline') boxes.push(l.b) }
+  const r = 13 / sc; for (const a of Object.values(S.armies || {})) { const P = PV[a.loc]; if (P) boxes.push([P.c[0] - r, P.c[1] - r * 1.6, P.c[0] + r, P.c[1] + r * .4]) }
+  for (const l of L) if (!l.cap) { const ok = !hit(l.b); l.t.setAttribute('display', ok ? 'inline' : 'none'); if (ok) boxes.push(l.b) }
+}
+function labels54later() { clearTimeout(labels54.t); labels54.t = setTimeout(() => { try { labels54() } catch (e) { } }, 90) }
+{ const _sv54 = setVB; setVB = function () { const r = _sv54.apply(this, arguments); labels54later(); return r } }
+{ const _um54 = updateMap; updateMap = function () { const r = _um54.apply(this, arguments); labels54later(); return r } }
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
