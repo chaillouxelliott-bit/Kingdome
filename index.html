@@ -678,7 +678,7 @@ const REALMS = {
     desc: 'Le cœur du continent nord, autour de la Mer Intérieure. Toutes les armées passent par ses gués ; tous ses seigneurs se jalousent.', inc: 1.15, lev: 1.0, loy: -8, ai: { agg: .35, honor: .65, greed: .5 } },
   CIM: { name: 'Royaume de Nordmark', short: 'Nordmark', col: '#9583c0', adj: 'nordique', house: 'Isenhart', title: 'Roi de Nordmark',
     spec: ['🏔️ Forteresses imprenables', 'Châteaux plus solides ; ses armées se défendent mieux en montagne.'], spec2: ['🦅 Isolement', 'Peu peuplé et peu disposé aux alliances.'],
-    desc: 'Toutes les terres enneigées du grand nord : glaciers, cols gelés, fjords et nids d\'aigle, sous la bannière au loup des Isenhart. Personne n\'a jamais pris Nordmark par la force.', inc: .85, lev: .85, loy: 8, ai: { agg: .3, honor: .7, greed: .4 } },
+    desc: 'Toutes les terres enneigées du grand nord : glaciers, cols gelés, fjords et nids d\'aigle, sous la bannière au loup des Isenhart. Personne n\'a jamais pris Belvar par la force.', inc: .85, lev: .85, loy: 8, ai: { agg: .3, honor: .7, greed: .4 } },
   AUB: { name: 'Royaume d\'Argenthal', short: 'Argenthal', col: '#f3f1ea', adj: 'argenthalois', house: 'Aeltharys', title: 'Roi d\'Argenthal',
     spec: ['👑 Siège du Trône d\'Argent', 'Grande légitimité ; la capitale de Vaeloria est la clé du titre de Haut-Roi.'], spec2: ['⛪ Cité du Haut-Prélat', 'L\'Église soutient le régent ; son trésor est riche mais son armée faible.'],
     desc: 'L\'ancienne capitale impériale, sur l\'isthme qui relie les deux continents. Le cœur de l\'isthme, siège du Trône d\'Argent forgé par Aelric le Conquérant : qui tient Vaeloria tient la clé du titre de Haut-Roi.', inc: 1.4, lev: .7, loy: 0, ai: { agg: .25, honor: .7, greed: .5 } },
@@ -2256,7 +2256,7 @@ function worldTick() {
   // 2) équilibre des puissances : coalition contre le royaume dominant
   const avg = avgStrength();
   const hegemon = REALM_IDS.filter(k => S.realms[k].alive).sort((a, b) => strength(b) - strength(a))[0];
-  if (hegemon && strength(hegemon) > avg * 1.7 && !(S.flags.coal > S.turn) && chance(.25)) {
+  if (hegemon && strength(hegemon) > avg * (S.flags && S.flags.ch50 ? 2.3 : 1.7) && !(S.flags.coal > S.turn) && chance(.25)) {
     const mem = ai.filter(o => o !== hegemon && rel(o, hegemon) < 15 && !hasTreaty(o, hegemon, ['alliance', 'marriage', 'vassal']));
     if (mem.length >= 2) {
       for (let i = 0; i < mem.length; i++) for (let j = i + 1; j < mem.length; j++) addTreaty('alliance', mem[i], mem[j], 20);
@@ -3498,7 +3498,7 @@ const LORE_CANON = [
   { y: 3, k: ['AUB'], big: 1, war: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
   { y: 5, k: ['AUB', 'ROS'], war: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Bellegarde charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Bellegarde plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
   { y: 7, k: ['AUB', 'VAL'], t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valgué restera la plus fidèle alliée du Trône.', rel: [['AUB', 'VAL', 10]] },
-  { y: 9, k: ['AUB', 'CIM'], war: 1, t: 'Le Siège des Cimes', d: 'Deux ans de siège devant Nordmark, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Nordmark par la force.', rel: [['AUB', 'CIM', -4]] },
+  { y: 9, k: ['AUB', 'CIM'], war: 1, t: 'Le Siège de Belvar', d: 'Deux ans de siège devant Belvar, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Belvar par la force.', rel: [['AUB', 'CIM', -4]] },
   { y: 10, k: ['AUB', 'ORV'], t: 'L\'or de Lodeshire', d: 'Lodeshire achète sa place dans le nouveau royaume : la maison Harcourt paie la solde de l\'ost et devient la banque du Trône.', rel: [['AUB', 'ORV', 5]] },
   { y: 12, k: ['AUB', 'SOL'], big: 1, t: 'Le sacre d\'Aelric le Conquérant', d: 'Solméria se soumet par le mariage d\'Aelric et d\'une princesse Sahrane. À Vaeloria, Aelric Ier est sacré Haut-Roi : six couronnes plient le genou, le Grand Royaume d\'Argenthal est né.', rel: [['AUB', 'SOL', 4]] },
   { y: 40, k: ['AUB'], t: 'La mort du Conquérant', d: 'Aelric meurt dans son lit, laissant deux fils de deux mères : Aelor l\'Aîné, fils de sa première épouse, et Corwen le Solaire, fils de la princesse de Solméria.' },
@@ -9790,7 +9790,7 @@ html.ios-app .screen{padding-bottom:max(6px,calc(env(safe-area-inset-bottom,0px)
 // ---------- 1. les chapitres ----------
 const SAGA50 = [
   ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes.'],
-  ['nord', 24, 'II. La Révolte du Nord', 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isenhart pend les collecteurs aux portes de Nordmark : « Le loup ne plie pas. » Dans les îles, la maison Grimsel en profite pour rompre avec le Nord.'],
+  ['nord', 24, 'II. La Révolte du Nord', 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isenhart pend les collecteurs aux portes de Belvar : « Le loup ne plie pas. » Dans les îles, la maison Grimsel en profite pour rompre avec le Nord.'],
   ['batard', 61, 'III. La Fille et le Bâtard', 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin de Rivemont ; l\'armée acclame son bâtard Draevon, qui se proclame Draevon Aeltharys. Deux couronnes, un seul trône.'],
   ['dechiree', 128, 'IV. La Couronne déchirée', 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. Trois Aeltharys, un seul Trône d\'Argent.'],
   ['tete', 138, 'V. La Tête du Roi', 'An 138 — Daemyr, réfugié à Solméria, en a épousé l\'héritière et s\'en est proclamé roi. Avec l\'or du désert, le Nord et Bellegarde, il marche sur l\'isthme contre le roi Aldric.'],
@@ -9833,11 +9833,11 @@ const F50COL = { AEL: '#f3f1ea', REINE: '#f3f1ea', BAT: '#e6d3a1', ALD: '#f3f1ea
     { y: 3, k: ['AUB'], big: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
     { y: 5, k: ['ROS', 'AUB'], big: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Bellegarde charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Bellegarde plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
     { y: 7, k: ['VAL', 'AUB'], big: 1, t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valgué restera la plus fidèle alliée du Trône.', rel: [['VAL', 'AUB', 10]] },
-    { y: 9, k: ['CIM', 'AUB'], big: 1, t: 'Le Siège des Cimes', d: 'Deux ans de siège devant Nordmark, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Nordmark par la force.', rel: [['CIM', 'AUB', -4]] },
+    { y: 9, k: ['CIM', 'AUB'], big: 1, t: 'Le Siège de Belvar', d: 'Deux ans de siège devant Belvar, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Belvar par la force.', rel: [['CIM', 'AUB', -4]] },
     { y: 10, k: ['ORV', 'AUB'], big: 1, t: 'L\'or de Lodeshire', d: 'Lodeshire achète sa place dans le nouveau royaume : la maison Harcourt paie la solde de l\'ost et devient la banque du Trône.', rel: [['ORV', 'AUB', 6]] },
     { y: 12, k: ['SOL', 'AUB'], big: 1, t: 'Le sacre d\'Aelric le Conquérant', d: 'Solméria se soumet par le mariage d\'Aelric et d\'une princesse Sahrane. À Vaeloria, Aelric Ier est sacré Haut-Roi : le Grand Royaume d\'Argenthal est né.' },
     { y: 21, k: ['CIM'], big: 1, t: 'Les trois hivers', d: 'Trois hivers sans récolte frappent le Nord. Dans les vallées, on mange l\'écorce des pins ; les collecteurs du Haut-Roi réclament pourtant le tribut.' },
-    { y: 24, k: ['CIM', 'AUB'], big: 1, war: 1, t: 'La Révolte du Nord', d: 'Le roi Hrodmar Isenhart fait pendre les collecteurs du Haut-Roi aux portes de Nordmark. Le Nord prend les armes.', rel: [['CIM', 'AUB', -8]] },
+    { y: 24, k: ['CIM', 'AUB'], big: 1, war: 1, t: 'La Révolte du Nord', d: 'Le roi Hrodmar Isenhart fait pendre les collecteurs du Haut-Roi aux portes de Belvar. Le Nord prend les armes.', rel: [['CIM', 'AUB', -8]] },
     { y: 24, k: ['FER', 'CIM'], big: 1, t: 'La naissance de Brisemer', d: 'Pendant que le Nord se bat, la maison Grimsel rompt avec Nordmark et proclame le royaume de Brisemer : la septième couronne de Westerhald.', rel: [['FER', 'CIM', -8]] },
     { y: 27, k: ['CIM', 'AUB'], big: 1, t: 'La Paix des Neiges', d: 'Épuisé, le Nord rentre dans le rang, la rancune intacte. Brisemer, elles, restent libres.' },
     { y: 40, k: ['AUB'], big: 1, t: 'La mort du Conquérant', d: 'Aelric meurt dans son lit. Son fils Haelor monte sur le Trône d\'Argent ; à la cour grandit un bâtard de Haelor, Draevon, élevé parmi les soldats.' },
@@ -9967,7 +9967,7 @@ const CH50 = {
       if (!rebelIsP) { war50('CIM', king, [], [alive50('VAL') && p !== 'VAL' ? 'VAL' : null].filter(Boolean)); men50('CIM', 1600); men50(king, 800) }
       if (alive50('FER') && alive50('CIM') && p !== 'FER' && !atWar('FER', 'CIM')) war50('FER', 'CIM', [], [], realmProvs('CIM').filter(q => PV[q].coast).slice(0, 1));
       S.flags.f50.start = { CIM: realmProvs('CIM').length, FER: alive50('FER') ? realmProvs('FER').length : 0 };
-      const txt = `Trois hivers sans récolte ont affamé le Nord. Les collecteurs du Haut-Roi réclamaient pourtant le tribut : le roi <b>Hrodmar Isenhart</b> les a fait pendre aux portes de Nordmark. « Le loup ne plie pas. »<br><br>Pendant que le Nord prend les armes, la maison <b>Grimsel</b> rompt avec Nordmark et proclame le royaume des <b>Brisemer</b>.`;
+      const txt = `Trois hivers sans récolte ont affamé le Nord. Les collecteurs du Haut-Roi réclamaient pourtant le tribut : le roi <b>Hrodmar Isenhart</b> les a fait pendre aux portes de Belvar. « Le loup ne plie pas. »<br><br>Pendant que le Nord prend les armes, la maison <b>Grimsel</b> rompt avec Nordmark et proclame le royaume des <b>Brisemer</b>.`;
       const you = rebelIsP ? '<br><br>Vous régnez sur le Nord affamé : à vous de décider si le loup plie… ou s\'il mord (onglet Diplo → déclarer la guerre au Haut-Roi).' : p === 'CIM' ? '<br><br><b>Objectif :</b> tenir les cols et arracher l\'indépendance.' : p === king ? '<br><br><b>Objectif :</b> mater la révolte sans perdre votre armée dans la neige.' : p === 'FER' ? '<br><br><b>Objectif :</b> rester libres. Tenez vos îles pendant cinq ans.' : '<br><br>Le Haut-Roi vous demandera de le suivre. Le ferez-vous ?';
       note50('❄️ La Révolte du Nord', txt + you);
     },
@@ -10287,6 +10287,12 @@ Object.assign(STORY38, {
   ],
 });
 </script>
+
+
+
+
+
+
 
 
 
@@ -10788,6 +10794,260 @@ const _updateMap51b = updateMap; updateMap = function () { _updateMap51b.apply(t
 (() => { let t; const st = document.createElement('style'); st.textContent = 'body.idle51 *{animation-play-state:paused!important}'; document.head.appendChild(st);
   const wake = () => { if (document.body.classList.contains('idle51')) document.body.classList.remove('idle51'); clearTimeout(t); t = setTimeout(() => document.body.classList.add('idle51'), 45000) };
   ['pointerdown', 'keydown', 'wheel'].forEach(e => addEventListener(e, wake, { passive: true })); wake() })();
+
+// ---------- 12. l'Est dans la saga (partie 3) ----------
+// Deux mondes : Westerhald et Ossyrian ne se font la guerre que lorsque l'histoire le veut.
+const EASTK52 = new Set(['KES', 'AZU', 'TAI']);
+function e52() { S.flags = S.flags || {}; return S.flags.e52 || (S.flags.e52 = {}) }
+function east52(k) {
+  if (!k || !S || !S.realms) return false; const r = realOf(k); const D = REALMS[r]; if (D && D.east) return true;
+  const c = S.realms[r] && S.realms[r].alive ? capitalOf(r) : null; return !!(c && PV[c] && EASTK52.has(PV[c].k));
+}
+const _dw52 = declareWar; declareWar = function (a, b) {
+  if (S && !e52().go && east52(a) !== east52(b)) return null;
+  const w = _dw52.apply(this, arguments); if (w && e52().go) w.e52 = 1; return w;
+};
+function ewar52(a, b, wa, wb, goal) { e52().go = 1; let w = null; try { w = war50(a, b, wa, wb, goal) } finally { e52().go = 0 } if (w) w.e52 = 1; return w }
+function joinWar52(k, ally, enemy, men, loc) {
+  if (!alive50(k) || !alive50(ally)) return null; const w = S.wars.find(x => (x.a.includes(ally) && x.b.includes(enemy)) || (x.b.includes(ally) && x.a.includes(enemy))); if (!w) return null;
+  const side = w.a.includes(ally) ? w.a : w.b; if (!side.includes(k)) side.push(k); w.e52 = 1; (S.realms[k].truce || {})[enemy] = 0;
+  if (men) { const A = mkArmy(k, null, loc || capitalOf(ally), men, S.realms[k].ruler, true); A.e52 = 1 } return w;
+}
+function clean52() {
+  if (!S || !S.wars) return;
+  for (const w of S.wars.slice()) {
+    if (w.e52) continue; const ea = east52(w.a[0]), eb = east52(w.b[0]);
+    if (ea !== eb) { try { endWar(w, null, null, true) } catch (e) { S.wars = S.wars.filter(x => x !== w) } continue }
+    w.a = w.a.filter((k, i) => i === 0 || east52(k) === ea); w.b = w.b.filter((k, i) => i === 0 || east52(k) === eb);
+  }
+  for (const w of S.wars) { w.a = [...new Set(w.a)]; w.b = [...new Set(w.b)].filter(k => !w.a.includes(k));
+  }
+  if (S.hk) { S.hk.sworn = S.hk.sworn.filter(k => !east52(k)); S.hk.defiant = S.hk.defiant.filter(k => !east52(k)) }
+}
+function west52(f) { return function () { const all = REALM_IDS; REALM_IDS = all.filter(k => !east52(k)); try { return f.apply(this, arguments) } finally { REALM_IDS = all } } }
+hkInit = west52(hkInit); canCrown = west52(canCrown); worldTick = west52(worldTick);
+// la limite de royaumes vaut pour chaque continent séparément
+aliveCount30 = function () { return REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive && realmProvs(k).length && !east52(k)).length };
+const _mi52 = makeIndep; makeIndep = function (fromK, h, opts) { if (east52(fromK) && !(opts && opts.force) && REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive && east52(k)).length >= 6) return null; return _mi52.apply(this, arguments) };
+// les gens de l'Est portent des noms de l'Est
+const _gc52 = genChar; genChar = function (o) {
+  const c = _gc52.apply(this, arguments);
+  try { const L = o && o.realm && REALMS[o.realm] && REALMS[o.realm].east && NAMES_LOC[o.realm]; if (L && L[c.sex === 'f' ? 'f' : 'm']) c.name = pick(L[c.sex === 'f' ? 'f' : 'm']) } catch (e) { }
+  return c;
+};
+const _es52 = endSeason; endSeason = function () { const r = _es52.apply(this, arguments); try { clean52() } catch (e) { } return r };
+// souverains de l'Est, chapitre par chapitre : [nom, âge, sexe, traits, numéro, maison, devise]
+const ER52 = {
+  conquete: { KES: ['Keshar', 52, 'm', [], 4, 'de Kesh', 'Le soleil ne se couche pas'], AZU: ['Ottavio', 60, 'm', ['ambit'], 0, 'Corsani', 'Le vent paie'], TAI: ['Ulfgar', 40, 'm', ['brave'], 0, 'Peau-d\'Ours', 'L\'ours ne dort qu\'un hiver'] },
+  nord: { KES: ['Keshar', 25, 'm', [], 5, 'de Kesh', 'Le soleil ne se couche pas'], AZU: ['Lucio', 51, 'm', [], 0, 'Vandrame', 'La mer est notre champ'], TAI: ['Haldra', 35, 'f', ['brave'], 0, 'la Louve', 'La meute avant tout'] },
+  batard: { KES: ['Ashkan', 68, 'm', ['ambit', 'brave'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Silvana', 52, 'f', ['ruse'], 0, 'Terzi', 'L\'or ne dort jamais'], TAI: ['Torvik', 50, 'm', [], 0, 'Bjornsson', 'L\'ours ne dort qu\'un hiver'] },
+  dechiree: { KES: ['Roxana', 48, 'f', ['ruse'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Enrico', 44, 'm', [], 0, 'Malvasi', 'Doux vin, dur marché'], TAI: ['Ragna', 44, 'f', ['brave'], 0, 'Œil-de-Glace', 'Froids et patients'] },
+  tete: { KES: ['Roxana', 58, 'f', ['ruse'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Enrico', 54, 'm', [], 0, 'Malvasi', 'Doux vin, dur marché'], TAI: ['Ragna', 54, 'f', ['brave'], 0, 'Œil-de-Glace', 'Froids et patients'] },
+  fou: { KES: ['Kesharan', 36, 'm', ['cruel', 'ambit'], 5, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Bastiano', 49, 'm', ['ruse'], 0, 'Corsani', 'Le vent paie'], TAI: ['Bjarn', 28, 'm', ['brave'], 0, 'le Jeune', 'L\'ours ne dort qu\'un hiver'] },
+};
+const KESF52 = { conquete: .55, nord: .65, batard: 1, dechiree: 1, tete: 1, fou: 1.1 };
+function vael52() { const q = MAP.provs.find(x => x.k === 'AUB' && x.cap); return q && q.id }
+function coast52(k, near) { const L = realmProvs(k).filter(q => PV[q].coast); if (!L.length) return capitalOf(k); if (!near) return L[0]; const c = PV[near].c; return L.sort((a, b) => Math.hypot(PV[a].c[0] - c[0], PV[a].c[1] - c[1]) - Math.hypot(PV[b].c[0] - c[0], PV[b].c[1] - c[1]))[0] }
+function offer52(to, t, body, acts) { S.letters.push({ id: uid('l'), kind: 'e52', from: null, t, body, acts }) }
+// la Marche du Couchant : la côte de Kesh qui fait face à Vaeloria
+function makeMarch52(ruler, age, traits) {
+  if (!alive50('KES')) return null; const take = MAP.provs.filter(q => q.reg === 'couchant' && S.prov[q.id] && S.prov[q.id].k === 'KES').map(q => q.id); if (take.length < 4) return null;
+  const seat = (MAP.provs.find(q => q.capc) || {}).id;
+  let h = Object.values(S.houses).find(x => x.realm === 'KES' && !x.royal && !x.gone);
+  if (!h) return null; if (!ch(h.head) || !ch(h.head).alive) { const c = genChar({ house: h.id, realm: 'KES', sex: 'm', age }); h.head = c.id }
+  realmProvs('KES').forEach(q => { if (S.prov[q].h === h.id && !take.includes(q)) S.prov[q].h = null });
+  take.forEach(q => S.prov[q].h = h.id); h.name = 'Aeltharys-Keshar'; h.motto = 'L\'argent et le soleil'; h.col = '#b8892b'; if (seat && take.includes(seat)) h.seat = seat;
+  const id = makeIndep('KES', h, { name: 'Marche du Couchant', short: 'le Couchant', col: '#b8892b', legit: 50, peaceful: true, force: true }); if (!id) return null;
+  const R = S.realms[id]; R.col = '#b8892b'; R.title = 'Satrape du Couchant'; REALMS[id].title = R.title; REALMS[id].east = 1; R.gold += 200; label50(id, 'Marche du Couchant', 'le Couchant', 'Satrape du Couchant');
+  REALMS[id].desc = 'La côte de l\'Empire de Kesh qui regarde Vaeloria par-delà le détroit. Depuis la forteresse de Qasr-Daral, un prétendant de la lignée du Bâtard gouverne pour l\'impératrice.';
+  REALMS[id].spec = ['🦅 Légion impériale', 'Une légion de Kesh sert le satrape tant que l\'Empire le soutient.']; REALMS[id].spec2 = ['⛓️ Vassale de l\'Empire', 'Le satrape doit tout à Kesh, qui peut le renier.'];
+  REALMS[id].inc = 1; REALMS[id].lev = 1.1; REALMS[id].ai = { agg: .8, honor: .4, greed: .6 };
+  ruler50(id, ruler, age, 'm', traits); setRel(id, 'KES', 60);
+  if (!REALM_IDS.includes(id)) REALM_IDS.push(id); S.flags.mar52 = id; return id;
+}
+function east52Setup(id, cont) {
+  const E = S.flags.e52 = { ch: id, t0: S.turn }; const R0 = ER52[id] || {};
+  for (const k of ['KES', 'AZU', 'TAI']) {
+    const v = R0[k]; if (!v || !alive50(k)) continue; const R = S.realms[k];
+    if (!cont || k !== S.player) { const c = ruler50(k, v[0], v[1], v[2], v[3]); if (c) { c.sex = v[2]; c.health = Math.max(c.health || 70, 85) } R.regnal = v[4] || 0; houseName50(k, v[5], v[6]) }
+    for (const o of ['KES', 'AZU', 'TAI']) if (o !== k && alive50(o) && !atWar(k, o)) { R.truce = R.truce || {}; R.truce[o] = Math.max(R.truce[o] || 0, S.turn + 12) }
+  }
+  if (!cont && alive50('KES')) { scale50('KES', KESF52[id] || 1); if (id === 'conquete' || id === 'nord') S.realms.KES.stab = 30 }
+  if (cont && S.flags.mar52 && alive50(S.flags.mar52) && id !== 'tete' && id !== 'fou') { }
+  clean52();
+}
+const _setup52 = setup50; setup50 = function (id, cont) {
+  const r = _setup52.apply(this, arguments);
+  try { east52Setup(id, cont); if (S.flags.role50 && EAST_ROLE52[id] && EAST_ROLE52[id][S.flags.role50] && !cont) EAST_ROLE52[id][S.flags.role50]() } catch (e) { console.error && console.error('e52', id, e) }
+  try { clean52(); injectRealms(); mapDirty() } catch (e) { }
+  return r;
+};
+// rôles jouables de l'Est
+const EAST_ROLE52 = {
+  conquete: { AZU: () => { S.player = 'AZU'; S.realms.AZU.gold += 400; note50('⚓ Le doge d\'Azurée', 'Vous êtes <b>Ottavio Corsani</b>, doge d\'Azurée. De l\'autre côté de la mer, Westerhald se déchire : Aelric Aeltharys s\'est soulevé contre le vieux roi Morvan III.<br><br><b>Objectif :</b> prêter votre or à celui qui gagnera, et devenir le banquier du vainqueur, sans jamais engager vos navires. Les deux camps vous écriront.') } },
+  nord: { TAI: () => { S.player = 'TAI'; S.realms.TAI.gold = Math.max(40, S.realms.TAI.gold - 40); realmProvs('TAI').forEach(q => S.prov[q].unrest = C(S.prov[q].unrest + 12, 0, 100)); note50('🐺 La Louve', 'Vous êtes <b>Haldra la Louve</b>, Grand Ours de la Taïga. Le même froid qui affame le Nord de Westerhald affame vos clans. De l\'autre côté de la mer de glace, le roi Hrodmar s\'est soulevé contre le Haut-Roi.<br><br><b>Objectif :</b> sauver les clans de la famine et sortir de l\'hiver avec un allié à l\'Ouest. Au deuxième hiver, vous pourrez débarquer dans le Nord.') } },
+};
+PLAY50.conquete.push({ id: 'AZU', realm: 'AZU', nm: 'Ottavio Corsani', role: 'Le doge d\'Azurée', obj: 'Devenir le banquier du vainqueur : prêter à celui qui gagnera, sans jamais engager vos navires.' });
+PLAY50.nord.push({ id: 'TAI', realm: 'TAI', nm: 'Haldra la Louve', role: 'La Taïga affamée', obj: 'Sauver les clans de la famine : débarquer dans le Nord et sortir de l\'hiver alliée du roi Hrodmar.' });
+{ const i = PLAY50.tete.findIndex(f => f.id === 'SOL'); if (i >= 0) PLAY50.tete[i] = { id: 'MAR', realm: 'KES', nm: 'Daemyr, Satrape du Couchant', role: 'Le prétendant d\'outre-détroit', obj: 'Prendre Vaeloria. Mais chaque cruauté vous coûtera des alliés.' } }
+OBJ50.conquete.AZU = () => { const E = e52(), L = E.loan, A = S.flags.f50.AEL; if (!L || !alive50(L)) return false; const o = L === A ? 'AUB' : A; return S.turn - S.flags.t050 > 3 && !warsOf(S.player).length && (!alive50(o) || realmProvs(o).length === 0 || overlordOf(o) === L) };
+OBJ50.nord.TAI = () => { const E = e52(); return !!E.pact && alive50('TAI') && hasTreaty('TAI', 'CIM', ['alliance']) && (S.turn - S.flags.t050 >= 12 || (alive50('CIM') && !atWar('CIM', S.highKing || 'AUB'))) };
+OBJ50.tete.MAR = OBJ50.tete.SOL;
+Object.assign(F50COL, { BAT: '#b8892b', DAE: '#b8892b', TAE: '#9cc7ea' });
+// V : Daemyr, Satrape du Couchant, débarque avec une légion de Kesh
+{
+  const _st = CH50.tete.setup; CH50.tete.setup = function (cont) {
+    const d = S.flags.f50.DAE; let mar = null;
+    if (!(d && alive50(d) && !east52(d))) {
+      mar = S.flags.mar52 && alive50(S.flags.mar52) ? S.flags.mar52 : makeMarch52('Daemyr', 38, ['cruel', 'ambit']);
+      if (mar) { S.flags.f50.DAE = mar; ruler50(mar, 'Daemyr', 38, 'm', ['cruel', 'ambit']); const dc = ch(S.realms[mar].ruler); if (dc) { const w = genChar({ house: S.realms.KES.house, realm: 'KES', sex: 'f', age: 26 }); w.name = 'Shirin'; w.spouse = dc.id; dc.spouse = w.id } }
+    }
+    e52().go = 1; try { _st.apply(this, arguments) } finally { e52().go = 0 }
+    if (!mar) return; S.wars.forEach(w => { if (w.a.includes(mar) || w.b.includes(mar)) { w.e52 = 1; w.a = w.a.filter(k => k !== 'KES'); w.b = w.b.filter(k => k !== 'KES') } });
+    if (S.flags.role50 === 'MAR' && !cont) S.player = mar;
+    const king = S.flags.tete50 && S.flags.tete50.king, cap = king && capitalOf(king);
+    if (cap) { const land = [...NB[cap]].filter(q => S.prov[q] && S.prov[q].k === king && PV[q].coast)[0] || cap; armiesOf(mar).forEach(a => { a.loc = land; a.legion52 = 1 }); mkArmy(mar, null, capitalOf(mar), 1500, null, true) }
+    if (alive50('SOL')) { houseName50('SOL', 'Sahrane', 'Le soleil ne trahit pas'); if (S.player !== 'SOL') ruler50('SOL', 'Tarek', 44, 'm', []) }
+    note50('🦅 Le Satrape du Couchant', `Six ans après sa fuite, <b>Daemyr</b> gouverne la <b>Marche du Couchant</b> depuis Qasr-Daral, la forteresse qui regarde Vaeloria par-delà le détroit. Marié à la princesse <b>Shirin</b>, nièce de l'impératrice Roxana, il a reçu une légion de 3 000 hommes.<br><br>Ce printemps, il débarque directement sur la presqu'île de Vaeloria. Le Nord et Bellegarde, fidèles à la lignée du Bâtard, attaquent par le nord et par le sud. Solméria reste neutre et commerce avec tout le monde.`);
+  };
+}
+// VI : Saeryn attend de l'autre côté du détroit ; Solméria se soulève sous les Sahrane
+{
+  const _ms = CH50.fou.massacre; CH50.fou.massacre = function (king, cont, byKing) {
+    _ms.apply(this, arguments);
+    let mar = S.flags.mar52 && alive50(S.flags.mar52) ? S.flags.mar52 : makeMarch52('Saeryn', 30, ['ruse']);
+    if (mar) { ruler50(mar, 'Saeryn', 30, 'm', ['ruse']); S.flags.fou52 = mar }
+    if (alive50('SOL') && S.player !== 'SOL') { houseName50('SOL', 'Sahrane', 'Le soleil ne trahit pas'); ruler50('SOL', 'Karim', 48, 'm', ['colere']); S.realms.SOL.title = 'Roi de Solméria' }
+  };
+}
+// les lettres et les décisions de l'Est
+const EACT52 = {
+  e52no: () => 'Vous déclinez.',
+  e52merc: () => { const r = P0(); if (r.gold < 250) return 'Le trésor est vide.'; r.gold -= 250; S.realms.AZU && (S.realms.AZU.gold += 250); const a = mkArmy(S.player, null, capitalOf(S.player), 1500, null, false); a.merc = true; addRel(S.player, 'AZU', 10); return 'Les compagnies d\'Azurée débarquent : 1 500 lances de plus sous votre bannière.' },
+  e52loanA: () => loan52(S.flags.f50.AEL), e52loanM: () => loan52('AUB'),
+  e52block: () => { const r = P0(); if (r.gold < 200) return 'Le trésor est vide.'; r.gold -= 200; e52().block = 1; addRel(S.player, 'AZU', 10); return 'Les galères d\'Azurée croisent devant les côtes du Nord : aucun drakkar ne passera.' },
+  e52pact: () => { pact52(); return 'Vos drakkars traversent la mer de glace. Le Pacte des Loups est scellé.' },
+  e52loan: () => { const r = P0(); r.gold += 800; S.flags.debt52 = { k: S.player, per: 6, left: 200 }; addRel(S.player, 'AZU', 15); return '800 écus d\'Azurée remplissent vos coffres. Le remboursement courra sur cinquante ans (6 écus par saison).' },
+  e52kesh: () => { keshGift52(S.player); return 'L\'or de Kesh arrive par le détroit, avec 1 500 cavaliers des déserts. Vous avez promis un port.' },
+  e52tai: () => { const r = P0(); if (r.gold < 200) return 'Le trésor est vide.'; r.gold -= 200; taiHelp52(S.player); return 'Le Grand Ours a pris votre or : ses guerriers débarquent dans le Nord.' },
+  e52cut: () => { e52().cut = 1; addRel(S.player, 'KES', -25); return 'Vos galères ferment le détroit : l\'or impérial ne passera plus.' },
+  e52strait: () => { e52().strait = 1; addTreaty('alliance', S.player, 'AZU', 40); return 'La flotte d\'Azurée bloque le détroit : Daemyr ne recevra plus rien de l\'Empire, et sa retraite est coupée.' },
+};
+function loan52(k) { const A = S.realms.AZU; if (!alive50(k) || !A) return 'Ce camp n\'existe plus.'; if (A.gold < 300) return 'Vos coffres sont trop légers.'; A.gold -= 300; S.realms[k].gold += 300; e52().loan = k; addRel('AZU', k, 20); S.flags.debt52 = { k, per: 4, left: 120, to: 'AZU' }; return `Vous prêtez 300 écus à ${rname(k)}. S'il gagne, le Trône vous devra de l'argent pour des générations.` }
+function pact52() {
+  const E = e52(); if (E.pact || !alive50('TAI') || !alive50('CIM')) return; E.pact = 1; S.flags.wolves52 = 1;
+  const king = S.highKing || 'AUB'; joinWar52('TAI', 'CIM', king, 1500, coast52('CIM', capitalOf('TAI')));
+  addTreaty('alliance', 'CIM', 'TAI', 999); setRel('CIM', 'TAI', 70); S.realms.TAI.gold += 120; realmProvs('TAI').forEach(q => S.prov[q].unrest = C(S.prov[q].unrest - 15, 0, 100));
+  note50('🐺 Le Pacte des Loups', 'Au deuxième hiver, <b>Haldra la Louve</b> débarque 1 500 guerriers de la Taïga dans le Nord. En échange, le roi Hrodmar ouvre ses greniers de montagne et ses ports aux clans. C\'est la première alliance entre un peuple de l\'Ouest et un peuple de l\'Est.');
+}
+function keshGift52(k) { if (!alive50(k)) return; S.realms[k].gold += 250; const a = mkArmy(k, null, capitalOf(k), 1500, null, true); a.e52 = 1; e52().promise = k; addRel(k, 'KES', 30) }
+function taiHelp52(k) { const king = S.flags.tete50 ? S.flags.tete50.king : 'AUB'; const enemy = S.wars.find(w => w.a.includes(k) || w.b.includes(k)); if (!enemy || !alive50('TAI')) return; const foe = enemy.a.includes(k) ? enemy.b[0] : enemy.a[0]; joinWar52('TAI', k, foe, 1200, alive50('CIM') ? coast52('CIM', capitalOf('TAI')) : capitalOf(k)) }
+const _la52 = letterAct; letterAct = function (id, act) {
+  if (!/^e52/.test(act || '')) return _la52.apply(this, arguments);
+  const L = S.letters.find(l => l.id === id); if (!L) return; let res = ''; try { res = (EACT52[act] || (() => ''))(L) || '' } catch (e) { res = '' }
+  L.done = res; S.letters = S.letters.filter(x => x !== L); notifyP('✉️ ' + L.t + ' : ' + res, 'pol'); return res;
+};
+// la chronique avance : événements de l'Est, saison après saison
+function tick52() {
+  const E = e52(), chp = S.flags.ch50, p = S.player;
+  const D = S.flags.debt52; if (D && D.left > 0 && alive50(D.k)) { S.realms[D.k].gold -= D.per; if (S.realms.AZU && S.realms.AZU.alive) S.realms.AZU.gold += D.per; D.left-- }
+  if (!chp || E.ch !== chp) return; const t = S.turn - E.t0;
+  if (chp === 'conquete') {
+    const A = S.flags.f50.AEL, camps = [A, 'AUB'].filter(alive50);
+    if (t === 1 && camps.length === 2) {
+      if (camps.includes(p)) offer52(p, '⚓ Les compagnies d\'Azurée', `Le doge <b>Ottavio Corsani</b> propose ses compagnies de mercenaires aux deux camps. Celui qui paie le plus prendra l'avantage : <b>1 500 lances pour 250 écus</b>.`, [['Engager les mercenaires (250 écus)', 'e52merc'], ['Refuser', 'e52no']]);
+      const ai = camps.filter(k => k !== p).sort((a, b) => S.realms[b].gold - S.realms[a].gold)[0];
+      if (ai && S.realms[ai].gold >= 200 && chance(.6)) { S.realms[ai].gold -= 200; const m = mkArmy(ai, null, capitalOf(ai), 1500, null, false); m.merc = true; worldNews(`⚓ ${rname(ai)} engage les compagnies d'Azurée.`) }
+    }
+    if (p === 'AZU' && !E.loan && camps.length === 2 && t % 4 === 1) offer52(p, '💰 Les deux camps vous sollicitent', 'Aelric et le vieux roi Morvan vous demandent de l\'or. Celui que vous financerez vous devra beaucoup… s\'il gagne.', [['Prêter 300 écus à Aelric', 'e52loanA'], ['Prêter 300 écus au roi Morvan', 'e52loanM'], ['Attendre', 'e52no']]);
+    if (p !== 'AZU' && !E.loan && t === 2 && camps.length === 2) { const k = camps.sort((a, b) => strength(b) - strength(a))[0]; if (S.realms.AZU && S.realms.AZU.gold >= 300) { S.realms.AZU.gold -= 300; S.realms[k].gold += 300; E.loan = k; S.flags.debt52 = { k, per: 4, left: 120 }; worldNews(`💰 Azurée prête 300 écus à ${rname(k)}.`) } }
+  }
+  if (chp === 'nord') {
+    const king = S.highKing || 'AUB';
+    if (t === 2 && !E.blockAsk) { E.blockAsk = 1; if (p === king) offer52(p, '⚓ La flotte d\'Azurée', 'Le doge <b>Lucio Vandrame</b> propose de bloquer les côtes du Nord contre paiement. Plus rien ne passera par la mer : ni grain, ni renforts.', [['Payer 200 écus : bloquer les côtes du Nord', 'e52block'], ['Refuser', 'e52no']]); else if (alive50(king) && S.realms[king].gold > 260 && chance(.4)) { S.realms[king].gold -= 200; E.block = 1; worldNews('⚓ La flotte d\'Azurée bloque les côtes du Nord pour le Haut-Roi.') } }
+    if (S.s === 3 && t >= 4 && !E.pactDone && alive50('CIM') && atWar('CIM', king)) {
+      E.pactDone = 1;
+      if (E.block) note50('⚓ Les côtes fermées', 'La flotte d\'Azurée tient les côtes du Nord : les drakkars de la Taïga ne passent pas. Le Nord se bat seul.');
+      else if (p === 'TAI') offer52(p, '🐺 Le Nord appelle', 'Le roi <b>Hrodmar</b> vous offre ses greniers de montagne et ses ports si vos guerriers traversent la mer de glace pour l\'aider contre le Haut-Roi.', [['Débarquer 1 500 guerriers dans le Nord', 'e52pact'], ['Rester chez nous', 'e52no']]);
+      else pact52();
+    }
+    if (E.pact && !E.grudge && alive50(king) && (!alive50('CIM') || overlordOf('CIM') === king || (S.hk && hkStatus('CIM') === 'sworn' && !atWar('CIM', king)))) { E.grudge = 1; if (alive50('TAI')) setRel('TAI', king, -80); worldNews('🐺 La Taïga jure de ne jamais oublier l\'écrasement du Nord.') }
+  }
+  if (chp === 'batard') {
+    const king = 'AUB', bat = S.flags.f50.BAT;
+    if (t === 1 && alive50(king)) { if (p === king) offer52(p, '💰 Le prêt d\'Azurée', 'La doge <b>Silvana Terzi</b> offre à la Reine un prêt de <b>800 écus</b>, remboursable sur cinquante ans : de quoi payer des mercenaires tout de suite, au prix d\'une dette qui pèsera sur les revenus.', [['Accepter les 800 écus', 'e52loan'], ['Refuser', 'e52no']]); else if (chance(.7)) { S.realms[king].gold += 800; S.flags.debt52 = { k: king, per: 6, left: 200 }; worldNews('💰 Azurée prête 800 écus à la petite reine Ysaera.') } }
+    if (t === 2 && alive50(bat)) { if (p === bat) offer52(p, '🦅 L\'ambassadeur de Kesh', 'L\'empereur <b>Ashkan le Grand</b> vous offre de l\'or et <b>1 500 cavaliers des déserts</b>, contre la promesse d\'un port sur le détroit si vous gagnez.', [['Accepter et promettre un port', 'e52kesh'], ['Refuser', 'e52no']]); else if (chance(.7)) { keshGift52(bat); worldNews('🦅 Kesh arme le Bâtard : 1 500 cavaliers des déserts traversent le détroit.') } }
+    if (t === 3 && alive50(bat) && alive50('TAI')) { if (p === bat) offer52(p, '🐺 Le Grand Ours', 'Le Nord, fidèle au Pacte des Loups, a appelé la Taïga. Mais le Grand Ours <b>Torvik</b> ne viendra que si vous payez.', [['Payer 200 écus au Grand Ours', 'e52tai'], ['Refuser', 'e52no']]); else if (S.realms[bat].gold >= 250 && chance(.5)) { S.realms[bat].gold -= 200; taiHelp52(bat); worldNews('🐺 Les guerriers de la Taïga rejoignent le Bâtard.') } }
+    const v = vael52();
+    if (E.promise && !E.port && alive50(E.promise) && v && S.prov[v].k === E.promise && !atWar(E.promise, 'AUB')) { const k = E.promise; const q = realmProvs(k).filter(x => PV[x].coast && x !== v && x !== capitalOf(k)).sort((a, b) => PV[b].c[0] - PV[a].c[0])[0]; if (q && alive50('KES')) { E.port = q; S.prov[q].k = 'KES'; S.prov[q].h = null; note50('🦅 Le port promis', `Le nouveau roi tient parole : <b>${PV[q].n}</b> devient un port de l'Empire de Kesh sur la rive ouest du détroit.`) } }
+  }
+  if (chp === 'dechiree') {
+    const dae = S.flags.f50.DAE, v = vael52(), holder = v && S.prov[v] ? (S.prov[v].occ || S.prov[v].k) : null;
+    if (t === 0 && !E.loanA && alive50('AUB')) { E.loanA = 1; S.realms.AUB.gold += 400; if (!S.flags.debt52) S.flags.debt52 = { k: 'AUB', per: 4, left: 100 } }
+    if (t === 1 && holder && holder !== dae && alive50(holder)) { if (p === holder) offer52(p, '⚓ Le détroit', 'Les espions jurent que l\'impératrice <b>Roxana</b> envoie de l\'or et des conseillers militaires à Daemyr par le détroit. Qui tient Vaeloria peut le fermer.', [['Fermer le détroit à l\'or impérial', 'e52cut'], ['Laisser passer (ne pas fâcher Kesh)', 'e52no']]); else if (chance(.5)) { E.cut = 1; addRel(holder, 'KES', -25); worldNews('⚓ Vaeloria ferme le détroit à l\'or de Kesh.') } }
+    if (alive50(dae) && !E.cut && t % 4 === 2) { S.realms[dae].gold += 150; if (!E.goldSeen) { E.goldSeen = 1; worldNews('🦅 L\'or de l\'impératrice Roxana passe le détroit pour Daemyr.') } }
+    if (dae && !alive50(dae) && !E.fled) { E.fled = 1; const c = ch(S.realms[dae] && S.realms[dae].ruler); if (c) { c.alive = true; c.prison = null; c.realm = 'KES'; S.flags.daemyr52 = c.id } note50('⛵ Daemyr passe le détroit', 'Vaincu, <b>Daemyr</b> ne disparaît pas : il s\'enfuit par le détroit avec ses fidèles. On dit que l\'impératrice Roxana l\'a reçu à Kesh.') }
+    if (alive50(dae) && holder === dae && !E.roxana && alive50('KES')) { E.roxana = 1; addTreaty('alliance', dae, 'KES', 999); note50('🦅 L\'offre de Roxana', 'Daemyr tient Vaeloria. L\'impératrice <b>Roxana</b> lui propose une alliance… et réclame un port sur le détroit.') }
+  }
+  if (chp === 'tete') {
+    const T = S.flags.tete50, mar = S.flags.mar52;
+    if (T && T.done && mar && !E.recall) {
+      E.recall = 1; let gone = 0; armiesOf(mar).filter(a => a.legion52).forEach(a => { const n = Math.min(a.men, 3000 - gone); a.men -= n; gone += n; if (a.men < 100) delete S.armies[a.id] });
+      if (alive50(mar)) S.realms[mar].prestige -= 10; note50('🦅 Roxana renie Daemyr', 'Pour ne pas unir tout Westerhald contre l\'Empire, l\'impératrice <b>Roxana</b> renie Daemyr et rappelle sa légion. Le Satrape du Couchant est seul de ce côté du détroit.');
+      const king = T.king; if (alive50(king) && alive50('AZU')) { if (p === king) offer52(p, '⚓ La flotte d\'Azurée', 'Le doge <b>Enrico Malvasi</b> propose de bloquer le détroit et de couper la retraite de Daemyr, contre la promesse d\'une alliance.', [['Accepter l\'alliance d\'Azurée', 'e52strait'], ['Refuser', 'e52no']]); else if (chance(.6)) { E.strait = 1; addTreaty('alliance', king, 'AZU', 40); worldNews('⚓ La flotte d\'Azurée bloque le détroit : la retraite de Daemyr est coupée.') } }
+    }
+    if (E.strait && mar && alive50(mar)) armiesOf(mar).forEach(a => { if (S.prov[a.loc] && !east52(S.prov[a.loc].k)) a.men = Math.round(a.men * .92) });
+  }
+  if (chp === 'fou') {
+    const F = S.flags.fou50, king = F && F.king, mar = S.flags.fou52 || S.flags.mar52;
+    if (!king) return;
+    if (t === 1 && !E.block && alive50(king)) { E.block = 1; note50('⚓ Les ports fermés', 'Le doge <b>Bastiano Corsani</b> refuse tout prêt à Aedrys et bloque ses ports : le trésor royal s\'épuise à chaque saison de guerre.') }
+    if (E.block && alive50(king) && warsOf(king).length) S.realms[king].gold -= 20;
+    if (t === 2 && !E.bjarn && alive50('TAI') && alive50('CIM') && atWar('CIM', king) && p !== 'TAI') { E.bjarn = 1; joinWar52('TAI', 'CIM', king, 1200, coast52('CIM', capitalOf('TAI'))); note50('🐺 Le vieux Pacte', 'Au nom du Pacte des Loups, <b>Bjarn le Jeune</b>, Grand Ours de la Taïga, envoie 1 200 guerriers au roi Ulric.') }
+    const v = capitalOf(king), rosHas = alive50('ROS') && v && ctrl(v) === 'ROS';
+    if (!E.saeryn && rosHas) { E.saeryn = -1; if (mar && alive50(mar)) note50('⛵ Saeryn renonce', 'Garran tient Vaeloria. De l\'autre côté du détroit, <b>Saeryn</b> range ses navires : l\'occasion est passée… pour cette fois.') }
+    if (!E.saeryn && t >= 12 && mar && alive50(mar) && alive50(king) && v && warsOf(king).length) {
+      E.saeryn = 1; const w = ewar52(mar, king, [], []); const land = [...NB[v]].filter(q => S.prov[q] && S.prov[q].k === king && PV[q].coast)[0] || v; const L = mkArmy(mar, null, land, 4000, S.realms[mar].ruler, true); L.legion52 = 1;
+      note50('⛵ Le débarquement de Saeryn', 'La guerre dure depuis trois ans. <b>Saeryn</b>, fils de Daemyr et Satrape du Couchant, débarque sur la presqu\'île de Vaeloria avec une légion de Kesh : il vient prendre le Trône d\'Argent à la faveur du chaos.');
+    }
+  }
+}
+const _dt52 = devTick; devTick = function () { const r = _dt52.apply(this, arguments); try { if (S && S.flags) tick52() } catch (e) { console.error && console.error('tick52', e) } return r };
+// textes de la saga et chronique : l'Est entre en scène
+(() => {
+  const D = { conquete: 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. À l\'Est, l\'Empire de Kesh se déchire, et le doge d\'Azurée compte ses écus.',
+    nord: 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isenhart pend les collecteurs aux portes de Belvar : « Le loup ne plie pas. » Dans les îles, la maison Grimsel rompt avec le Nord ; de l\'autre côté de la mer de glace, le même froid affame la Taïga.',
+    batard: 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin de Rivemont ; l\'armée acclame son bâtard Draevon. Azurée prête à la reine, Kesh arme le Bâtard : deux couronnes, un seul trône.',
+    dechiree: 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. À Kesh, l\'impératrice Roxana mise en secret sur Daemyr.',
+    tete: 'An 138 — Daemyr, devenu Satrape du Couchant pour l\'Empire de Kesh, traverse le détroit avec une légion impériale et débarque sous les murs de Vaeloria. Le Nord et Bellegarde le soutiennent contre le roi Aldric.',
+    fou: 'An 163 — Hanté par la tête de son père, Aedrys Ier a fait exécuter les rois de Bellegarde et du Nord sous une couronne d\'argent fondu. Le Nord, Bellegarde et Solméria se soulèvent, Azurée étrangle le roi par la mer, et de l\'autre côté du détroit Saeryn, fils de Daemyr, attend son heure.' };
+  for (const s of SAGA50) if (D[s[0]]) s[3] = D[s[0]];
+  for (const s of SAGA) if (D[s[0]]) s[3] = D[s[0]];
+  for (const k in D) if (SCEN[k]) SCEN[k].d = D[k];
+  const fix = (y, t, o) => { const e = LORE_CANON.find(x => x.y === y && x.t === t); if (e) Object.assign(e, o) };
+  fix(9, 'Le Siège des Cimes', { t: 'Le Siège de Belvar', d: 'Deux ans de siège devant Belvar, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Belvar par la force.' });
+  fix(24, 'La Révolte du Nord', { d: 'Le roi Hrodmar Isenhart fait pendre les collecteurs du Haut-Roi aux portes de Belvar. Le Nord prend les armes.' });
+  fix(131, 'Le Champ des Trois Bannières', { d: 'Aldric l\'emporte et devient roi. Taelon se soumet. Daemyr s\'enfuit par le détroit.' });
+  fix(132, 'Le roi du désert', { t: 'Le Satrape du Couchant', k: ['KES', 'AUB'], d: 'À Kesh, l\'impératrice Roxana nomme Daemyr Satrape du Couchant et lui donne sa nièce, la princesse Shirin. Depuis Qasr-Daral, un prétendant Aeltharys regarde Vaeloria par-delà le détroit.', rel: [['KES', 'AUB', -10]] });
+  fix(138, 'La Tête du Roi', { k: ['KES', 'AUB', 'CIM', 'ROS'], d: 'Daemyr débarque avec une légion de Kesh, capture le roi Aldric, le fait torturer et envoie sa tête dans un coffret d\'argent à son fils Aedrys, douze ans. Horrifiés, le Nord et Bellegarde l\'abandonnent ; Roxana le renie et rappelle sa légion.', rel: [['KES', 'AUB', -14]] });
+  fix(139, 'Le couronnement dans les ruines', { d: 'Valgué, Lodeshire et la flotte d\'Azurée sauvent Vaeloria et repoussent Daemyr. Aedrys est couronné ; il n\'oubliera jamais que le Nord et Bellegarde ont d\'abord combattu aux côtés de l\'assassin de son père.' });
+  fix(155, 'La mort de Daemyr', { k: ['KES', 'AUB'], d: 'Daemyr meurt à Qasr-Daral, empoisonné dit-on sur ordre d\'Aedrys. Son fils Saeryn, à moitié keshite, lui succède et se dit le vrai Aeltharys.' });
+  LORE_CANON.push(
+    { y: 15, k: ['AZU', 'AUB'], big: 1, t: 'Le Traité des Deux Rives', d: 'Azurée signe avec Aelric un traité de commerce : Vaeloria devient le port de l\'Est en Westerhald, et le doge garde une créance sur le Trône.', rel: [['AZU', 'AUB', 10]] },
+    { y: 25, k: ['TAI', 'CIM'], big: 1, t: 'Le Pacte des Loups', d: 'Au deuxième hiver de la révolte, Haldra la Louve débarque 1 500 guerriers de la Taïga dans le Nord. Hrodmar lui ouvre ses greniers : le Nord et la Taïga s\'appelleront à l\'aide pendant un siècle.', rel: [['TAI', 'CIM', 25]] },
+    { y: 40, k: ['KES'], big: 1, t: 'Ashkan le Grand', d: 'Le satrape Ashkan réunifie l\'Empire de Kesh et se fait couronner. Sa première ambassade à Vaeloria porte un message : « Le soleil se lève à l\'est. »' },
+    { y: 62, k: ['AZU', 'KES', 'AUB'], t: 'La guerre des banquiers', d: 'Azurée prête 800 écus à la petite reine ; Kesh arme le Bâtard. Pour la première fois, l\'Est se bat en Westerhald par procuration.' },
+    { y: 90, k: ['AZU', 'KES'], big: 1, t: 'Le détroit de Corail', d: 'La flotte d\'Azurée brise la flotte impériale. Kesh renonce à la mer pour un siècle.', rel: [['AZU', 'KES', -15]] },
+    { y: 111, k: ['AUB', 'AZU'], t: 'La dette payée', d: 'Westerhald achève de rembourser Azurée.' },
+    { y: 158, k: ['KES'], t: 'Kesharan V', d: 'Un jeune empereur cruel et ambitieux monte sur le trône de Kesh.' });
+  LORE_CANON.sort((a, b) => a.y - b.y);
+  if (LORE_EPILOGUE[0]) LORE_EPILOGUE[0].d = 'Le Trône d\'Argent change de mains. Une nouvelle dynastie commence ; de l\'autre côté du détroit, la lignée du Bâtard attend son heure.';
+})();
+// les grandes figures de l'Est ne meurent pas de maladie au milieu de leur chapitre
+const _kc52 = killChar; killChar = function (c, why) {
+  try { const E = S && S.flags && S.flags.e52; if (E && c && c.age < 72 && S.turn - E.t0 < 20 && /^(de fièvre|d'une chute de cheval|de maladie|dans son sommeil)$/.test(String(why || '')) && ['KES', 'AZU', 'TAI', S.flags.mar52].some(k => k && S.realms[k] && S.realms[k].ruler === c.id)) { c.health = Math.max(c.health || 0, 70); return } } catch (e) { }
+  return _kc52.apply(this, arguments);
+};
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
