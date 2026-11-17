@@ -1002,7 +1002,7 @@ class PQ51 { constructor() { this.h = []; this.n = 0 } get length() { return thi
 function findPath(k, from, to, naval) {
   if (!S.prov[to] || !S.prov[from]) return null;
   if (from === to) return [];
-  const real = realOf(k), seaCost = real === 'FER' ? 3 : real === 'BOU' || real === 'SOL' ? 5 : 6;
+  const real = realOf(k), seaCost = real === 'FER' || real === 'AZU' ? 3 : real === 'BOU' || real === 'SOL' ? 5 : 6;
   const dist = { [from]: 0 }, prev = {}, done = new Set(), pq = new PQ51(); pq.push([0, from]);
   while (pq.length) {
     const [d, x] = pq.pop(); if (done.has(x)) continue; done.add(x); if (x === to) break;
@@ -3494,8 +3494,8 @@ const _devTick16 = devTick; devTick = function () { _devTick16(); try { aiVsPlay
 const LORE_ERAS = [[1, 'La Conquête'], [41, 'La Guerre des Deux Frères'], [48, 'L\'Âge d\'Argent'], [131, 'La Mort Grise et l\'Enfant-Roi'], [171, 'L\'Ombre de Solméria'], [281, 'La Chute'], [284, 'Le Trône vide']];
 // rel : [a,b,delta] · cl : [qui revendique, province (nom)] · foe : ennemis héréditaires
 const LORE_CANON = [
-  { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Westerhald. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison de Morvaine. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
-  { y: 3, k: ['AUB'], big: 1, war: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
+  { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Westerhald. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison Saevar. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
+  { y: 3, k: ['AUB'], big: 1, war: 1, t: 'La chute de la maison Saevar', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
   { y: 5, k: ['AUB', 'ROS'], war: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Bellegarde charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Bellegarde plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
   { y: 7, k: ['AUB', 'VAL'], t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valgué restera la plus fidèle alliée du Trône.', rel: [['AUB', 'VAL', 10]] },
   { y: 9, k: ['AUB', 'CIM'], war: 1, t: 'Le Siège de Belvar', d: 'Deux ans de siège devant Belvar, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Belvar par la force.', rel: [['AUB', 'CIM', -4]] },
@@ -7107,7 +7107,7 @@ function prologueHTML() {
   const feuds = L.hfeud.filter(f => hs(f.a) && hs(f.b) && hs(f.a).realm === p && !hs(f.a).royal && !hs(f.b).royal);
   const li = e => `<li><b>An ${e.y}</b> — <i>${esc(e.t)}</i>. ${esc(e.d)}</li>`;
   const st = L.start || 301, hk = S.realms.AUB && ch(S.realms.AUB.ruler), sc = S.scen && SCEN[S.scen];
-  const lead = st <= 1 ? 'Westerhald compte six couronnes, et aucune ne commande aux autres. Sur l\'isthme, le royaume d\'Argenthal ploie sous la vieille maison de Morvaine, pesante et détestée. Il n\'existe ni Haut-Roi, ni Trône d\'Argent — pas encore.'
+  const lead = st <= 1 ? 'Westerhald compte six couronnes, et aucune ne commande aux autres. Sur l\'isthme, le royaume d\'Argenthal ploie sous la vieille maison Saevar, pesante et détestée. Il n\'existe ni Haut-Roi, ni Trône d\'Argent — pas encore.'
     : st < 40 ? `Il y a ${st - 1} ans, Aelric Aeltharys se révoltait à Vaeloria ; onze ans plus tard, les cinq autres couronnes pliaient le genou devant le Conquérant. Aujourd'hui vieillissant, Aelric règne toujours sur le Trône d'Argent — mais le Nord affamé gronde.`
     : st < 128 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. Son fils Haelor vient de mourir sans fils légitime : une fillette de huit ans et un bâtard aimé des soldats se disputent le Trône d'Argent.`
     : st < 138 ? `Il y a ${st - 1} ans, Aelric le Conquérant fondait le Grand Royaume d'Argenthal. La reine Ysaera, qui régna soixante-sept ans, vient de mourir : trois Aeltharys réclament son trône.`
@@ -7168,7 +7168,7 @@ DIFFICULTÉ : ${diff().n}. Les rois rivaux sont rusés, rancuniers et opportunis
 
 // ---------- la saga d'Argenthal en sept chapitres ----------
 const SAGA = [
-  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. (Vous jouez Aelric.)'],
+  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison Saevar : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. (Vous jouez Aelric.)'],
   ['freres', 41, 'II. La Guerre des Deux Frères', 'An 41 — Aelric le Conquérant est mort. Aelor l\'Aîné tient Vaeloria ; Corwen le Solaire, fils de la princesse de Solméria, réclame la couronne avec l\'appui de Solméria et de Bellegarde. Le royaume se coupe en deux : quel frère suivrez-vous ?'],
   ['iles', 61, 'III. La Révolte des Îles', 'An 61 — Corwen a fui dans le désert, Aelor règne. Mais les îles du nord-est refusent le tribut : la maison Grimsel proclame le royaume de Brisemer. Naîtra-t-il une septième couronne ?'],
   ['enfant', 131, 'IV. L\'Enfant-Roi', 'An 131 — La Mort Grise a emporté un tiers de Westerhald, le Haut-Roi et ses fils aînés. Sur le Trône d\'Argent : Edrik II, sept ans. Les grandes maisons gouvernent en son nom… et Bellegarde murmure le nom de la branche du Sud.'],
@@ -7186,8 +7186,8 @@ const _applyScenario24 = applyScenario; applyScenario = function (id) {
     const A0 = S.realms.AUB, vae = A0.cap, rh = hs(A0.house);
     // avant la conquête : pas d'Brisemer, les îles du nord-est obéissent au Nord
     if (S.realms.FER && S.realms.FER.alive && S.realms.CIM) { try { absorbRealm('FER', 'CIM') } catch (e) { } S.realms.FER.unborn = 1; S.world = []; S.news = [] }
-    // la vieille maison de Morvaine règne sur l'ancien royaume d'Argenthal
-    if (rh) { rh.name = 'de Morvaine'; rh.motto = 'Ce qui est ancien demeure'; rh.col = '#6e4a5c' }
+    // la vieille maison Saevar règne sur l'ancien royaume d'Argenthal
+    if (rh) { rh.name = 'Saevar'; rh.motto = 'Ce qui est ancien demeure'; rh.col = '#6e4a5c' }
     A0.nm = 'Royaume d\'Argenthal'; A0.nmS = 'Argenthal'; A0.title = 'Roi d\'Argenthal'; A0.legit = 50; A0.stab = 42; const old = ch(A0.ruler); if (old) { old.name = 'Morvan'; old.age = 56 } A0.regnal = 3;
     // la révolte : Vaeloria et les terres des Aeltharys
     const h = Object.values(S.houses).filter(x => x.realm === 'AUB' && !x.royal && houseProvs(x.id).some(q => NB[vae].has(q))).sort((x, y) => houseProvs(y.id).length - houseProvs(x.id).length)[0]
@@ -7205,7 +7205,7 @@ const _applyScenario24 = applyScenario; applyScenario = function (id) {
     armiesOf('AUB').forEach(a => { if (a.loc === vae) a.loc = A0.cap; a.men = Math.round(a.men * .7); a.path = [] });
     mkArmy(id2, null, vae, 4200, S.flags.ysolde || r.ruler, true);
     r.claims = realmProvs('AUB').slice();
-    Object.values(S.houses).filter(x => x.realm === 'AUB' && !x.royal).forEach(x => houseMod(x, -12, 'Las des Morvaine', 30));
+    Object.values(S.houses).filter(x => x.realm === 'AUB' && !x.royal).forEach(x => houseMod(x, -12, 'Las des Saevar', 30));
     declareWar(id2, 'AUB', 'claim', [A0.cap], true);
     if (S.realms.ROS && S.realms.VAL) setRel('ROS', 'VAL', -30);
     S.world = []; S.news = [];
@@ -7301,7 +7301,7 @@ const _devTick24c = devTick; devTick = function () {
     if (S.realms.AUB && S.realms.AUB.alive) try { absorbRealm('AUB', p) } catch (e) { console.error(e) }
     S.prov[cap].k = p; S.prov[cap].occ = null; r.cap = cap; r.nm = 'Royaume d\'Argenthal'; r.nmS = 'Argenthal'; r.title = 'Roi d\'Argenthal'; r.legit = C(r.legit + 15, 0, 100); r.prestige += 25; S.flags.conquete = 2;
     try { claimThrone(p) } catch (e) { }
-    if (S.lore) S.lore.ev.push({ y: S.year, k: [], big: 1, t: 'La chute de la maison de Morvaine', d: `Aelric Aeltharys prend ${PV[cap].n} : le vieux roi Morvan plie le genou et le royaume d'Argenthal passe aux Aeltharys. Avec l'argent des couronnes vaincues, Aelric fait forger un trône.` });
+    if (S.lore) S.lore.ev.push({ y: S.year, k: [], big: 1, t: 'La chute de la maison Saevar', d: `Aelric Aeltharys prend ${PV[cap].n} : le vieux roi Morvan plie le genou et le royaume d'Argenthal passe aux Aeltharys. Avec l'argent des couronnes vaincues, Aelric fait forger un trône.` });
     S.pend.push({ kind: 'html', t: '🏰 Étape 1 accomplie — le royaume d\'Argenthal est à vous', body: `${PV[cap].n} est tombée. Le vieux roi Morvan plie le genou, ses seigneurs vous prêtent serment : vous voici <b>Roi d'Argenthal</b>. Dans la grande salle de Vaeloria, vos forgerons fondent l'argent des couronnes vaincues : le <b>Trône d'Argent</b> est né.<br><br><b>Étape 2 :</b> faites-vous sacrer Haut-Roi (onglet Diplo → Trône d'Argent). <b>Étape 3 :</b> soumettez les ${conqN()} autres couronnes — conquête, vassalité ou serment — pour former le <b>Grand Royaume d'Argenthal</b>.` });
     mapDirty(); return;
   }
@@ -7411,7 +7411,7 @@ function rumors() {
     if (ru && !heir) add('👶 À la cour, on s\'inquiète : le souverain n\'a pas d\'héritier.');
     else if (heir && heir.sex === 'f') add(`👑 Les seigneurs murmurent : faute de fils, ${heir.name} héritera.`);
     if (ru && ru.age > 60) add(`🕯️ Le souverain a ${ru.age} ans ; les vautours comptent les hivers.`);
-    if (S.highKing && S.highKing !== p) add(`👑 À Vaeloria, ${titR(S.highKing)} tient le Trône d'Argent.`); else if (!S.highKing) add(S.flags && S.flags.ch50 === 'conquete' && (S.flags.conquete || 0) < 2 ? '⚔️ Sur l\'isthme, la bannière d\'argent défie la vieille maison de Morvaine.' : '👑 Le Trône d\'Argent attend toujours son roi.');
+    if (S.highKing && S.highKing !== p) add(`👑 À Vaeloria, ${titR(S.highKing)} tient le Trône d'Argent.`); else if (!S.highKing) add(S.flags && S.flags.ch50 === 'conquete' && (S.flags.conquete || 0) < 2 ? '⚔️ Sur l\'isthme, la bannière d\'argent défie la vieille maison Saevar.' : '👑 Le Trône d\'Argent attend toujours son roi.');
     if (S.famine) add(`🌾 La famine frappe ${rn(S.famine.realm)} ; le pain vaut son pesant d'argent.`);
     const w = warsOf(p)[0]; if (w) add(`⚔️ Les veuves de la guerre contre ${(sideOf(w, p) === 'a' ? w.b : w.a).map(rn).join(' et ')} portent le noir.`);
     const rich = REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive).sort((a, b) => S.realms[b].gold - S.realms[a].gold)[0]; if (rich && rich !== p) add(`💰 Les marchands jurent que le trésor de ${rn(rich)} déborde.`);
@@ -9789,7 +9789,7 @@ html.ios-app .screen{padding-bottom:max(6px,calc(env(safe-area-inset-bottom,0px)
 // ===================== ARGENTHAL 50 : la nouvelle saga en six chapitres (de la Révolte de Vaeloria au Roi Fou) =====================
 // ---------- 1. les chapitres ----------
 const SAGA50 = [
-  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes.'],
+  ['conquete', 1, 'I. La Révolte de Vaeloria', 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison Saevar : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes.'],
   ['nord', 24, 'II. La Révolte du Nord', 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isenhart pend les collecteurs aux portes de Belvar : « Le loup ne plie pas. » Dans les îles, la maison Grimsel en profite pour rompre avec le Nord.'],
   ['batard', 61, 'III. La Fille et le Bâtard', 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin de Rivemont ; l\'armée acclame son bâtard Draevon, qui se proclame Draevon Aeltharys. Deux couronnes, un seul trône.'],
   ['dechiree', 128, 'IV. La Couronne déchirée', 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. Trois Aeltharys, un seul Trône d\'Argent.'],
@@ -9806,8 +9806,8 @@ const SCEN50 = {}; SAGA50.forEach(s => SCEN50[s[0]] = 1);
 })();
 // ---------- 2. les camps jouables de chaque chapitre ----------
 const PLAY50 = {
-  conquete: [{ id: 'AUB', realm: 'AUB', nm: 'Aelric Aeltharys', role: 'La révolte de Vaeloria', obj: 'Prendre la capitale de Morvaine, forger le Trône d\'Argent, puis soumettre les cinq autres couronnes.' },
-    { id: 'MOR', realm: 'AUB', nm: 'Morvan III de Morvaine', role: 'Le vieux roi d\'Argenthal', obj: 'Écraser la révolte et reprendre Vaeloria avant qu\'elle ne se répande.' }],
+  conquete: [{ id: 'AUB', realm: 'AUB', nm: 'Aelric Aeltharys', role: 'La révolte de Vaeloria', obj: 'Prendre la capitale des Saevar, forger le Trône d\'Argent, puis soumettre les cinq autres couronnes.' },
+    { id: 'MOR', realm: 'AUB', nm: 'Morvan III Saevar', role: 'Le vieux roi d\'Argenthal', obj: 'Écraser la révolte et reprendre Vaeloria avant qu\'elle ne se répande.' }],
   nord: [{ id: 'AUB', realm: 'AUB', nm: 'Aelric le Conquérant', role: 'Le Haut-Roi', obj: 'Mater la révolte du Nord sans perdre votre armée dans la neige.' },
     { id: 'CIM', realm: 'CIM', nm: 'Hrodmar Isenhart', role: 'Le Nord affamé', obj: 'Tenir les cols et arracher l\'indépendance du Nord.' },
     { id: 'FER', realm: 'FER', nm: 'Maison Grimsel', role: 'Brisemer', obj: 'Profiter de la guerre pour rester libres : tenir vos îles pendant cinq ans.' }],
@@ -9829,8 +9829,8 @@ const F50COL = { AEL: '#f3f1ea', REINE: '#f3f1ea', BAT: '#e6d3a1', ALD: '#f3f1ea
 (() => {
   LORE_CANON.length = 0;
   LORE_CANON.push(
-    { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Westerhald. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison de Morvaine. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi Morvan III et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
-    { y: 3, k: ['AUB'], big: 1, t: 'La chute de la maison de Morvaine', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
+    { y: 1, k: ['AUB'], big: 1, t: 'La Révolte de Vaeloria', d: 'Six couronnes se partagent Westerhald. Sur l\'isthme, le royaume d\'Argenthal ploie sous la maison Saevar. À Vaeloria, Aelric Aeltharys ferme ses portes aux collecteurs du roi Morvan III et lève la bannière d\'argent, avec à ses côtés sa sœur Rhaelys, la meilleure stratège de son temps.' },
+    { y: 3, k: ['AUB'], big: 1, t: 'La chute de la maison Saevar', d: 'Aelric écrase l\'ost de Morvan III. Il fait fondre les couronnes vaincues et forger un trône : le Trône d\'Argent.' },
     { y: 5, k: ['ROS', 'AUB'], big: 1, t: 'Le Champ des Bannières', d: 'La chevalerie de Bellegarde charge l\'ost d\'Aelric et se brise sur les piques de Rhaelys. Le roi de Bellegarde plie le genou ; ses descendants ne l\'ont jamais tout à fait pardonné.', rel: [['ROS', 'AUB', -6]] },
     { y: 7, k: ['VAL', 'AUB'], big: 1, t: 'Le Serment de Gué-du-Roi', d: 'Plutôt que de voir ses gués ravagés, le roi des Rivières prête serment sans combattre. Valgué restera la plus fidèle alliée du Trône.', rel: [['VAL', 'AUB', 10]] },
     { y: 9, k: ['CIM', 'AUB'], big: 1, t: 'Le Siège de Belvar', d: 'Deux ans de siège devant Belvar, en vain. Le roi du Nord se soumet par traité, en gardant ses châteaux : nul n\'a jamais pris Belvar par la force.', rel: [['CIM', 'AUB', -4]] },
@@ -9949,7 +9949,7 @@ const CH50 = {
       if (fac === 'MOR' && reb) {
         S.player = 'AUB'; S.flags.conquete = 0; S.realms.AUB.gold += 150; men50('AUB', 1800);
         S.pend = S.pend.filter(x => x.t !== '⚔️ La bannière d\'argent');
-        S.pend.push({ kind: 'html', t: '🏰 Le vieux roi', body: `Vous êtes <b>Morvan III de Morvaine</b>, roi d'Argenthal. Ce printemps, Vaeloria vous a fermé ses portes : <b>Aelric Aeltharys</b> et sa sœur <b>Rhaelys</b> ont levé la bannière d'argent, et vos seigneurs hésitent.<br><br><b>Objectif :</b> reprendre <b>${esc(PV[S.realms[reb].cap].n)}</b> et écraser la révolte avant que les cinq autres couronnes ne la prennent au sérieux.` });
+        S.pend.push({ kind: 'html', t: '🏰 Le vieux roi', body: `Vous êtes <b>Morvan III Saevar</b>, roi d'Argenthal. Ce printemps, Vaeloria vous a fermé ses portes : <b>Aelric Aeltharys</b> et sa sœur <b>Rhaelys</b> ont levé la bannière d'argent, et vos seigneurs hésitent.<br><br><b>Objectif :</b> reprendre <b>${esc(PV[S.realms[reb].cap].n)}</b> et écraser la révolte avant que les cinq autres couronnes ne la prennent au sérieux.` });
       }
     },
   },
@@ -10318,6 +10318,8 @@ Object.assign(STORY38, {
 
 
 
+
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -10327,7 +10329,7 @@ function g51() { if (!S) return {}; S.g51 = S.g51 || {}; const G = S.g51; G.spy 
 const KEY51 = { Aelric: 'AEL', Haelor: 'AEL', Ysaera: 'AEL', Draevon: 'AEL', Aldric: 'AEL', Taelon: 'AEL', Daemyr: 'AEL', Aedrys: 'AEL', Rhaelys: 'AEL', Saeryn: 'AEL', Garran: 'ROS', Ulric: 'CIM', Hrodmar: 'CIM', Morvan: 'MOR' };
 function keyOk51(c) {
   const t = KEY51[(c.name || '').split(' ')[0]]; if (!t) return true; const h = hs(c.house), hn = (h && h.name) || '';
-  if (t === 'AEL') return /Aeltharys/.test(hn); if (t === 'MOR') return /Morvaine/.test(hn);
+  if (t === 'AEL') return /Aeltharys/.test(hn); if (t === 'MOR') return /Saevar/.test(hn);
   if (t === 'ROS') return /Rosemont/.test(hn); if (t === 'CIM') return /Isenhart/.test(hn); return true;
 }
 function freeName51(sex) { const L = (sex === 'f' ? NAMES_F : NAMES_M).filter(n => !KEY51[n]); return L[Math.floor(Math.random() * L.length)] }
@@ -10836,7 +10838,7 @@ const _mi52 = makeIndep; makeIndep = function (fromK, h, opts) { if (east52(from
 // les gens de l'Est portent des noms de l'Est
 const _gc52 = genChar; genChar = function (o) {
   const c = _gc52.apply(this, arguments);
-  try { const L = o && o.realm && REALMS[o.realm] && REALMS[o.realm].east && NAMES_LOC[o.realm]; if (L && L[c.sex === 'f' ? 'f' : 'm']) c.name = pick(L[c.sex === 'f' ? 'f' : 'm']) } catch (e) { }
+  try { const L = o && o.realm && REALMS[o.realm] && (REALMS[o.realm].east || o.realm === 'SOL') && NAMES_LOC[o.realm]; if (L && L[c.sex === 'f' ? 'f' : 'm']) c.name = pick(L[c.sex === 'f' ? 'f' : 'm']) } catch (e) { }
   return c;
 };
 const _es52 = endSeason; endSeason = function () { const r = _es52.apply(this, arguments); try { clean52() } catch (e) { } return r };
@@ -11020,7 +11022,7 @@ function tick52() {
 const _dt52 = devTick; devTick = function () { const r = _dt52.apply(this, arguments); try { if (S && S.flags) tick52() } catch (e) { console.error && console.error('tick52', e) } return r };
 // textes de la saga et chronique : l'Est entre en scène
 (() => {
-  const D = { conquete: 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison de Morvaine : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. À l\'Est, l\'Empire de Kesh se déchire, et le doge d\'Azurée compte ses écus.',
+  const D = { conquete: 'An 1 — Six couronnes se partagent Westerhald. À Vaeloria, Aelric Aeltharys et sa sœur Rhaelys se soulèvent contre la maison Saevar : prenez le royaume d\'Argenthal, forgez le Trône d\'Argent, puis soumettez les cinq autres couronnes. À l\'Est, l\'Empire de Kesh se déchire, et le doge d\'Azurée compte ses écus.',
     nord: 'An 24 — Trois hivers sans récolte, et le vieil Aelric exige toujours le tribut. Le roi Hrodmar Isenhart pend les collecteurs aux portes de Belvar : « Le loup ne plie pas. » Dans les îles, la maison Grimsel rompt avec le Nord ; de l\'autre côté de la mer de glace, le même froid affame la Taïga.',
     batard: 'An 61 — Le roi Haelor est mort sans fils légitime. Le conseil couronne sa fille Ysaera, huit ans, sous la régence d\'Oswin de Rivemont ; l\'armée acclame son bâtard Draevon. Azurée prête à la reine, Kesh arme le Bâtard : deux couronnes, un seul trône.',
     dechiree: 'An 128 — La reine Ysaera est morte à 75 ans. Ses petits-fils Aldric et Taelon se disputent son trône, et Daemyr, petit-fils du bâtard Draevon, se lève avec l\'armée. À Kesh, l\'impératrice Roxana mise en secret sur Daemyr.',
@@ -11284,6 +11286,36 @@ const _tick52b = tick52; tick52 = function () {
 })();
 // l'Est ne prête jamais hommage au Haut-Roi d'Argenthal
 const _hks52 = hkSet; hkSet = function (o, st) { if (st === 'sworn' && east52(o)) return; return _hks52.apply(this, arguments) };
+
+// ---------- 14. concordance avec le document (vérification finale) ----------
+// IV : le Nord et Bellegarde attendent leur heure au lieu de suivre Daemyr dès le départ
+{ const _sd = CH50.dechiree.setup; CH50.dechiree.setup = function (cont) { _sd.apply(this, arguments); const d = S.flags.f50.DAE; if (!d) return; for (const w of S.wars) if (w.a.includes(d) || w.b.includes(d)) { if (w.a[0] === d || w.b[0] === d) { w.a = w.a.filter(k => !['CIM', 'ROS'].includes(k) || k === S.player); w.b = w.b.filter(k => !['CIM', 'ROS'].includes(k) || k === S.player) } } } }
+// VII : le vieil Aelric règne à l'Ouest ; Ashkan doit être couronné en sept ans
+{ const _sa = CH50.aigle.setup; CH50.aigle.setup = function (cont) { _sa.apply(this, arguments); if (!cont && alive50('AUB')) { const c = ruler50('AUB', 'Aelric', 63, 'm', ['brave']); if (c) c.health = 99; houseName50('AUB', 'Aeltharys', 'D\'argent naîtra la couronne'); S.realms.AUB.col = AELTH_COL } } }
+OBJ50.aigle.KES = () => !!e52().crowned && (e52().crownT || S.turn) - S.flags.t050 <= 28;
+// II : si le Nord tient trois ans, la Paix des Neiges est signée
+// Azurée : la plus grande flotte, débarque partout ; Kesh : soldats moins chers ; Taïga : l'hiver tue les envahisseurs ; Vaeloria : péages du détroit
+const _up52 = upkeep; upkeep = function (k) { const u = _up52.apply(this, arguments); return realOf(k) === 'KES' ? Math.round(u * .8) : u };
+const _tick52c = tick52; tick52 = function () {
+  _tick52c.apply(this, arguments);
+  const E = e52(), chp = S.flags.ch50, t = S.turn - (E.t0 || 0);
+  if (chp === 'aigle' && E.crowned && !E.crownT) E.crownT = S.turn;
+  if (chp === 'nord' && E.ch === 'nord' && t >= 12 && !E.neiges) { const king = S.highKing || 'AUB'; const w = S.wars.find(x => (x.a.includes('CIM') && x.b.includes(king)) || (x.b.includes('CIM') && x.a.includes(king))); if (w && alive50('CIM') && realmProvs('CIM').length >= ((S.flags.f50.start || {}).CIM || 50) - 6) { E.neiges = 1; try { endWar(w, null, null, true) } catch (e) { } note50('❄️ La Paix des Neiges', 'Après trois ans de guerre dans la neige, le Haut-Roi et le Nord signent la Paix des Neiges. Le Nord rentre dans le rang, la rancune intacte.') } }
+  if (S.s === 3 && alive50('TAI')) for (const a of Object.values(S.armies)) { const P = S.prov[a.loc]; if (P && P.k === 'TAI' && a.realm !== 'TAI' && atWar(a.realm, 'TAI')) a.men = Math.round(a.men * .92) }
+  const v = vael52(); if (v && S.prov[v]) { const h = S.prov[v].occ || S.prov[v].k; if (alive50(h) && !warsOf(h).some(w => w.a.concat(w.b).some(east52))) S.realms[h].gold += 12 }
+  if (alive50('AZU')) { const A = S.realms.AZU; A.ships = A.ships || { war: 0, cog: 0 }; if (A.ships.war < 16) A.ships.war = 16 }
+};
+(() => { // chronique : les dates du document
+  const e = LORE_CANON.find(x => x.y === 158 && x.t === 'Kesharan V'); if (e) { e.y = 163; e.d = 'Un jeune empereur cruel et ambitieux, Kesharan V, monte sur le trône de Kesh.' }
+  const e64 = LORE_CANON.find(x => x.y === 64); if (e64) e64.d += ' À Kesh, on murmure : « L\'Empire n\'oublie pas ses amis. »';
+  const e139 = LORE_CANON.find(x => x.y === 139 && x.t === 'Le couronnement dans les ruines'); if (e139) e139.d += ' Azurée devient l\'alliée du Trône d\'Argent.';
+  LORE_CANON.push(
+    { y: 7, k: ['TAI', 'KES'], t: 'Les raids de la Taïga', d: 'Pendant que l\'Empire se déchire, les clans de la Taïga pillent les marches impériales.' },
+    { y: 27, k: ['TAI'], t: 'Les alliés du froid', d: 'La Taïga rentre chez elle avec la réputation d\'alliée des peuples du froid.' },
+    { y: 110, k: ['KES', 'TAI'], big: 1, t: 'Le Mur de Givre', d: 'Après la Guerre du Givre, où ses légions ont échoué dans la neige, Kesh bâtit le Mur de Givre contre la Taïga.', rel: [['KES', 'TAI', -15]] },
+    { y: 150, k: ['KES', 'AZU'], t: 'La Guerre des Épices', d: 'Les satrapes du sud se révoltent ; Azurée en profite pour prendre la route maritime des épices.' });
+  LORE_CANON.sort((a, b) => a.y - b.y);
+})();
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
