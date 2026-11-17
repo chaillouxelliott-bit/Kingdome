@@ -10314,6 +10314,9 @@ Object.assign(STORY38, {
 
 
 
+
+
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -10825,7 +10828,7 @@ function clean52() {
   if (S.hk) { S.hk.sworn = S.hk.sworn.filter(k => !east52(k)); S.hk.defiant = S.hk.defiant.filter(k => !east52(k)) }
 }
 function west52(f) { return function () { const all = REALM_IDS; REALM_IDS = all.filter(k => !east52(k)); try { return f.apply(this, arguments) } finally { REALM_IDS = all } } }
-hkInit = west52(hkInit); canCrown = west52(canCrown); worldTick = west52(worldTick);
+hkInit = west52(hkInit); canCrown = west52(canCrown); worldTick = west52(worldTick); hkTick = west52(hkTick);
 // la limite de royaumes vaut pour chaque continent séparément
 aliveCount30 = function () { return REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive && realmProvs(k).length && !east52(k)).length };
 const _mi52 = makeIndep; makeIndep = function (fromK, h, opts) { if (east52(fromK) && !(opts && opts.force) && REALM_IDS.filter(k => S.realms[k] && S.realms[k].alive && east52(k)).length >= 6) return null; return _mi52.apply(this, arguments) };
@@ -10866,7 +10869,7 @@ function makeMarch52(ruler, age, traits) {
   if (!REALM_IDS.includes(id)) REALM_IDS.push(id); S.flags.mar52 = id; return id;
 }
 function east52Setup(id, cont) {
-  const E = S.flags.e52 = { ch: id, t0: S.turn }; const R0 = ER52[id] || {};
+  const E = e52(); E.ch = id; E.t0 = S.turn; const R0 = ER52[id] || {};
   for (const k of ['KES', 'AZU', 'TAI']) {
     const v = R0[k]; if (!v || !alive50(k)) continue; const R = S.realms[k];
     if (!cont || k !== S.player) { const c = ruler50(k, v[0], v[1], v[2], v[3]); if (c) { c.sex = v[2]; c.health = Math.max(c.health || 70, 85) } R.regnal = v[4] || 0; houseName50(k, v[5], v[6]) }
@@ -10877,6 +10880,7 @@ function east52Setup(id, cont) {
   clean52();
 }
 const _setup52 = setup50; setup50 = function (id, cont) {
+  S.flags = S.flags || {}; S.flags.e52 = { ch: id, t0: S.turn };
   const r = _setup52.apply(this, arguments);
   try { east52Setup(id, cont); if (S.flags.role50 && EAST_ROLE52[id] && EAST_ROLE52[id][S.flags.role50] && !cont) EAST_ROLE52[id][S.flags.role50]() } catch (e) { console.error && console.error('e52', id, e) }
   try { clean52(); injectRealms(); mapDirty() } catch (e) { }
@@ -11048,6 +11052,237 @@ const _kc52 = killChar; killChar = function (c, why) {
   try { const E = S && S.flags && S.flags.e52; if (E && c && c.age < 72 && S.turn - E.t0 < 20 && /^(de fièvre|d'une chute de cheval|de maladie|dans son sommeil)$/.test(String(why || '')) && ['KES', 'AZU', 'TAI', S.flags.mar52].some(k => k && S.realms[k] && S.realms[k].ruler === c.id)) { c.health = Math.max(c.health || 0, 70); return } } catch (e) { }
   return _kc52.apply(this, arguments);
 };
+
+// ---------- 13. les chapitres VII à XI (partie 4) ----------
+function kesGeo52() { // découpe géographique de l'Empire : cité, delta (sud), Deux Déserts (est), Couchant
+  const o = { city: [], delta: [], des: [], cou: [] };
+  const cap = MAP.provs.find(x => x.k === 'KES' && x.cap), rest = [];
+  for (const q of MAP.provs) { if (q.k !== 'KES') continue; if (q.reg === 'couchant') o.cou.push(q.id); else rest.push(q) }
+  rest.sort((a, b) => Math.hypot(a.c[0] - cap.c[0], a.c[1] - cap.c[1]) - Math.hypot(b.c[0] - cap.c[0], b.c[1] - cap.c[1]));
+  rest.forEach((q, i) => { if (i < 12) o.city.push(q.id); else if (q.c[0] > 1700) o.des.push(q.id); else o.delta.push(q.id) });
+  return o;
+}
+function kesCap52() { const q = MAP.provs.find(x => x.k === 'KES' && x.cap); return q && q.id }
+function splitList52(fromK, take, o) {
+  if (!alive50(fromK)) return null; const cap = capitalOf(fromK); take = take.filter(q => S.prov[q] && S.prov[q].k === fromK && q !== cap); if (take.length < 2) return null;
+  const h = mkHouse(fromK, [o.house, o.motto || '', o.col], false); const c = genChar({ house: h.id, realm: fromK, sex: o.sex || 'm', age: o.age || 40 }); h.head = c.id;
+  take.forEach(q => S.prov[q].h = h.id); if (o.seat && take.includes(o.seat)) h.seat = o.seat;
+  const id = makeIndep(fromK, h, { name: o.name, short: o.short, col: o.col, legit: o.legit || 55, peaceful: !!o.peaceful, force: true }); if (!id) return null;
+  const R = S.realms[id]; R.col = o.col; R.title = o.title; REALMS[id].title = o.title; if (o.east) REALMS[id].east = 1; label50(id, o.name, o.short, o.title); R.gold += o.gold || 150;
+  Object.assign(REALMS[id], { inc: REALMS[fromK].inc, lev: REALMS[fromK].lev, ai: o.ai || { agg: .65, honor: .5, greed: .6 } }); if (o.desc) REALMS[id].desc = o.desc;
+  if (o.ruler) ruler50(id, o.ruler, o.age, o.sex || 'm', o.traits); if (o.men) mkArmy(id, null, R.cap, o.men, R.ruler, true);
+  if (!REALM_IDS.includes(id)) REALM_IDS.push(id); return id;
+}
+function heir52(k, name, age, sex) { const R = S.realms[k], c = R && ch(R.ruler); return c ? kid50(c, name, age, sex) : null }
+function ownOrig52(k, orig, list) { return realmProvs(k).filter(q => (list ? list.includes(q) : PV[q].k === orig)).length }
+function landNear52(target, owner) { return [...NB[target]].filter(q => S.prov[q] && S.prov[q].k === owner && PV[q].coast)[0] || target }
+function rosThrone52() { // après l'an 164 : le Trône d'Argent appartient aux Rosemont, qui tiennent Vaeloria
+  if (alive50('AUB') && alive50('ROS')) { try { absorbRealm('AUB', 'ROS') } catch (e) { } }
+  if (!alive50('ROS')) return; const R = S.realms.ROS; S.highKing = 'ROS'; try { hk50('ROS', ['VAL', 'ORV', 'CIM', 'SOL', 'FER'].filter(alive50), []) } catch (e) { }
+  R.title = 'Haut-Roi d\'Argenthal'; R.legit = Math.max(R.legit || 50, 65); men50('ROS', 2500);
+}
+const SAGA52 = [
+  ['aigle', 33, 'VII. L\'Aigle de Kesh', 'An 33 — Depuis la Guerre des Satrapes, l\'Empire de Kesh n\'est plus qu\'un nom : l\'empereur Keshar V ne tient plus que sa cité. Ashkan, satrape du delta, a l\'armée la plus disciplinée et veut la couronne. Azurée, elle, ne veut surtout pas qu\'un empereur fort renaisse.'],
+  ['ports', 88, 'VIII. Les Sept Ports', 'An 88 — L\'empereur Dariyan lance trois cents galères contre l\'archipel d\'Azurée. Azurée a la meilleure flotte du monde mais une armée minuscule : si les légions débarquent, les sept cités tombent. À l\'Ouest, la reine Ysaera, qui doit encore une fortune à Azurée, hésite.'],
+  ['pretendant', 171, 'IX. Le Prétendant d\'Outre-Détroit', 'An 171 — Saeryn, dernier sang de la lignée du Bâtard, se proclame Aedrys II à Qasr-Daral. L\'empereur Kesharan V lui donne trois légions : il débarque à Vaeloria pour arracher le Trône d\'Argent à Garran de Rosemont.'],
+  ['ligue', 186, 'X. La Ligue des Deux Rives', 'An 186 — Kesharan V est mort ; son fils Darius, 19 ans, affronte le satrape Narseh qui se proclame empereur des déserts. À Vaeloria, le Haut-Roi Aldwin de Rosemont signe avec Azurée la Ligue des Deux Rives : pour la première fois, une armée de l\'Ouest passe le détroit.'],
+  ['pont', 203, 'XI. Le Pont d\'Argent', 'An 203 — Onze ans après la Ligue, l\'empereur Darius propose sa fille Yasmin à Edric, héritier du Trône d\'Argent : leurs enfants régneraient sur les deux rives. Les faucons des deux camps et la Thalassocratie d\'Azurée veulent faire échouer le mariage.'],
+];
+(() => {
+  for (const s of SAGA52) { SAGA50.push(s.slice()); SCEN50[s[0]] = 1; SCEN[s[0]] = Object.assign({}, SCEN[s[0]] || {}, { y: s[1], n: s[2], d: s[3] }) }
+  SAGA50.sort((a, b) => a[1] - b[1]); SAGA.length = 0; SAGA50.forEach(s => SAGA.push(s.slice()));
+})();
+Object.assign(PLAY50, {
+  aigle: [{ id: 'KES', realm: 'KES', nm: 'Ashkan', role: 'Le satrape du delta', obj: 'Réunifier l\'Empire : prendre la cité de Kesh en sept ans et vous y faire couronner.' },
+    { id: 'DES', realm: 'KES', nm: 'Vashti', role: 'Les Deux Déserts', obj: 'Garder les Deux Déserts indépendants pendant cinq ans.' },
+    { id: 'AZU', realm: 'AZU', nm: 'Lucio Vandrame', role: 'Le doge d\'Azurée', obj: 'Empêcher la renaissance d\'un empereur fort pendant cinq ans, sans entrer en guerre ouverte.' }],
+  ports: [{ id: 'AZU', realm: 'AZU', nm: 'Ottavia Terzi', role: 'La doge d\'Azurée', obj: 'Sauver la Thalassocratie : tenir au moins cinq des sept cités pendant trois ans.' },
+    { id: 'KES', realm: 'KES', nm: 'Dariyan', role: 'L\'empereur bâtisseur', obj: 'Conquérir l\'archipel : prendre cinq des sept cités d\'Azurée.' }],
+  pretendant: [{ id: 'ROS', realm: 'ROS', nm: 'Garran de Rosemont', role: 'Le Haut-Roi', obj: 'Unir Westerhald contre l\'envahisseur et rejeter les légions à la mer.' },
+    { id: 'MAR', realm: 'KES', nm: 'Saeryn, dit Aedrys II', role: 'Le prétendant d\'outre-détroit', obj: 'Prendre Vaeloria et vous faire couronner sur le Trône d\'Argent.' },
+    { id: 'AZU', realm: 'AZU', nm: 'Bastiano Corsani', role: 'Le doge d\'Azurée', obj: 'Choisir votre camp au meilleur prix, et qu\'il gagne.' },
+    { id: 'TAI', realm: 'TAI', nm: 'Bjarn', role: 'Le Grand Ours', obj: 'Frapper l\'Empire dans le dos : prendre trois provinces de Kesh.' }],
+  ligue: [{ id: 'ROS', realm: 'ROS', nm: 'Aldwin de Rosemont', role: 'Le Haut-Roi', obj: 'Prendre pied sur l\'autre rive : tenir six provinces de la Marche du Couchant.' },
+    { id: 'KES', realm: 'KES', nm: 'Darius', role: 'Le jeune empereur', obj: 'Sauver l\'Empire de la révolte et de l\'invasion : garder Kesh et faire la paix avec tous.' },
+    { id: 'AZU', realm: 'AZU', nm: 'Livia Corsani', role: 'La doge d\'Azurée', obj: 'S\'emparer de trois ports de la côte impériale.' },
+    { id: 'TAI', realm: 'TAI', nm: 'Eyvind', role: 'Le Grand Ours', obj: 'Conquérir quatre provinces des forêts du nord de l\'Empire.' }],
+  pont: [{ id: 'ROS', realm: 'ROS', nm: 'Aldwin de Rosemont', role: 'Le parti de la paix (Ouest)', obj: 'Célébrer le mariage d\'Edric et de Yasmin, puis tenir la paix cinq ans.' },
+    { id: 'KES', realm: 'KES', nm: 'Darius', role: 'Le parti de la paix (Est)', obj: 'Célébrer le mariage de Yasmin et d\'Edric, puis tenir la paix cinq ans.' },
+    { id: 'CIM', realm: 'CIM', nm: 'Le roi du Nord', role: 'Les faucons', obj: 'Faire échouer l\'union et gagner la guerre qui suivra : prendre six provinces à Kesh.' },
+    { id: 'AZU', realm: 'AZU', nm: 'Livia Corsani', role: 'La doge d\'Azurée', obj: 'Empêcher l\'union par l\'or, les complots et la mer.' },
+    { id: 'TAI', realm: 'TAI', nm: 'Eyvind', role: 'Le Grand Ours', obj: 'Survivre entre les deux géants pendant cinq ans.' }],
+});
+Object.assign(ER52, {
+  aigle: { AZU: ['Lucio', 60, 'm', [], 0, 'Vandrame', 'La mer est notre champ'], TAI: ['Haldra', 44, 'f', ['brave'], 0, 'la Louve', 'La meute avant tout'] },
+  ports: { KES: ['Dariyan', 41, 'm', ['ambit'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Ottavia', 46, 'f', ['ruse'], 0, 'Terzi', 'L\'or ne dort jamais'], TAI: ['Torvik', 77, 'm', [], 0, 'Bjornsson', 'L\'ours ne dort qu\'un hiver'] },
+  pretendant: { KES: ['Kesharan', 44, 'm', ['cruel', 'ambit'], 5, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Bastiano', 57, 'm', ['ruse'], 0, 'Corsani', 'Le vent paie'], TAI: ['Bjarn', 36, 'm', ['brave'], 0, 'le Jeune', 'L\'ours ne dort qu\'un hiver'] },
+  ligue: { KES: ['Darius', 19, 'm', ['brave'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Livia', 38, 'f', ['ruse'], 0, 'Corsani', 'Le vent paie'], TAI: ['Eyvind', 41, 'm', ['brave'], 0, 'Ravnsdal', 'Le corbeau se souvient'] },
+  pont: { KES: ['Darius', 36, 'm', ['juste'], 0, 'de Kesh', 'Le soleil se lève à l\'est'], AZU: ['Livia', 55, 'f', ['ruse'], 0, 'Corsani', 'Le vent paie'], TAI: ['Eyvind', 58, 'm', [], 0, 'Ravnsdal', 'Le corbeau se souvient'] },
+});
+Object.assign(CH50, {
+  aigle: { setup(cont) {
+    if (!alive50('KES') || realmProvs('KES').length < 30) return note50('🦅 L\'Empire se tait', 'Dans votre histoire, l\'Empire de Kesh n\'est plus en état de se déchirer : l\'Aigle de Kesh n\'aura pas lieu.');
+    const G = kesGeo52(), K = S.realms.KES, cap = kesCap52();
+    const seat = G.delta.filter(q => S.prov[q] && S.prov[q].k === 'KES').sort((a, b) => S.prov[b].pop - S.prov[a].pop)[0]; if (!seat) return; K.cap = seat;
+    ruler50('KES', 'Ashkan', 40, 'm', ['ambit', 'brave']); houseName50('KES', 'de Kesh', 'Le soleil se lève à l\'est'); K.regnal = 0; label50('KES', 'Satrapie du Delta', 'le Delta', 'Satrape du Delta');
+    const city = splitList52('KES', G.city, { name: 'Cité impériale de Kesh', short: 'la Cité', title: 'Empereur de Kesh', col: '#7a1f2b', house: 'de la Cité', motto: 'Le soleil ne se couche pas', ruler: 'Keshar', age: 34, men: 2600, east: 1, seat: cap, desc: 'Ce qui reste de l\'Empire : la cité de Kesh et ses vallées. L\'empereur Keshar V règne sur un nom.' });
+    const des = splitList52('KES', G.des, { name: 'Satrapie des Deux Déserts', short: 'les Deux Déserts', title: 'Satrape des Deux Déserts', col: '#d9a066', house: 'Vashtiran', motto: 'Patience des sables', ruler: 'Vashti', sex: 'f', age: 45, traits: ['ruse'], men: 3200, gold: 250, east: 1, desc: 'Les routes des épices et du sel, tenues par la satrape Vashti.' });
+    const cou = splitList52('KES', G.cou, { name: 'Satrapie du Couchant', short: 'le Couchant', title: 'Satrape du Couchant', col: '#c79a5a', house: 'Daralid', motto: 'Face au détroit', ruler: 'Farhad', age: 50, men: 1600, east: 1, peaceful: true });
+    if (city) S.realms[city].regnal = 5;
+    Object.assign(e52(), { city, des, cou, crowned: 0 }); men50('KES', 2500);
+    if (city) war50('KES', city, [], des ? [des] : []); if (city && alive50('TAI')) war50('TAI', city, [], []);
+    if (S.flags.role50 === 'DES' && des && !cont) S.player = des;
+    note50('🦅 L\'Aigle de Kesh', 'L\'Empire de Kesh est divisé en quatre : la <b>cité impériale</b> de l\'empereur Keshar V, la <b>satrapie du delta</b> d\'Ashkan, les <b>Deux Déserts</b> de la satrape Vashti et la <b>Marche du Couchant</b>. Ashkan marche sur Kesh : s\'il tient la cité, l\'empereur lui cédera le trône. La Taïga pille le nord ; Azurée finance les satrapes rebelles.');
+  } },
+  ports: { setup(cont) {
+    if (!alive50('KES') || !alive50('AZU')) return note50('⚓ La mer se tait', 'Dans votre histoire, ni Kesh ni Azurée ne peuvent s\'affronter sur la mer : les Sept Ports n\'auront pas lieu.');
+    const K = S.realms.KES, A = S.realms.AZU; K.ships = K.ships || { war: 0, cog: 0 }; A.ships = A.ships || { war: 0, cog: 0 }; K.ships.war = Math.max(K.ships.war, 40); A.ships.war = Math.max(A.ships.war, 32);
+    const cities = realmProvs('AZU').sort((a, b) => S.prov[b].pop - S.prov[a].pop).slice(0, 7); Object.assign(e52(), { cities });
+    const cv = genChar({ house: A.house, realm: 'AZU', sex: 'm', age: 55 }); cv.name = 'Corvino'; cv.mar = 14; A.council.mar = cv.id;
+    if (alive50('FER') && S.player !== 'FER') ruler50('FER', 'Sigvald', 40, 'm', []);
+    if (!cont && alive50('AUB')) { ruler50('AUB', 'Ysaera', 35, 'f', []); houseName50('AUB', 'Aeltharys', 'D\'argent naîtra la couronne') }
+    war50('KES', 'AZU', [], []); men50('KES', 3000); const land = cities.length ? landNear52(cities[cities.length - 1], 'AZU') : capitalOf('AZU'); const L = mkArmy('KES', null, land, 4000, K.ruler, true); L.e52 = 1;
+    note50('⚓ Les Sept Ports', 'La flotte impériale de <b>Dariyan</b> bloque les ports d\'Azurée et une première légion a pris pied dans l\'archipel. La doge <b>Ottavia Terzi</b> et l\'amiral <b>Corvino</b> ont la meilleure flotte du monde, mais une armée minuscule. Les batailles navales décideront de tout : une légion qui débarque sans flotte pour la ravitailler fond en quelques saisons.');
+  } },
+  pretendant: { setup(cont) {
+    if (!cont) rosThrone52(); const king = S.highKing && alive50(S.highKing) ? S.highKing : 'ROS';
+    if (!alive50(king) || !alive50('KES')) return note50('⛵ Le détroit se tait', 'Dans votre histoire, aucun prétendant ne peut traverser le détroit : le Prétendant d\'Outre-Détroit n\'aura pas lieu.');
+    if (!cont && king === 'ROS') ruler50('ROS', 'Garran', 31, 'm', ['brave', 'juste']);
+    if (alive50('CIM') && S.player !== 'CIM') { ruler50('CIM', 'Ulric', 34, 'm', ['brave']); addTreaty('alliance', 'CIM', king, 40); setRel('CIM', king, 60) }
+    const mar = S.flags.mar52 && alive50(S.flags.mar52) ? S.flags.mar52 : makeMarch52('Saeryn', 38, ['ruse']); if (!mar) return;
+    ruler50(mar, 'Saeryn', 38, 'm', ['ruse']); S.realms[mar].title = 'Prétendant au Trône d\'Argent';
+    const v = vael52(), land = landNear52(v, S.prov[v].k);
+    ewar52(mar, king, [], alive50('CIM') ? ['CIM'] : []); const L = mkArmy(mar, null, land, 9000, S.realms[mar].ruler, true); L.legion52 = 1;
+    Object.assign(e52(), { mar, king, over: 0, reinf: 0 });
+    if (S.flags.role50 === 'MAR' && !cont) S.player = mar;
+    note50('⛵ Le Prétendant d\'Outre-Détroit', 'À Qasr-Daral, <b>Saeryn</b> s\'est proclamé <b>Aedrys II</b>, seul héritier légitime des Aeltharys. L\'empereur <b>Kesharan V</b> lui a donné trois légions : 9 000 hommes débarquent sur la presqu\'île de Vaeloria. Le roi du Nord, <b>Ulric Isenhart</b>, se range aux côtés du Haut-Roi ; Valgué et Lodeshire, nostalgiques des Aeltharys, hésitent. Azurée met sa flotte aux enchères.');
+  } },
+  ligue: { setup(cont) {
+    if (!cont) rosThrone52(); const king = S.highKing && alive50(S.highKing) ? S.highKing : 'ROS';
+    if (!alive50(king) || !alive50('KES')) return note50('🤝 Pas de Ligue', 'Dans votre histoire, ni le Trône d\'Argent ni l\'Empire ne sont en état de s\'affronter : la Ligue des Deux Rives n\'aura pas lieu.');
+    if (S.flags.mar52 && alive50(S.flags.mar52) && S.flags.mar52 !== S.player) { try { absorbRealm(S.flags.mar52, 'KES') } catch (e) { } }
+    if (!cont && king === 'ROS') ruler50('ROS', 'Aldwin', 28, 'm', ['ambit']);
+    const G = kesGeo52(); const nar = splitList52('KES', G.des, { name: 'Empire des Déserts', short: 'Narseh', title: 'Empereur des Déserts', col: '#d9a066', house: 'Narsehid', motto: 'Le sable n\'a pas de maître', ruler: 'Narseh', age: 50, traits: ['ambit'], men: 4500, gold: 250, east: 1 });
+    Object.assign(e52(), { nar, king, cou: MAP.provs.filter(q => q.reg === 'couchant').map(q => q.id) });
+    if (nar) war50(nar, 'KES', [], []);
+    if (alive50('AZU')) addTreaty('alliance', king, 'AZU', 60);
+    ewar52(king, 'KES', alive50('AZU') ? ['AZU'] : [], []); if (alive50('TAI')) war50('TAI', 'KES', [], []);
+    const qd = (MAP.provs.find(q => q.capc) || {}).id; if (qd) { const L = mkArmy(king, null, qd, 5000, S.realms[king].ruler, true); L.e52 = 1 }
+    if (alive50('AZU')) { const port = realmProvs('KES').filter(q => PV[q].coast && PV[q].c[1] > 1300).sort((a, b) => PV[b].c[0] - PV[a].c[0])[0]; if (port) mkArmy('AZU', null, port, 2200, null, true) }
+    note50('🤝 La Ligue des Deux Rives', 'Kesharan V est mort sans héritier incontesté. Son fils <b>Darius</b>, 19 ans, tient Kesh et le delta ; le satrape <b>Narseh</b> se proclame empereur des déserts. Au nord, la Taïga franchit le Mur de Givre. Le Haut-Roi <b>Aldwin de Rosemont</b> et la doge <b>Livia Corsani</b> ont signé la Ligue : une armée de l\'Ouest débarque à Qasr-Daral, la flotte d\'Azurée attaque les ports du sud. La Marche du Couchant reviendra à qui la prendra.');
+  } },
+  pont: { setup(cont) {
+    if (!cont) { rosThrone52(); if (S.flags.mar52 && alive50(S.flags.mar52)) { try { absorbRealm(S.flags.mar52, 'KES') } catch (e) { } } if (alive50('ROS')) MAP.provs.filter(q => q.reg === 'couchant' && S.prov[q.id].k === 'KES').forEach(q => { S.prov[q.id].k = 'ROS'; S.prov[q.id].h = null; S.prov[q.id].occ = null }) }
+    const king = S.highKing && alive50(S.highKing) ? S.highKing : 'ROS';
+    if (!alive50(king) || !alive50('KES')) return note50('💍 Pas de mariage', 'Dans votre histoire, il n\'y a plus de Trône d\'Argent et d\'Empire pour s\'unir : le Pont d\'Argent n\'aura pas lieu.');
+    S.wars.filter(w => (w.a.includes(king) && w.b.includes('KES')) || (w.b.includes(king) && w.a.includes('KES'))).forEach(w => { try { endWar(w, null, null, true) } catch (e) { } });
+    if (!cont && king === 'ROS') ruler50('ROS', 'Aldwin', 45, 'm', ['juste']);
+    const ed = heir52(king, 'Edric', 21, 'm'), ya = heir52('KES', 'Yasmin', 18, 'f');
+    const ar = genChar({ house: S.realms.KES.house, realm: 'KES', sex: 'm', age: 33 }); ar.name = 'Ardashir'; ar.traits.push('ambit');
+    if (alive50('CIM') && S.player !== 'CIM') ruler50('CIM', 'Harald', 50, 'm', ['colere']);
+    setRel(king, 'KES', 30); [king, 'KES'].forEach(k => { const R = S.realms[k]; R.truce = R.truce || {} }); S.realms[king].truce.KES = S.turn + 4; S.realms.KES.truce[king] = S.turn + 4;
+    Object.assign(e52(), { king, prog: 0, need: 4, wed: 0, off: 0, ed: ed && ed.id, ya: ya && ya.id, kesStart: realmProvs('KES').length });
+    note50('💍 Le Pont d\'Argent', 'Onze ans après la Ligue, les deux rives sont épuisées. L\'empereur <b>Darius</b> propose sa fille, la princesse <b>Yasmin</b>, à <b>Edric</b>, héritier du Trône d\'Argent. Les négociations durent quatre saisons : chaque guerre, complot ou insulte fait reculer la date. Le prince <b>Ardashir</b> à Kesh, le roi du Nord à l\'Ouest et la doge d\'Azurée veulent tout faire échouer.');
+  } },
+});
+Object.assign(OBJ50, {
+  aigle: { KES: () => !!e52().crowned, DES: () => { const d = e52().des; return S.turn - S.flags.t050 >= 20 && alive50(d) && overlordOf(d) !== 'KES' }, AZU: () => S.turn - S.flags.t050 >= 20 && !e52().crowned && !warsOf('AZU').length },
+  ports: { AZU: () => S.turn - S.flags.t050 >= 12 && (e52().cities || []).filter(q => ctrl(q) === 'AZU').length >= 5, KES: () => !alive50('AZU') || (e52().cities || []).filter(q => ctrl(q) === 'KES').length >= 5 },
+  pretendant: { ROS: () => e52().over === 'garran', MAR: () => { const v = vael52(); return !!v && ctrl(v) === S.player }, AZU: () => !!e52().azuSide && e52().over === e52().azuSide, TAI: () => ownOrig52('TAI', 'KES') >= 3 },
+  ligue: { ROS: () => S.turn - S.flags.t050 >= 4 && ownOrig52(S.player, null, e52().cou || []) >= 6, KES: () => S.turn - S.flags.t050 >= 8 && alive50('KES') && ctrl(kesCap52()) === 'KES' && !warsOf('KES').length, AZU: () => ownOrig52('AZU', 'KES') >= 3, TAI: () => ownOrig52('TAI', 'KES') >= 4 },
+  pont: { ROS: () => { const E = e52(); return E.wed && S.turn - E.wedT >= 20 && !atWar(E.king, 'KES') }, KES: () => { const E = e52(); return E.wed && S.turn - E.wedT >= 20 && !atWar(E.king, 'KES') }, CIM: () => { const E = e52(); return E.off && alive50('KES') && realmProvs('KES').length <= (E.kesStart || 99) - 6 }, AZU: () => { const E = e52(); return E.off || (S.turn - S.flags.t050 >= 16 && !E.wed) }, TAI: () => S.turn - S.flags.t050 >= 20 && alive50('TAI') },
+});
+Object.assign(EACT52, {
+  e52knights: () => { const r = P0(); r.gold += 300; if (alive50('KES')) mkArmy('KES', null, capitalOf('KES'), 1500, null, true); addRel(S.player, 'KES', 30); e52().aelric = 'ashkan'; return 'Vos chevaliers passent le détroit au service d\'Ashkan. L\'Empire s\'en souviendra.' },
+  e52vashti: () => { const r = P0(), d = e52().des; if (r.gold < 200) return 'Le trésor est vide.'; r.gold -= 200; if (alive50(d)) S.realms[d].gold += 200; e52().aelric = 'vashti'; return 'Votre or file vers les Deux Déserts : l\'Est restera divisé.' },
+  e52fund: () => { const r = P0(), d = e52().des; if (r.gold < 150) return 'Le trésor est vide.'; r.gold -= 150; if (alive50(d)) { S.realms[d].gold += 150; mkArmy(d, null, capitalOf(d), 1200, null, false).merc = true } return 'Vos écus et vos mercenaires renforcent la satrape Vashti.' },
+  e52cors: () => { const r = P0(); if (r.gold < 80) return 'Le trésor est vide.'; r.gold -= 80; e52().cors = 6; return 'Vos corsaires prennent la mer : les convois de l\'Empire vont saigner.' },
+  e52fer: () => { const r = P0(); if (r.gold < 150) return 'Le trésor est vide.'; r.gold -= 150; joinWar52('FER', 'AZU', 'KES', 0); if (alive50('FER')) { S.realms.FER.ships = S.realms.FER.ships || { war: 0, cog: 0 }; S.realms.FER.ships.war += 6 } return 'Les pillards de Brisemer rejoignent la guerre.' },
+  e52ysa: () => { ysa52(); return 'Westerhald entre en guerre aux côtés d\'Azurée : la moitié de la dette est effacée.' },
+  e52bidG: () => { e52().azuSide = 'garran'; e52().strait = 1; P0().gold += 300; return 'Votre flotte bloque le détroit pour le Haut-Roi, contre 300 écus.' },
+  e52bidS: () => { e52().azuSide = 'saeryn'; e52().ferry = 1; P0().gold += 300; return 'Votre flotte transportera les renforts de Kesh, contre 300 écus.' },
+  e52payStrait: () => { const r = P0(); if (r.gold < 300) return 'Le trésor est vide.'; r.gold -= 300; e52().strait = 1; e52().azuSide = 'garran'; return 'La flotte d\'Azurée bloque le détroit : plus aucun renfort ne passera.' },
+  e52payFerry: () => { const r = P0(); if (r.gold < 300) return 'Le trésor est vide.'; r.gold -= 300; e52().ferry = 1; e52().azuSide = 'saeryn'; return 'La flotte d\'Azurée transportera vos renforts.' },
+  e52wall: () => { wall52(); return 'Vos guerriers franchissent le Mur de Givre.' },
+  e52cede: () => { cede52(); return 'Vous cédez la Marche du Couchant pour sauver l\'Empire.' },
+  e52narseh: () => { narseh52(); return 'Narseh accepte : les deux empereurs s\'unissent contre les étrangers.' },
+  e52plotPay: () => { const r = P0(); if (r.gold < 100) return 'Le trésor est vide.'; r.gold -= 100; return 'Vos espions démantèlent le complot d\'Azurée.' },
+  e52plotNo: () => { e52().prog = (e52().prog || 0) - 1; return 'Le complot fait reculer la date du mariage.' },
+  e52incident: () => { incident52(); return 'Vos navires provoquent un incident au détroit.' },
+});
+function ysa52() { const E = e52(); if (E.ysa || !alive50('AUB')) return; E.ysa = 1; joinWar52('AUB', 'AZU', 'KES', 0); const D = S.flags.debt52; if (D) D.left = Math.round(D.left / 2); if (alive50('KES')) { const v = vael52(); const L = mkArmy('KES', null, landNear52(v, S.prov[v].k), 3000, null, true); L.e52 = 1 } note50('⚓ Westerhald entre en guerre', 'La reine <b>Ysaera</b> accepte l\'offre d\'Azurée : la moitié de sa dette est effacée. Kesh déclare la guerre à Westerhald et une légion frappe Vaeloria par le détroit.') }
+function wall52() { const E = e52(); if (E.wall || !alive50('TAI') || !alive50('KES')) return; E.wall = 1; if (!atWar('TAI', 'KES')) war50('TAI', 'KES', [], []); const m = E.mar; const A = m && armiesOf(m).sort((a, b) => b.men - a.men)[0]; if (A) A.men = Math.max(300, A.men - 3000); note50('🐺 Le Mur de Givre', 'La Taïga franchit le Mur de Givre. L\'empereur Kesharan doit rappeler une légion de Westerhald.') }
+function cede52() { const E = e52(), k = E.king; if (!alive50(k)) return; (E.cou || []).filter(q => S.prov[q] && S.prov[q].k === 'KES').forEach(q => { S.prov[q].k = k; S.prov[q].h = null; S.prov[q].occ = null }); S.wars.filter(w => (w.a.includes(k) && w.b.includes('KES')) || (w.b.includes(k) && w.a.includes('KES'))).forEach(w => { try { endWar(w, null, null, true) } catch (e) { } }); E.ceded = 1; note50('🤝 La paix du Couchant', 'Darius achète la paix : la Marche du Couchant passe au Trône d\'Argent. Pour la première fois, Vaeloria tient les deux rives du détroit.') }
+function narseh52() { const E = e52(), n = E.nar; if (!alive50(n)) return; S.wars.filter(w => (w.a.includes(n) && w.b.includes('KES')) || (w.b.includes(n) && w.a.includes('KES'))).forEach(w => { try { endWar(w, null, null, true) } catch (e) { } }); addTreaty('alliance', 'KES', n, 40); joinWar52(n, 'KES', E.king, 0); note50('🦅 Les deux empereurs', 'Darius et Narseh enterrent leur querelle contre les étrangers.') }
+function incident52() { const E = e52(); if (E.off || E.wed) return; E.off = 1; addRel('KES', E.king, -40); ewar52('KES', E.king, [], []); note50('🔥 L\'incident du détroit', 'Des navires ont été incendiés au détroit. Les faucons ont gagné : le mariage est annulé, et c\'est la guerre entre les deux rives.') }
+const _tick52b = tick52; tick52 = function () {
+  _tick52b.apply(this, arguments);
+  const E = e52(), chp = S.flags.ch50, p = S.player; if (!chp || E.ch !== chp) return; const t = S.turn - E.t0;
+  if (chp === 'aigle') {
+    const { city, des } = E, kc = kesCap52();
+    if (t === 1 && alive50('AUB')) { if (p === 'AUB') offer52(p, '🦅 Les envoyés de l\'Est', 'Ashkan vous demande des chevaliers ; la satrape Vashti, de l\'or. L\'un fera de l\'Empire un ami, l\'autre gardera l\'Est divisé.', [['Vendre 1 500 chevaliers à Ashkan (+300 écus)', 'e52knights'], ['Financer Vashti (200 écus)', 'e52vashti'], ['Ne rien faire', 'e52no']]); else if (chance(.5)) { if (alive50('KES')) mkArmy('KES', null, capitalOf('KES'), 1500, null, true); E.aelric = 'ashkan'; worldNews('🦅 Aelric vend des chevaliers à Ashkan.') } }
+    if (t % 4 === 1 && alive50(des)) { if (p === 'AZU') offer52(p, '💰 Les satrapes rebelles', 'La satrape Vashti demande de l\'or et des mercenaires pour tenir contre Ashkan.', [['Financer Vashti (150 écus)', 'e52fund'], ['Attendre', 'e52no']]); else if (alive50('AZU') && S.realms.AZU.gold > 200) { S.realms.AZU.gold -= 120; S.realms[des].gold += 120 } }
+    if (!E.crowned && kc && alive50('KES') && ctrl(kc) === 'KES') {
+      E.crowned = 1; if (alive50(city)) { try { absorbRealm(city, 'KES') } catch (e) { } } const K = S.realms.KES; S.prov[kc].k = 'KES'; S.prov[kc].occ = null; K.cap = kc; K.renamed = false; K.nm = null; K.nmS = null; K.title = 'Empereur de Kesh'; K.prestige += 30; K.legit = C((K.legit || 50) + 20, 0, 100);
+      note50('🦅 Ashkan le Grand', 'Ashkan tient la cité de Kesh. L\'empereur Keshar V lui cède le trône : <b>Ashkan le Grand</b> est couronné. Sa première ambassade à Vaeloria porte un message : « Le soleil se lève à l\'est. »');
+    }
+  }
+  if (chp === 'ports') {
+    const K = S.realms.KES, A = S.realms.AZU; if (!alive50('KES') || !alive50('AZU')) return; const war = atWar('KES', 'AZU');
+    if (war && K.ships.war > A.ships.war * .9) { A.gold -= 25; if (!E.blk) { E.blk = 1; note50('⚓ Le blocus', 'La flotte impériale bloque les ports d\'Azurée : le commerce s\'effondre, la Thalassocratie perd 25 écus par saison.') } }
+    if (t === 1) { if (p === 'AZU') offer52(p, '🏴‍☠️ Les corsaires', 'L\'amiral Corvino propose de lâcher vos corsaires sur les convois de l\'Empire.', [['Lancer les corsaires (80 écus)', 'e52cors'], ['Non', 'e52no']]); else E.cors = 6 }
+    if (E.cors > 0 && war) { E.cors--; K.gold -= 40 }
+    if (t === 2 && alive50('FER')) { if (p === 'AZU') offer52(p, '🏴‍☠️ Les pillards de Brisemer', 'Le roi Sigvald Grimsel vend ses pillards au plus offrant.', [['Engager Brisemer (150 écus)', 'e52fer'], ['Non', 'e52no']]); else if (chance(.5) && A.gold > 200) { A.gold -= 150; joinWar52('FER', 'AZU', 'KES', 0) } }
+    if (t === 3 && alive50('AUB') && !E.ysa) { if (p === 'AUB') offer52(p, '⚓ L\'offre d\'Azurée', 'La doge Ottavia Terzi propose d\'effacer la moitié de votre dette si Westerhald entre en guerre contre Kesh. Mais Kesh pourra frapper Vaeloria par le détroit.', [['Entrer en guerre aux côtés d\'Azurée', 'e52ysa'], ['Rester neutre', 'e52no']]); else if (chance(.35)) ysa52() }
+    if (war && A.ships.war >= K.ships.war * .8) armiesOf('KES').forEach(a => { if (S.prov[a.loc] && PV[a.loc].k === 'AZU') a.men = Math.round(a.men * .94) });
+  }
+  if (chp === 'pretendant') {
+    const m = E.mar, king = E.king, v = vael52(); if (!m) return;
+    if (t === 1 && alive50('AZU')) {
+      if (p === 'AZU') offer52(p, '⚓ Votre flotte aux enchères', 'Le Haut-Roi et le prétendant vous offrent chacun 300 écus : bloquer le détroit pour Garran, ou transporter les renforts de Kesh.', [['Bloquer le détroit pour Garran', 'e52bidG'], ['Transporter les renforts de Kesh', 'e52bidS']]);
+      else if (p === king) offer52(p, '⚓ La flotte d\'Azurée', 'Le doge Bastiano Corsani vend sa flotte au plus offrant. Pour 300 écus, il bloque le détroit ; sinon, il transportera les renforts de Kesh.', [['Payer 300 écus : bloquer le détroit', 'e52payStrait'], ['Refuser', 'e52no']]);
+      else if (p === m) offer52(p, '⚓ La flotte d\'Azurée', 'Le doge Bastiano Corsani vend sa flotte au plus offrant. Pour 300 écus, il transportera vos renforts ; sinon, il bloquera le détroit pour Garran.', [['Payer 300 écus : transporter mes renforts', 'e52payFerry'], ['Refuser', 'e52no']]);
+      else { if (chance(.5)) { E.strait = 1; E.azuSide = 'garran' } else { E.ferry = 1; E.azuSide = 'saeryn' } }
+    }
+    if (t === 2 && !E.strait && !E.ferry) { if (p === king) { E.ferry = 1; E.azuSide = 'saeryn' } else if (p === m) { E.strait = 1; E.azuSide = 'garran' } }
+    if (t === 2 && alive50('TAI')) { if (p === 'TAI') offer52(p, '🐺 Le Mur de Givre', 'Les légions de Kesh sont à l\'Ouest. Le moment est venu de frapper l\'Empire dans le dos.', [['Franchir le Mur de Givre', 'e52wall'], ['Attendre', 'e52no']]); else if (chance(.7)) wall52() }
+    if (E.ferry && alive50(m) && E.reinf < 3 && t > 0 && t % 4 === 0) { E.reinf++; mkArmy(m, null, landNear52(v, S.prov[v].k), 2000, null, true); worldNews('⛵ Les navires d\'Azurée débarquent des renforts de Kesh à Vaeloria.') }
+    if (E.strait && alive50(m)) armiesOf(m).forEach(a => { if (S.prov[a.loc] && !east52(S.prov[a.loc].k)) a.men = Math.round(a.men * .93) });
+    if (!E.over && alive50(m) && ctrl(v) === m && !E.nost) { E.nost = 1; ['VAL', 'ORV'].filter(k => alive50(k) && k !== p && chance(.6)).forEach(k => joinWar52(k, m, king, 0)); note50('👑 Aedrys II à Vaeloria', 'Saeryn tient Vaeloria. Les nostalgiques des Aeltharys hésitent… et certains se rallient à lui.') }
+    const west = alive50(m) ? armiesOf(m).filter(a => S.prov[a.loc] && !east52(S.prov[a.loc].k)).reduce((s, a) => s + a.men, 0) : 0;
+    if (!E.over && t >= 4 && (!alive50(m) || (west < 300 && ctrl(v) !== m))) { E.over = 'garran'; if (alive50(m) && m !== S.player) { try { absorbRealm(m, 'KES') } catch (e) { } } note50('⚔️ Les légions à la mer', 'Les légions de Kesh sont rejetées à la mer. Saeryn meurt au combat sur la presqu\'île de Vaeloria ; la Marche du Couchant redevient une simple province impériale. La lignée du Bâtard s\'éteint.') }
+    if (!E.over && alive50(m) && ctrl(v) === m && t >= 6 && !atWar(m, king)) { E.over = 'saeryn'; note50('👑 Westerhald vassal de Kesh', 'Saeryn est couronné sur le Trône d\'Argent. Westerhald devient un royaume vassal de l\'Empire de Kesh.') }
+  }
+  if (chp === 'ligue') {
+    const king = E.king;
+    if (t === 2 && alive50('KES') && !E.ceded) { if (p === 'KES') offer52(p, '🦅 Sauver l\'Empire', 'Les étrangers sont à Qasr-Daral, Narseh tient les déserts. Vous pouvez acheter la paix en cédant la Marche du Couchant, ou proposer à Narseh une alliance contre les étrangers.', [['Céder la Marche du Couchant', 'e52cede'], ['S\'allier à Narseh', 'e52narseh'], ['Se battre sur tous les fronts', 'e52no']]); else if ((E.cou || []).filter(q => ctrl(q) !== 'KES').length >= 3) cede52(); else if (alive50(E.nar) && chance(.4)) narseh52() }
+    if (!E.mist && alive50('AZU') && atWar('AZU', 'KES') && ownOrig52(king, null, E.cou || []) >= 6) { E.mist = 1; S.wars.forEach(w => { w.a = w.a.filter(k => k !== 'AZU'); w.b = w.b.filter(k => k !== 'AZU') }); note50('⚓ La méfiance d\'Azurée', 'Azurée ne veut pas d\'un Westerhald trop fort sur les deux rives : la doge retire sa flotte de la guerre.') }
+  }
+  if (chp === 'pont') {
+    const king = E.king; if (!alive50(king) || !alive50('KES')) return;
+    if (!E.off && !E.wed && atWar(king, 'KES')) { E.off = 1; note50('🔥 Le mariage annulé', 'La guerre a éclaté entre les deux rives : le mariage est annulé.') }
+    if (E.off || E.wed) return;
+    E.prog = (E.prog || 0) + 1;
+    if (chance(.35)) { if (p === king || p === 'KES') offer52(p, '🕯️ Un complot d\'Azurée', 'Vos espions ont découvert que l\'or d\'Azurée achète des seigneurs pour saboter le mariage.', [['Démanteler le complot (100 écus)', 'e52plotPay'], ['Laisser faire', 'e52plotNo']]); else if (chance(.5)) E.prog -= 1 }
+    if (!E.asx && t >= 2 && chance(.2)) { E.asx = 1; const y = ch(E.ya); if (y && y.alive && chance(.4)) { try { killChar(y, 'assassinée par des tueurs à la solde d\'Azurée') } catch (e) { } E.off = 1; note50('🗡️ La princesse assassinée', 'Des tueurs ont assassiné la princesse <b>Yasmin</b>. Le mariage est annulé, et chaque rive accuse l\'autre.'); addRel('KES', king, -30); return } else note50('🗡️ L\'attentat manqué', 'Des tueurs ont tenté d\'assassiner la princesse Yasmin. Elle a survécu ; la date du mariage recule.'); E.prog -= 1 }
+    if (alive50('CIM') && chance(.15)) { if (p === 'CIM') offer52(p, '🔥 Le détroit', 'Vos capitaines peuvent provoquer un incident au détroit. Si une guerre éclate, le mariage est annulé.', [['Provoquer un incident', 'e52incident'], ['Attendre', 'e52no']]); else if (p !== king && chance(.35)) incident52() }
+    if (!E.off && E.prog >= E.need) {
+      E.wed = 1; E.wedT = S.turn; const a = ch(E.ed), b = ch(E.ya); if (a && b) { a.spouse = b.id; b.spouse = a.id } addTreaty('alliance', king, 'KES', 999); setRel(king, 'KES', 70);
+      if (alive50('AZU') && alive50('TAI')) { addTreaty('alliance', 'AZU', 'TAI', 60); setRel('AZU', king, -30); setRel('AZU', 'KES', -30) }
+      note50('🌉 Le Pont d\'Argent', 'Edric de Rosemont épouse la princesse Yasmin. Leurs enfants régneront sur Vaeloria et sur Kesh : les deux rives sont réunies sous une dynastie d\'argent et d\'or. Azurée et la Taïga, inquiètes, s\'allient contre le nouveau géant.');
+    }
+  }
+};
+(() => { // la chronique jusqu'à l'an 203
+  LORE_CANON.push(
+    { y: 164, k: ['ROS'], big: 1, t: 'Le Trône des Rosemont', d: 'Garran de Rosemont est couronné Haut-Roi : le Trône d\'Argent passe aux Rosemont.' },
+    { y: 173, k: ['ROS', 'KES'], big: 1, war: 1, t: 'Les légions à la mer', d: 'Garran, Ulric et la flotte d\'Azurée repoussent les légions de Saeryn. La lignée du Bâtard s\'éteint ; la Marche du Couchant redevient une province impériale.', rel: [['ROS', 'KES', -15]] },
+    { y: 186, k: ['KES'], big: 1, t: 'La mort de Kesharan V', d: 'L\'empereur meurt sans héritier incontesté. Son fils Darius, 19 ans, est couronné ; les satrapes des déserts se soulèvent.' },
+    { y: 192, k: ['ROS', 'KES', 'AZU'], big: 1, t: 'La paix du Couchant', d: 'Darius réunifie l\'Empire mais cède la Marche du Couchant au Trône d\'Argent et trois ports à Azurée.', rel: [['ROS', 'KES', 10]] });
+  LORE_CANON.sort((a, b) => a.y - b.y);
+})();
+// l'Est ne prête jamais hommage au Haut-Roi d'Argenthal
+const _hks52 = hkSet; hkSet = function (o, st) { if (st === 'sworn' && east52(o)) return; return _hks52.apply(this, arguments) };
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
