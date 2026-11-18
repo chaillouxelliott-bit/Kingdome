@@ -10330,6 +10330,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11535,6 +11536,15 @@ function civil55(id) {
   try { cleanWars30(); injectRealms(); applyNameMode(); mapDirty() } catch (e) { }
   return r;
 } }
+
+// ---------- 22. équilibrage (simulations de chaque camp) ----------
+{ const outOfWest = a => !alive50(a) || !realmProvs(a).some(q => !east52(S.prov[q].k) || !EASTK52.has(PV[q].k));
+  const grow = k => { const T = S.flags.tete50, st = ((S.flags.f50.start || {})[k] || 0); const t = S.turn - S.flags.t050, n = realmProvs(S.player).length; return T && T.done && !warsOf(S.player).length && ((t >= 8 && n > st) || (t >= 12 && n >= st && outOfWest(T.att))) };
+  OBJ50.tete.CIM = () => grow('CIM'); OBJ50.tete.ROS = () => grow('ROS');
+  const _fa = OBJ50.fou.AUB; OBJ50.fou.AUB = () => { const F = S.flags.fou50; return !!F && S.turn - F.t0 >= 12 && _fa() };
+}
+{ const _c11b = CH50.pont.setup; CH50.pont.setup = function (cont) { _c11b.apply(this, arguments); const E = e52(); if (alive50('KES')) E.kesStart = realmProvs('KES').length } }
+{ const _ca = CH50.aigle.setup; CH50.aigle.setup = function (cont) { _ca.apply(this, arguments); if (e52().city && alive50('KES')) men50('KES', 4000) } }
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
