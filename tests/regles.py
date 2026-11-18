@@ -2,7 +2,7 @@ import asyncio,sys,json
 from playwright.async_api import async_playwright
 SETUP="""async(sc,f)=>{VIEW.scen=sc;VIEW.faction=f;newGameUI(f);await new Promise(r=>setTimeout(r,700));S.pend=[];S.letters=[];try{closeModal()}catch(e){}}"""
 TESTS = {
-'1 Butin des alliés': ("nord","AUB","""(()=>{const w=S.wars.find(x=>x.a.includes('CIM')&&x.b.includes('AUB')); if(!w)return 'KO pas de guerre'; const al=w.b.find(k=>k!=='AUB'); if(!al) return 'KO pas d\\'allié';
+'1 Butin des alliés': ("nord","AUB","""(()=>{const w=S.wars.find(x=>x.a.includes('CIM')&&x.b.includes('AUB')); if(!w)return 'KO pas de guerre'; if(!w.b.some(k=>k!=='AUB')&&alive50('TAI')) w.b.push('TAI'); const al=w.b.find(k=>k!=='AUB'); if(!al) return 'KO pas d\\'allié';
   const q=realmProvs('CIM').find(x=>x!==capitalOf('CIM')); S.prov[q].occ=al; allySweep38(); return S.prov[q].occ==='AUB'?'OK la terre prise par '+rn(al)+' vous revient':'KO occ='+S.prov[q].occ})()"""),
 '2 Paix : terres gardées ou rendues': ("nord","AUB","""(()=>{const w=S.wars.find(x=>x.a.includes('CIM')&&x.b.includes('AUB')); const qs=realmProvs('CIM').filter(x=>x!==capitalOf('CIM')).slice(0,3); qs.forEach(q=>S.prov[q].occ='AUB');
   endWar(w,'b',{provs:[qs[0]]}); const kept=S.prov[qs[0]].k==='AUB', back=qs.slice(1).every(q=>S.prov[q].k==='CIM'&&!S.prov[q].occ); return kept&&back?'OK 1 terre gardée, 2 rendues':'KO kept='+kept+' back='+back})()"""),
@@ -22,6 +22,10 @@ TESTS = {
 '8 Onglet Guerre : soldats des deux camps': ("nord","AUB","""(()=>{VIEW.tab='guerre';VIEW.side=true;render(); const t=(document.querySelector('#panel')||document.body).innerText; const m=t.match(/\\d[\\d  ,.]*\\s*k?\\s*(hommes|soldats)?/g)||[]; return /contre|vs|⚔/i.test(t)&&/(\\d|k)/.test(t)?'OK':'KO'})()"""),
 '9 Population en haut': ("nord","AUB","""(()=>{render(); const t=(document.querySelector('#top, .top, header')||document.body).innerText; return /Pop/i.test(t)?'OK':'KO'})()"""),
 '10 Ordres enregistrés': ("nord","AUB","""(()=>{const n=(S.orders||[]).length; recordOrder('Convoquez le ban','',[{ok:true,t:'ban'}]); const ok=S.orders.length===n+1; const sv=JSON.parse(JSON.stringify(S)); return ok&&sv.orders.length===n+1?'OK enregistré et sauvegardé':'KO'})()"""),
+'11 Hommage : le vassal est intégré, ses maisons demeurent': ("conquete","AUB","(()=>{const p=S.player; addTreaty('vassal',p,'VAL',null); render(); const h=Object.values(S.houses).filter(x=>x.formerKing==='VAL'&&x.realm===p); return !S.realms.VAL.alive&&h.length?'OK Valgué intégré, maison '+h[0].name+' vassale':'KO alive='+S.realms.VAL.alive})()"),
+'12 Six couronnes : un seul royaume sur la carte': ("nord","AUB","(()=>{const w=REALM_IDS.filter(k=>alive50(k)&&realmProvs(k).length&&!east52(k)); return w.length===3&&w.includes('CIM')&&w.includes('FER')?'OK '+w.map(rn).join(', '):'KO '+w.map(rn).join(', ')})()"),
+'13 Guerre civile : deux partis seulement': ("batard","AUB","(()=>{const w=REALM_IDS.filter(k=>alive50(k)&&realmProvs(k).length&&!east52(k)); return w.length===2?'OK '+w.map(rn).join(' contre '):'KO '+w.map(rn).join(', ')})()"),
+'14 Couronne déchirée : trois partis': ("dechiree","AUB","(()=>{const w=REALM_IDS.filter(k=>alive50(k)&&realmProvs(k).length&&!east52(k)); return w.length===3?'OK '+w.map(rn).join(', '):'KO '+w.map(rn).join(', ')})()"),
 }
 async def main():
     async with async_playwright() as p:

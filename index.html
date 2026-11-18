@@ -11466,6 +11466,76 @@ function cols54() { if (!S || !S.realms) return; S.settings = S.settings || {}; 
 // frontières des royaumes : un trait sombre et net
 (() => { const st = document.createElement('style'); st.textContent = '#gbord path:nth-child(1){stroke-width:2.2px;stroke-opacity:.38}#gbord path:nth-child(2){stroke:#2a1d10;stroke-opacity:.55;stroke-width:1px}'; document.head.appendChild(st) })();
 
+// ---------- 21. hommage et vassalité : un royaume soumis est intégré, ses maisons demeurent ----------
+// Règle : dès qu'un royaume de Westerhald devient vassal (hommage exigé, soumission proposée, paix de vassalisation,
+// serment au Haut-Roi), il disparaît de la carte et entre dans le royaume de son suzerain ; sa maison royale et ses
+// maisons deviennent de grandes maisons vassales. Seul le royaume du joueur n'est jamais absorbé. L'Est ne plie pas.
+function canAbs55(o, into) {
+  if (!o || !into || o === into || o === S.player || !alive50(o) || !alive50(into)) return false;
+  if (/^R_/.test(o) || /^R_/.test(into)) return false;
+  try { if (east52(o) || east52(into)) return false } catch (e) { }
+  return true;
+}
+function sweep55() {
+  if (!S || !S.realms || !S.treaties || S.pendBattle) return 0; let n = 0;
+  for (const t of S.treaties.slice()) if (t.type === 'vassal' && !t.keep55 && canAbs55(t.p[1], t.p[0])) { try { if (absorbRealm(t.p[1], t.p[0]) !== undefined) n++ } catch (e) { console.error && console.error('abs55', e) } }
+  if (S.hk && alive50(S.hk.king)) for (const o of S.hk.sworn.slice()) if (canAbs55(o, S.hk.king)) { try { absorbRealm(o, S.hk.king); n++ } catch (e) { console.error && console.error('abs55', e) } }
+  if (n) { try { cleanWars30() } catch (e) { } try { injectRealms(); applyNameMode() } catch (e) { } try { mapDirty() } catch (e) { } }
+  return n;
+}
+// le serment au Haut-Roi passe par la même règle (plus d'exception pour le joueur)
+hkSet = function (o, st) { if (st === 'sworn') { try { if (east52(o)) return } catch (e) { } } return _hkSet10(o, st) };
+// une indépendance accordée « en restant vassal » reste un royaume à part
+{ const _at55 = addTreaty; addTreaty = function (type, a, b, seasons, extra) { if (type === 'vassal' && S && S._keep55) extra = Object.assign({}, extra || {}, { keep55: true }); return _at55.call(this, type, a, b, seasons, extra) } }
+{ const _act55 = act; act = function (a) { if (a && a.type === 'grantIndep' && a.vassal) S._keep55 = 1; let r; try { r = _act55.apply(this, arguments) } finally { S._keep55 = 0 } try { sweep55() } catch (e) { } return r } }
+{ const _la55 = letterAct; letterAct = function () { const r = _la55.apply(this, arguments); try { sweep55() } catch (e) { } return r } }
+{ const _es55 = endSeason; endSeason = function () { try { sweep55() } catch (e) { } const r = _es55.apply(this, arguments); try { sweep55() } catch (e) { } return r } }
+{ const _r55 = render; render = function () { try { if (S && S.realms && !S.pendBattle) sweep55() } catch (e) { } return _r55.apply(this, arguments) } }
+
+// un ancien royaume intégré peut renaître quand l'histoire en a besoin (chapitre qui survient en cours de règne)
+function revive55(k) {
+  const R = S.realms[k]; if (!R || R.alive || k === S.player) return false;
+  const h = Object.values(S.houses).find(x => x.formerKing === k && !x.gone && !x.rebel); if (!h || !alive50(h.realm)) return false;
+  const host = h.realm, hcap = capitalOf(host);
+  const provs = realmProvs(host).filter(q => q !== hcap && (PV[q].k === k || (S.prov[q].h === h.id)));
+  if (!provs.length) return false; const set = new Set(provs);
+  R.alive = true; R.absorbed = null; R.unborn = 0; R.gold = Math.max(R.gold || 0, 120); R.legit = Math.max(R.legit || 0, 55); R.stab = Math.max(R.stab || 0, 50); R.truce = {}; R.claims = R.claims || [];
+  h.realm = k; h.royal = true; h.formerKing = null; h.loy = 100; h.rebel = false; R.house = h.id;
+  if (!ch(h.head) || !ch(h.head).alive) { const c = genChar({ house: h.id, realm: k, sex: 'm', age: 34 }); h.head = c.id }
+  R.ruler = h.head; for (const c of Object.values(S.chars)) if (c.house === h.id && c.alive) c.realm = k;
+  for (const x of Object.values(S.houses)) if (x !== h && x.realm === host && !x.royal && houseProvs(x.id).length && houseProvs(x.id).every(q => set.has(q))) x.realm = k;
+  provs.forEach(q => { const P = S.prov[q]; P.k = k; P.occ = null; P.siege = 0; if (P.h === h.id) P.h = null; else if (P.h && hs(P.h) && hs(P.h).realm !== k) P.h = null });
+  const c0 = REALMS[k] && REALMS[k].cap; R.cap = c0 && set.has(c0) ? c0 : provs.slice().sort((a, b) => S.prov[b].pop - S.prov[a].pop)[0];
+  let men = 0; for (const a of Object.values(S.armies)) if (a.realm === host && a.house === h.id) { a.realm = k; a.house = null; a.royal = true; a.loc = set.has(a.loc) ? a.loc : R.cap; a.path = []; men += a.men }
+  if (men < 1200) mkArmy(k, null, R.cap, Math.max(1500, provs.length * 160) - men, R.ruler, true);
+  if (S.hk) { S.hk.sworn = S.hk.sworn.filter(x => x !== k); S.hk.defiant = S.hk.defiant.filter(x => x !== k) }
+  if (!REALM_IDS.includes(k)) REALM_IDS.push(k);
+  return true;
+}
+const REV55 = { nord: ['CIM'], batard: ['CIM', 'ROS'], dechiree: ['ORV'], tete: ['SOL', 'CIM', 'ROS'], fou: ['ROS', 'CIM', 'SOL'] };
+// guerre civile : il ne reste que les partis en lutte, chacun avec les royaumes intégrés qui le soutiennent
+function civil55(id) {
+  const king = S.highKing; if (!alive50(king)) return;
+  const pre = (id === 'batard' ? [S.flags.f50.BAT] : id === 'dechiree' ? [S.flags.f50.TAE, S.flags.f50.DAE] : []).filter(k => alive50(k) && k !== king);
+  if (!pre.length) return;
+  for (const k of REALM_IDS.slice()) {
+    if (!alive50(k) || k === S.player || k === king || pre.includes(k) || /^N\d+$/.test(k)) continue;
+    try { if (east52(k)) continue } catch (e) { }
+    let into = king;
+    for (const w of S.wars) { const s = w.a.includes(k) ? 'a' : w.b.includes(k) ? 'b' : null; if (!s) continue; const P = pre.find(x => w[s].includes(x)); if (P) { into = P; break } }
+    const wary = into === king && hkStatus(k) === 'defiant'; // ils restent à l'écart : peu loyaux, ils lèvent peu leur ban et attendent leur heure
+    if (into === S.player || canAbs55(k, into)) { try { const rh = absorbRealm(k, into); if (rh && wary) { rh.loy = 22; rh.mods = [{ v: -10, why: 'Attend son heure', t: 16 }]; Object.values(S.houses).forEach(x => { if (x.realm === into && !x.royal && x !== rh && houseProvs(x.id).some(q => PV[q].k === k)) x.loy = Math.min(x.loy, 35) }) } } catch (e) { console.error && console.error('civil55', e) } }
+  }
+}
+{ const _s55 = setup50; setup50 = function (id, cont) {
+  if (cont) (REV55[id] || []).forEach(k => { try { if (!alive50(k)) revive55(k) } catch (e) { console.error && console.error('rev55', e) } });
+  const r = _s55.apply(this, arguments);
+  try { civil55(id) } catch (e) { console.error && console.error('civil55', e) }
+  try { sweep55() } catch (e) { }
+  try { cleanWars30(); injectRealms(); applyNameMode(); mapDirty() } catch (e) { }
+  return r;
+} }
+
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
 </body></html>
