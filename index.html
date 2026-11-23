@@ -812,9 +812,9 @@ function family(house, realm, head, o = {}) {
     head.kids.push(k.id); sp.kids.push(k.id);
   }
 }
-function crownProvs(k) { return Object.keys(S.prov).filter(p => S.prov[p].k === k && !S.prov[p].h) }
-function realmProvs(k) { return Object.keys(S.prov).filter(p => S.prov[p].k === k) }
-function houseProvs(h) { return Object.keys(S.prov).filter(p => S.prov[p].h === h) }
+function crownProvs(k) { const o = [], P = S.prov; for (const p in P) { const x = P[p]; if (x.k === k && !x.h) o.push(p) } return o }
+function realmProvs(k) { const o = [], P = S.prov; for (const p in P) if (P[p].k === k) o.push(p); return o }
+function houseProvs(h) { const o = [], P = S.prov; for (const p in P) if (P[p].h === h) o.push(p); return o }
 function capitalOf(k) { const r = S.realms[k]; if (r && r.cap && S.prov[r.cap] && S.prov[r.cap].k === k) return r.cap; const ps = realmProvs(k); return ps.sort((a, b) => S.prov[b].pop - S.prov[a].pop)[0] }
 
 function newGame(player, opts = {}) {
@@ -1187,7 +1187,7 @@ function loyTarget(h) {
   if (r.regent) t -= 10;
   return C(t, 0, 100);
 }
-function isMarriedTo(h, rh) { return Object.values(S.chars).some(c => c.alive && c.house === h.id && c.spouse && ch(c.spouse) && ch(c.spouse).house === rh) }
+function isMarriedTo(h, rh) { const C = S.chars, hid = h.id; for (const i in C) { const c = C[i]; if (c.alive && c.house === hid && c.spouse) { const sp = ch(c.spouse); if (sp && sp.house === rh) return true } } return false }
 function houseMod(h, v, why, dur) { h.mods.push({ v, why, t: dur || 8 }); h.loy = C(h.loy + v / 2, 0, 100) }
 function vassalTick(k) {
   const r = S.realms[k];
@@ -3196,12 +3196,7 @@ function statTick() {
   S.peak = S.peak || {}; for (const k of ['provs', 'men', 'gold', 'prestige', 'inc']) S.peak[k] = Math.max(S.peak[k] || 0, S.shist[S.shist.length - 1][k]);
   victoryCheck();
 }
-function victoryCheck() {
-  if (S.victory) return; const p = S.player, tot = Object.keys(S.prov).length, mine = realmProvs(p).length;
-  const others = REALM_IDS.filter(k => k !== p && S.realms[k] && S.realms[k].alive);
-  if (S.highKing === p && (mine / tot >= .7 || !others.length)) { S.victory = { kind: 'argenthal', turn: S.turn }; S.pend.push({ kind: 'html', t: '👑 Le Royaume d\'Argenthal est refondé !', body: `Sous votre règne, ${Math.round(mine / tot * 100)} % de Westerhald obéit au Trône d'Argent. Les chroniqueurs parleront de vous pendant des siècles. <br><br><button class="btn primary" onclick="closeModal();bilanUI()">📜 Voir le bilan du règne</button>` }) }
-  else if (!mine && !Object.values(S.armies).some(a => a.realm === p)) { S.victory = { kind: 'defeat', turn: S.turn }; S.pend.push({ kind: 'html', t: '💀 Le royaume est tombé', body: `Il ne vous reste plus une seule terre. Votre dynastie s'éteint dans l'exil. <br><br><button class="btn primary" onclick="closeModal();bilanUI()">📜 Voir le bilan du règne</button>` }) }
-}
+
 function reignScore() { const p = S.player, r = P0(), h = S.shist || []; return Math.round(realmProvs(p).length * 12 + r.prestige * 3 + r.legit * 2 + (S.highKing === p ? 400 : 0) + (S.peak ? S.peak.provs * 4 : 0) + (S.stats ? (S.stats.warsWon || 0) * 40 + (S.stats.built || 0) * 6 : 0) + h.length * 2 - infamy(p) * 2) }
 // ---------- 10. TICK ----------
 const _devTick13 = devTick; devTick = function () {
@@ -4200,14 +4195,7 @@ function checkTac() {
   const live = s => TB.units.filter(u => u.side === s && u.str > 0);
   if (!live('att').length) TB.over = 'def'; else if (!live('def').length) TB.over = 'att';
 }
-function tacTap(x, y) {
-  if (TB.over || TB.busy) return;
-  const u = tAt(x, y), s = TB.sel && TB.units.find(v => v.id === TB.sel);
-  if (u && u.side === TB.me) { TB.sel = u.done ? null : u.id; drawTac(); return }
-  if (!s) return;
-  if (u && u.side !== TB.me) { if (s.acted) return; if (targets(s).includes(u)) { hit(s, u, s.type === 'arc' && cheb(s, u) > 1); s.acted = true; s.done = true; TB.sel = null; drawTac(); return } return }
-  if (!u && !s.acted) { const r = reach(s); if (r.has(x + ',' + y)) { const c = r.get(x + ',' + y); s.moved += c; s.x = x; s.y = y; if (tile(x, y) === 'W') s.moved = 9; if (!targets(s).length && (s.moved >= UT[s.type].mv - .01)) { s.done = true; TB.sel = null } drawTac() } }
-}
+
 function aiSide(side, cb) {
   const foes = () => TB.units.filter(v => v.str > 0 && v.side !== side);
   const mine = TB.units.filter(u => u.side === side && u.str > 0).sort((a, b) => ({ arc: 0, cav: 1, inf: 2 }[a.type] - { arc: 0, cav: 1, inf: 2 }[b.type]));
@@ -4256,42 +4244,7 @@ function tacFinish() {
   $('#tac').hidden = true; TB = null; render(); autosave();
   modal(`<h2>${won ? '🏆 Victoire !' : '💀 Défaite'}</h2><p>${won ? 'Vos troupes tiennent le champ de bataille. Les ménestrels chanteront votre nom.' : 'Vos troupes refluent en désordre. Il faudra se relever.'}</p><div class="ch"><button class="btn primary" onclick="closeModal();nextPend()">Continuer</button></div>`);
 }
-function drawTac() {
-  if (!TB) return; const el = $('#tac'); const cs = 10;
-  const sel = TB.sel && TB.units.find(u => u.id === TB.sel);
-  const rch = sel && !sel.acted ? reach(sel) : new Map(); const tgs = sel && !sel.acted ? targets(sel) : [];
-  let g = '';
-  for (let y = 0; y < TB.H; y++) for (let x = 0; x < TB.W; x++) {
-    const t = TB.tiles[y][x]; g += `<rect x="${x * cs}" y="${y * cs}" width="${cs}" height="${cs}" fill="${TT[t][1]}" stroke="#0003" stroke-width=".3" onclick="tacTap(${x},${y})"/>`;
-    if (t === 'F') g += `<text x="${x * cs + 5}" y="${y * cs + 7}" font-size="6" text-anchor="middle" pointer-events="none">🌲</text>`;
-    if (t === 'H') g += `<path d="M${x * cs + 1.5} ${y * cs + 8}L${x * cs + 5} ${y * cs + 3}L${x * cs + 8.5} ${y * cs + 8}Z" fill="#9a875a" opacity=".7" pointer-events="none"/>`;
-    if (t === 'R') g += `<text x="${x * cs + 5}" y="${y * cs + 7}" font-size="6" text-anchor="middle" pointer-events="none">🪨</text>`;
-    if (t === 'M') g += `<text x="${x * cs + 5}" y="${y * cs + 7}" font-size="5" text-anchor="middle" pointer-events="none" opacity=".7">🌿</text>`;
-    if (rch.has(x + ',' + y)) g += `<rect x="${x * cs + .6}" y="${y * cs + .6}" width="${cs - 1.2}" height="${cs - 1.2}" fill="#ffe9a8" fill-opacity=".22" stroke="#ffe9a8" stroke-width=".5" rx="1" pointer-events="none"/>`;
-  }
-  for (const u of TB.units) {
-    if (u.str <= 0) continue;
-    const col = rcol(u.realm), cx = u.x * cs + 5, cy = u.y * cs + 5, mine = u.side === TB.me;
-    const [w, h] = u.type === 'inf' ? [8.4, 4.4] : u.type === 'cav' ? [6.6, 6.6] : [4.4, 4.4];
-    const f = .55 + .45 * u.str / u.str0;
-    g += `<g onclick="tacTap(${u.x},${u.y})" style="cursor:pointer" opacity="${u.done && mine ? .55 : 1}">`;
-    if (tgs.includes(u)) g += `<rect x="${u.x * cs + .4}" y="${u.y * cs + .4}" width="${cs - .8}" height="${cs - .8}" fill="none" stroke="#ff5a4a" stroke-width=".9" rx="1"><animate attributeName="stroke-opacity" values="1;.3;1" dur="1s" repeatCount="indefinite"/></rect>`;
-    g += `<rect x="${cx - w * f / 2}" y="${cy - h * f / 2 - .6}" width="${w * f}" height="${h * f}" fill="${col}" stroke="${sel === u ? '#ffe9a8' : mine ? '#fff' : '#111'}" stroke-width="${sel === u ? 1 : .5}" rx=".6"/>`;
-    if (u.type === 'cav') g += `<path d="M${cx - 2} ${cy - .6}L${cx + 2} ${cy - .6}M${cx} ${cy - 2.6}L${cx} ${cy + 1.4}" stroke="${lum(col) > 140 ? '#222' : '#fff'}" stroke-width=".5"/>`;
-    if (u.type === 'arc') g += `<circle cx="${cx}" cy="${cy - .6}" r=".8" fill="${lum(col) > 140 ? '#222' : '#fff'}"/>`;
-    g += `<rect x="${u.x * cs + 1.2}" y="${u.y * cs + 8.4}" width="7.6" height="1" fill="#0008"/><rect x="${u.x * cs + 1.2}" y="${u.y * cs + 8.4}" width="${7.6 * u.str / u.str0}" height="1" fill="${mine ? '#7dbb8c' : '#dc6d5f'}"/>`;
-    g += `</g>`;
-  }
-  const s = sd => TB.units.filter(u => u.side === sd).reduce((x, u) => x + Math.max(0, u.str), 0);
-  const me = TB.me, foe = me === 'att' ? 'def' : 'att';
-  el.innerHTML = `<div class="tbox"><div class="row between"><div><h2 style="font-size:17px;color:var(--brass2)">⚔️ Bataille de ${esc(PV[TB.p].n)}</h2><div class="mute" style="font-size:12.5px">Tour ${Math.min(TB.turn, TB.max)}/${TB.max} · Vous : <b class="ok">${fmtMen(s(me))}</b> · Ennemi : <b class="bad">${fmtMen(s(foe))}</b>${TB.cmd[me] ? ' · ⚔️ ' + esc(chName(TB.cmd[me])) : ''}</div></div></div>
-   <svg viewBox="0 0 ${TB.W * cs} ${TB.H * cs}" class="tsvg">${g}</svg>
-   <div class="tleg"><span><i style="width:16px;height:8px"></i> Fantassins : solides, brisent les charges</span><span><i style="width:12px;height:12px"></i> Chevaliers : rapides, chargez (×1,45) les archers</span><span><i style="width:8px;height:8px"></i> Archers : tirent à 3 cases (4 depuis une colline)</span></div>
-   <div class="tlog">${TB.log.slice(0, 3).map(l => `<div>${esc(l)}</div>`).join('')}</div>
-   ${TB.over ? `<div class="result ${TB.over === me ? 'ok' : 'bad'}" style="font-size:16px;font-family:var(--serif);margin:6px 0"><b>${TB.over === me ? '🏆 La bataille est gagnée !' : TB.retreat ? '🏳️ Retraite.' : '💀 La bataille est perdue.'}</b></div><button class="btn primary" style="width:100%" onclick="tacFinish()">Voir le résultat</button>` :
-      `<div class="row" style="gap:6px"><button class="btn primary grow" ${TB.busy ? 'disabled' : ''} onclick="tacEndTurn()">${TB.busy ? '<span class="spin"></span> L\'ennemi manœuvre…' : 'Fin du tour ▶'}</button><button class="btn" ${TB.busy ? 'disabled' : ''} onclick="tacAuto()" title="Laisser le maréchal finir la bataille">🤖 Auto</button><button class="btn danger" ${TB.busy ? 'disabled' : ''} onclick="tacRetreat()">🏳️</button></div>
-      <div class="faint" style="font-size:12px;margin-top:5px">Touchez une de vos unités (bordure blanche), puis une case dorée pour la déplacer ou un ennemi encadré de rouge pour l'attaquer.</div>`}</div>`;
-}
+
 
 // ===================== ARGENTHAL : bataille tactique retravaillée (rendu réaliste, animations, jouabilité) =====================
 const TFX = []; // effets en cours : flèches, chocs, dégâts flottants
@@ -5408,15 +5361,7 @@ function renderAmenu() {
   h += b('✕', 'Fermer', "VIEW.army=null;render()");
   el.innerHTML = h + '</div>'; el.hidden = false; placeAmenu();
 }
-function placeAmenu() {
-  const el = $('#amenu'); if (!el || el.hidden || !S) return; const a = VIEW.army && S.armies[VIEW.army]; if (!a) { el.hidden = true; return }
-  const svg = $('#map'), R = svg.getBoundingClientRect(), W0 = $('#mapwrap').getBoundingClientRect();
-  const [x, y] = PV[a.loc].c;
-  let sx = (x - MV.x) / MV.w * R.width, sy = (y - MV.y) / MV.h * R.height;
-  const w = el.offsetWidth || 260, h = el.offsetHeight || 80;
-  sx = C(sx, w / 2 + 6, W0.width - w / 2 - 6); sy = C(sy - 14, h + 50, W0.height - 10);
-  el.style.left = sx + 'px'; el.style.top = sy + 'px';
-}
+
 
 // ===================== COURONNES : interface du développement, maisons, ordres libres =====================
 const _migrate7 = migrate; migrate = function () { _migrate7(); ensureDev() };
@@ -6578,28 +6523,9 @@ function landPath() { return MAP3.lp || (MAP3.lp = new Path2D(MAP.land)) }
 function provPath(id) { MAP3.pp = MAP3.pp || {}; return MAP3.pp[id] || (MAP3.pp[id] = new Path2D(PV[id].d)) }
 function canvasURL(cv, cb) { if (cv.toBlob) cv.toBlob(b => cb(URL.createObjectURL(b)), 'image/png'); else cb(cv.toDataURL()) }
 // lignes d'eau autour des côtes + grain de parchemin
-function buildWaterArt(cb) {
-  const W = MAP.W, H = MAP.H, s = MAP3.sc, cv = document.createElement('canvas'); cv.width = Math.round(W * s); cv.height = Math.round(H * s); const x = cv.getContext('2d');
-  x.scale(s, s); x.lineJoin = 'round';
-  for (const [w, o] of [[60, .07], [40, .11], [24, .17], [12, .28]]) { x.strokeStyle = `rgba(20,45,75,${o * .7})`; x.lineWidth = w + 3; x.stroke(landPath()); x.strokeStyle = `rgba(200,228,245,${o})`; x.lineWidth = w; x.stroke(landPath()) }
-  x.strokeStyle = 'rgba(235,248,255,.6)'; x.lineWidth = 4; x.stroke(landPath());
-  x.globalCompositeOperation = 'destination-out'; x.fill(landPath()); x.globalCompositeOperation = 'source-over';
-  // grain léger sur toute la carte
-  x.setTransform(1, 0, 0, 1, 0, 0); const n = x.createImageData(cv.width, cv.height), d = n.data;
-  const base = x.getImageData(0, 0, cv.width, cv.height).data;
-  for (let i = 0; i < d.length; i += 4) { const g = (Math.random() - .5) * 26; if (base[i + 3] > 8) { d[i] = base[i]; d[i + 1] = base[i + 1]; d[i + 2] = base[i + 2]; d[i + 3] = base[i + 3] } else { d[i] = 90 + g; d[i + 1] = 70 + g; d[i + 2] = 40 + g; d[i + 3] = 16 } }
-  x.putImageData(n, 0, 0);
-  canvasURL(cv, cb);
-}
+
 // liserés intérieurs aux couleurs des royaumes
-function buildBandArt(cb) {
-  const W = MAP.W, H = MAP.H, s = MAP3.sc, cv = document.createElement('canvas'); cv.width = Math.round(W * s); cv.height = Math.round(H * s); const x = cv.getContext('2d'); x.scale(s, s);
-  MAP3.ep = MAP3.ep || {}; const by = {};
-  for (const kk in MAP.edges) { const [a, b] = kk.split('|'); if (!S.prov[a] || !S.prov[b] || S.prov[a].k === S.prov[b].k) continue; const e = MAP3.ep[kk] || (MAP3.ep[kk] = new Path2D(MAP.edges[kk])); (by[a] = by[a] || []).push(e); (by[b] = by[b] || []).push(e) }
-  // côtes : liseré aussi le long de la mer
-  for (const q in by) { const p = provPath(q); x.save(); x.clip(p); x.strokeStyle = rcol(S.prov[q].k); x.lineCap = 'round'; for (const e of by[q]) { x.globalAlpha = .3; x.lineWidth = 30; x.stroke(e); x.globalAlpha = .85; x.lineWidth = 13; x.stroke(e) } x.restore() }
-  canvasURL(cv, cb);
-}
+
 const _buildMap18 = buildMap; buildMap = function () {
   const r = _buildMap18.apply(this, arguments);
   try {
@@ -10333,6 +10259,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -10791,23 +10718,6 @@ const _place51 = place39; place39 = function (px) {
   return byP;
 };
 (() => { const st = document.createElement('style'); st.textContent = `.wx-petal{display:none!important}#gr39{opacity:.45}`; document.head.appendChild(st) })();
-// étiquettes : quand deux noms se chevauchent, le second glisse juste en dessous
-function declutter51() {
-  const gl = $('#glab'); if (!gl) return; const key = Math.round(MV.w) + '|' + gl.childElementCount; if (gl.dataset.k51 === key) return; gl.dataset.k51 = key;
-  const L = [...gl.querySelectorAll('text.plab')]; if (!L.length || L.length > 400) return;
-  L.forEach(t => { if (t.dataset.y51 == null) t.dataset.y51 = t.getAttribute('y'); else t.setAttribute('y', t.dataset.y51) });
-  const boxes = []; 
-  for (const t of L) {
-    if (t.getAttribute('display') === 'none' || getComputedStyle(t).display === 'none') continue;
-    let b; try { b = t.getBBox() } catch (e) { continue } if (!b.width) continue;
-    let y = parseFloat(t.getAttribute('y')), dy = 0, tries = 0;
-    const hit = () => boxes.find(o => b.x < o.x + o.w && b.x + b.width > o.x && b.y + dy < o.y + o.h && b.y + dy + b.height > o.y);
-    let o; while ((o = hit()) && tries++ < 3) dy = o.y + o.h - b.y + 1;
-    if (dy) t.setAttribute('y', (y + dy).toFixed(1));
-    boxes.push({ x: b.x, y: b.y + dy, w: b.width, h: b.height });
-  }
-}
-const _updateMap51b = updateMap; updateMap = function () { _updateMap51b.apply(this, arguments); try { clearTimeout(declutter51.t); declutter51.t = setTimeout(declutter51, 120) } catch (e) { } };
 
 // Économie de batterie : les animations de la carte se mettent en pause après 45 s sans toucher l'écran
 (() => { let t; const st = document.createElement('style'); st.textContent = 'body.idle51 *{animation-play-state:paused!important}'; document.head.appendChild(st);
@@ -11435,7 +11345,6 @@ function strait53() {
 
 // ---------- 19. noms lisibles : jamais deux étiquettes l'une sur l'autre ----------
 // Taille constante à l'écran, priorité aux capitales puis aux grandes provinces, et on cache ce qui ne tient pas.
-declutter51 = function () { };
 function labels54() {
   const gl = $('#glab'), svg = $('#map'); if (!gl || !svg || !MV.w) return;
   const sc = (svg.clientWidth || 800) / MV.w, pad = 3 / sc, X0 = MV.x - 40 / sc, Y0 = MV.y - 40 / sc, X1 = MV.x + MV.w + 40 / sc, Y1 = MV.y + MV.h + 40 / sc;
@@ -11547,6 +11456,13 @@ function civil55(id) {
 }
 { const _c11b = CH50.pont.setup; CH50.pont.setup = function (cont) { _c11b.apply(this, arguments); const E = e52(); if (alive50('KES')) E.kesStart = realmProvs('KES').length } }
 { const _ca = CH50.aigle.setup; CH50.aigle.setup = function (cont) { _ca.apply(this, arguments); if (e52().city && alive50('KES')) men50('KES', 4000) } }
+
+// ---------- 23. allègements (relecture du code) ----------
+// le panneau latéral n'est reconstruit que s'il est visible : fermé, il serait caché de toute façon
+const _renderPanel55 = renderPanel; renderPanel = function () {
+  if (S && !VIEW.side && $('#panel') && $('#panel').childElementCount) { renderPanel.stale55 = true; return }
+  renderPanel.stale55 = false; return _renderPanel55.apply(this, arguments);
+};
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
