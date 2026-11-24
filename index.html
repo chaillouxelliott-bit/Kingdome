@@ -10260,6 +10260,7 @@ Object.assign(STORY38, {
 
 
 
+
 <script id="a51">
 // ===================== ARGENTHAL 51 : grande refonte — histoire cohérente, économie et armée simplifiées, nouvelles actions, onglets sur une seule page =====================
 // Cette couche remplace les anciennes interfaces à pastilles (40/45/46) et à boutons repliés : elle doit rester la dernière.
@@ -11463,6 +11464,42 @@ const _renderPanel55 = renderPanel; renderPanel = function () {
   if (S && !VIEW.side && $('#panel') && $('#panel').childElementCount) { renderPanel.stale55 = true; return }
   renderPanel.stale55 = false; return _renderPanel55.apply(this, arguments);
 };
+
+// ---------- 24. commerce : cours du blé, du fer, du sel et des épices ----------
+RES.epices = ['Épices', '🌶️', 8, 'agr'];
+const _assignRes56 = assignRes; assignRes = function (id) {
+  const V = PV[id], t = V.t0 || V.t, r = hashStr(id + 'epi');
+  if (typeof EASTK52 !== 'undefined' && EASTK52.has(V.k) && ((t === 'd' && r < .45) || (V.coast && t !== 'm' && r < .22))) return 'epices';
+  return _assignRes56.apply(this, arguments);
+};
+const GOODS56 = ['ble', 'fer', 'sel', 'epices'], GW56 = { ble: .4, fer: .15, sel: .25, epices: .2 };
+function blockades56() { let n = 0; for (const k in (S.fleets || {})) { const F = S.fleets[k]; if (F && F.mis === 'blockade' && F.tgt) n++ } return n }
+function embargoes56() { let n = 0; for (const k of REALM_IDS) { const g = S.realms[k] && S.realms[k].alive && S.realms[k].geo; if (g) n += (g.embargo || []).length } return n }
+const _priceTick56 = priceTick; priceTick = function () {
+  if (S.prices && S.prices.epices == null) S.prices.epices = 1;
+  _priceTick56.apply(this, arguments); if (!S.prices) return;
+  const E = embargoes56(), B = blockades56(), W = S.wars.length;
+  const eastWar = S.wars.filter(w => [...w.a, ...w.b].some(k => east52(k))).length;
+  const adj = { ble: Math.min(.15, W * .03) + Math.min(.08, E * .02), sel: Math.min(.1, E * .02) + Math.min(.12, B * .03), epices: Math.min(.2, eastWar * .05) + Math.min(.15, E * .04) + Math.min(.16, B * .04), fer: 0 };
+  for (const r of GOODS56) if (adj[r]) S.prices[r] = C(Math.round((S.prices[r] + adj[r] * .35) * 100) / 100, .55, 2.4);
+  if (S.priceH && S.priceH.length) S.priceH[S.priceH.length - 1].p = Object.assign({}, S.prices);
+};
+function index56() { const P = S.prices || {}; let v = 0; for (const r of GOODS56) v += (P[r] || 1) * GW56[r]; return v }
+function dear56(k) { if (!S.prices || !k || k.startsWith('R_')) return 0; return C(-Math.round((index56() - 1) * realmProvs(k).length * .8), -25, 10) }
+const _realmIncome56 = realmIncome; realmIncome = function (k) {
+  const r = _realmIncome56.apply(this, arguments); const d = dear56(k);
+  if (d && r && typeof r.total === 'number') { r.trade = (r.trade || 0) + d; r.total += d; r.dear = d }
+  return r;
+};
+const _geoCard56 = geoCard; geoCard = function () {
+  const h = _geoCard56.apply(this, arguments); if (!S.prices) return h;
+  const prev = (S.priceH && S.priceH.length > 1 && S.priceH[S.priceH.length - 2].p) || {}, p = S.player, d = dear56(p), mine = realmRes(p) || {};
+  const chip = r => { const v = S.prices[r] || 1, dv = v - (prev[r] || v); return `<span class="cr56${mine[r] ? ' mine' : ''}" title="${RES[r][0]}${mine[r] ? ' — vous en produisez' : ''}">${RES[r][1]} <b class="${v >= 1.25 ? 'bad' : v <= .85 ? 'ok' : ''}">${Math.round(v * 100)}</b>${dv > .02 ? '▲' : dv < -.02 ? '▼' : ''}</span>` };
+  const E = embargoes56(), B = blockades56();
+  return `<div class="lbl">Cours du marché</div><div class="card cours56"><div class="row56">${GOODS56.map(chip).join('')}</div>
+  <div class="faint" style="font-size:12px;margin-top:5px">${d < 0 ? `Vie chère : <b class="bad">${d}</b> écus/saison` : d > 0 ? `Abondance : <b class="ok">+${d}</b> écus/saison` : 'Prix normaux'}${E ? ` · ${E} embargo${E > 1 ? 's' : ''}` : ''}${B ? ` · ${B} blocus` : ''}${S.wars.length ? ` · ${S.wars.length} guerre${S.wars.length > 1 ? 's' : ''}` : ''}</div></div>` + h;
+};
+(() => { const st = document.createElement('style'); st.textContent = `.cours56 .row56{display:flex;gap:6px;flex-wrap:wrap}.cr56{flex:1;min-width:64px;text-align:center;padding:4px 2px;border-radius:7px;background:rgba(255,255,255,.05);font-size:13px;white-space:nowrap}.cr56.mine{outline:1px solid rgba(214,178,94,.55)}.cr56 b.bad{color:#e07a6a}.cr56 b.ok{color:#8fc98a}`; document.head.appendChild(st) })();
 
 </script><!--/a51-->
 <script>if("serviceWorker" in navigator&&location.protocol.startsWith("http"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));</script>
